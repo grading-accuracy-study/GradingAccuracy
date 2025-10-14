@@ -13,7 +13,7 @@
 #' 
 #' @importFrom readr read_csv write_csv
 #' @importFrom dplyr left_join mutate select join_by
-deidentify_gradescope <- function(gs_csv_path, ids_csv_path,
+deidentify_gradescope_evals <- function(gs_csv_path, ids_csv_path,
                                   output_path){
   #ignore last 3 lines
   nrow = length(readLines(gs_csv_path))-5
