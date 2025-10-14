@@ -13,6 +13,8 @@
 #' 
 #' @importFrom readr read_csv write_csv
 #' @importFrom dplyr left_join mutate select join_by
+#' 
+#' @export
 deidentify_gradescope_evals <- function(gs_csv_path, ids_csv_path,
                                   output_path){
   #ignore last 3 lines
@@ -32,3 +34,4 @@ deidentify_gradescope_evals <- function(gs_csv_path, ids_csv_path,
     write_csv(file = output_path)
     
 }
+
