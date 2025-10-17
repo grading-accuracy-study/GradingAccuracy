@@ -13,5 +13,5 @@ normalize_full_credit(evals)
 This function "normalizes" the "Full Credit" toggle
 on the evaluations by making all other rubric items
 TRUE to allow for comparisons across individual rubric
-items.
+items. Note that this assumes that Scoring Method is positive.
 }

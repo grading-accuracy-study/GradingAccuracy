@@ -23,7 +23,7 @@ identical_score_prop <- function(eval1, eval2){
     drop_na() |>
     summarize(
       Proportion = mean(Score1 == Score2),
-      `Count` = n(),
+      Count = n(),
       `Avg of Score1` = mean(Score1),
       `Avg of Score2` = mean(Score2),
       `Avg Abs Diff` = mean(abs(Score1 - Score2))
@@ -36,7 +36,7 @@ identical_score_prop <- function(eval1, eval2){
 #' This function "normalizes" the "Full Credit" toggle
 #' on the evaluations by making all other rubric items
 #' TRUE to allow for comparisons across individual rubric
-#' items.
+#' items. Note that this assumes that Scoring Method is positive.
 #'
 #' @param evals dataframe of Gradescope evaluations
 #'
