@@ -9,7 +9,7 @@ identical_score_prop(eval1, eval2)
 \arguments{
 \item{eval1}{first dataframe of Gradescope evaluations}
 
-\item{eval2}{first dataframe of Gradescope evaluations}
+\item{eval2}{second dataframe of Gradescope evaluations}
 }
 \value{
 a single proportion

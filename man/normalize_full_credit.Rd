@@ -19,5 +19,5 @@ This function "normalizes" the "Full Credit" toggle
 on the evaluations by making all other rubric items
 TRUE to allow for comparisons across individual rubric
 items. Note that \code{rubric_items} can be a string vector of
-colnames or a numeric vector of column indices.
+column names or a numeric vector of column indices.
 }

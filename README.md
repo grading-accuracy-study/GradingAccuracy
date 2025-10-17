@@ -60,4 +60,4 @@ rubric_mean_absolute_error(expert_evals, student_evals,
                            rubric_matching_list)
 ```
 
--   where `rubric_matching_list` is an R list with two vector of corresponding rubric items
+-   where `rubric_matching_list` is an R list with two vector of corresponding rubric items from each evaluation
