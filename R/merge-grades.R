@@ -9,6 +9,7 @@
 #'
 #' @param gs_csv_path path to exported Gradescope csv
 #' @param ids_csv_path path to de-identified table csv
+#' @param ignore_nrows how many lines at the end of csv to exclude
 #' @param output_path path to de-idenfitied Gradescope output
 #'
 #' @importFrom readr read_csv write_csv
@@ -54,11 +55,13 @@ read_evals <- function(csv_path, ignore_nrows = 5){
 }
 
 #' @importFrom readr write_csv
+#' @importFrom utils tail
 write_evals <- function(de_identified, output_path,
                         ignored_nrows, original_path){
   # append remove lines to maintain original format
   write_csv(de_identified, output_path)
   deidentified_lines <- readLines(output_path)
+  # ignored_nrows-1 due to whitespaces in csv file
   last_lines <- tail(readLines(original_path), ignored_nrows-1)
   writeLines(c(deidentified_lines, last_lines), output_path)
 

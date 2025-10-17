@@ -4,12 +4,19 @@
 \alias{deidentify_gradescope_evals}
 \title{Deidentify Gradescope}
 \usage{
-deidentify_gradescope_evals(gs_csv_path, ids_csv_path, output_path)
+deidentify_gradescope_evals(
+  gs_csv_path,
+  ids_csv_path,
+  ignore_nrows = 5,
+  output_path
+)
 }
 \arguments{
 \item{gs_csv_path}{path to exported Gradescope csv}
 
 \item{ids_csv_path}{path to de-identified table csv}
+
+\item{ignore_nrows}{how many lines at the end of csv to exclude}
 
 \item{output_path}{path to de-idenfitied Gradescope output}
 }
