@@ -8,7 +8,8 @@
 #'
 #' @return a single proportion
 #'
-#'@importFrom dplyr mutate rename
+#' @importFrom dplyr mutate rename summarize inner_join select
+#' @importFrom tidyr drop_na
 #'
 #' @export
 identical_score_prop <- function(eval1, eval2){
@@ -18,8 +19,15 @@ identical_score_prop <- function(eval1, eval2){
   eval2 <- eval2 |>
     rename(Score2 = Score) |>
     select(SID, Score2)
-  combined <- inner_join(eval1, eval2, by = "SID")
-  sum(combined$Score1 == combined$Score2)
+  inner_join(eval1, eval2, by = "SID") |>
+    drop_na() |>
+    summarize(
+      Proportion = mean(Score1 == Score2),
+      `Count` = n(),
+      `Avg of Score1` = mean(Score1),
+      `Avg of Score2` = mean(Score2),
+      `Avg Abs Diff` = mean(abs(Score1 - Score2))
+    )
 }
 
 
