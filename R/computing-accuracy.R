@@ -31,6 +31,10 @@ identical_score_prop <- function(eval1, eval2){
 }
 
 
+rubric_mean_absolute_error <- function(){
+
+}
+
 #' Normalize Full Credit
 #'
 #' This function "normalizes" the "Full Credit" toggle
