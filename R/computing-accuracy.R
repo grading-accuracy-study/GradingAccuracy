@@ -36,11 +36,16 @@ identical_score_prop <- function(eval1, eval2){
 #' This function "normalizes" the "Full Credit" toggle
 #' on the evaluations by making all other rubric items
 #' TRUE to allow for comparisons across individual rubric
-#' items. Note that this assumes that Scoring Method is positive.
+#' items. Note that `rubric_items` can be a string vector of
+#' colnames or a numeric vector of column indices.
 #'
 #' @param evals dataframe of Gradescope evaluations
+#' @param rubric_items vector of rubric items that sum up to full credit
+#'
+#' @return normalized evals dataframe
 #'
 #' @export
-normalize_full_credit <- function(evals){
-
+normalize_full_credit <- function(evals, rubric_items){
+  evals[evals$`Full credit.`, rubric_items] <- TRUE
+  return (evals)
 }

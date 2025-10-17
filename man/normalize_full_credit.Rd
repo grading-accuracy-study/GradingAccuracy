@@ -4,14 +4,20 @@
 \alias{normalize_full_credit}
 \title{Normalize Full Credit}
 \usage{
-normalize_full_credit(evals)
+normalize_full_credit(evals, rubric_items)
 }
 \arguments{
 \item{evals}{dataframe of Gradescope evaluations}
+
+\item{rubric_items}{vector of rubric items that sum up to full credit}
+}
+\value{
+normalized evals dataframe
 }
 \description{
 This function "normalizes" the "Full Credit" toggle
 on the evaluations by making all other rubric items
 TRUE to allow for comparisons across individual rubric
-items. Note that this assumes that Scoring Method is positive.
+items. Note that \code{rubric_items} can be a string vector of
+colnames or a numeric vector of column indices.
 }
