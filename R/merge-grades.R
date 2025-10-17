@@ -16,9 +16,9 @@
 #'
 #' @export
 deidentify_gradescope_evals <- function(gs_csv_path, ids_csv_path,
-                                  output_path){
+                                        ignore_nrows = 5, output_path){
 
-  gs_csv <- read_evals(gs_csv_path)
+  gs_csv <- read_evals(gs_csv_path, ignore_nrows = ignore_nrows)
   ids_csv <- read_csv(ids_csv_path, show_col_types = FALSE)
 
   de_identified <- gs_csv |>
@@ -28,7 +28,7 @@ deidentify_gradescope_evals <- function(gs_csv_path, ids_csv_path,
     select(SID, Score:Comments, Tags)
 
     write_evals(de_identified = de_identified, output_path = output_path,
-                original_path = gs_csv_path)
+                ignored_nrows = ignore_nrows, original_path = gs_csv_path)
 
 }
 
@@ -55,7 +55,7 @@ read_evals <- function(csv_path, ignore_nrows = 5){
 
 #' @importFrom readr write_csv
 write_evals <- function(de_identified, output_path,
-                        ignored_nrows = 5, original_path){
+                        ignored_nrows, original_path){
   # append remove lines to maintain original format
   write_csv(de_identified, output_path)
   deidentified_lines <- readLines(output_path)
