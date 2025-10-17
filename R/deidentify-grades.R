@@ -40,7 +40,7 @@ deidentify_gradescope_evals <- function(gs_csv_path, ids_csv_path,
 #' "Export Evaluations" functionality. The formatting of this
 #' file is not in tidy format because the last few lines include
 #' Point Values, Rubric Numbers and Scoring Method. These are
-#' excluded for the sake of this package.
+#' excluded when loading in the file.
 #'
 #' @param csv_path path to exported Gradescope evaluations csv
 #' @param ignore_nrows how many of the last lines to ignore
