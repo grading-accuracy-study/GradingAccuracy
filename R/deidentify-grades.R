@@ -45,6 +45,8 @@ deidentify_gradescope_evals <- function(gs_csv_path, ids_csv_path,
 #' @param csv_path path to exported Gradescope evaluations csv
 #' @param ignore_nrows how many of the last lines to ignore
 #'
+#' @return a dataframe of Gradescope evaluations
+#'
 #' @importFrom readr read_csv
 #' @importFrom utils head
 #'

@@ -11,6 +11,9 @@ read_evals(csv_path, ignore_nrows = 3)
 
 \item{ignore_nrows}{how many of the last lines to ignore}
 }
+\value{
+a dataframe of Gradescope evaluations
+}
 \description{
 This function reads in the .csv file from Gradescope's
 "Export Evaluations" functionality. The formatting of this
