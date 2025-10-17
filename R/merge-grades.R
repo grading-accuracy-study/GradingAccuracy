@@ -17,7 +17,7 @@
 #'
 #' @export
 deidentify_gradescope_evals <- function(gs_csv_path, ids_csv_path,
-                                        ignore_nrows = 5, output_path){
+                                        output_path, ignore_nrows = 3){
 
   gs_csv <- read_evals(gs_csv_path, ignore_nrows = ignore_nrows)
   ids_csv <- read_csv(ids_csv_path, show_col_types = FALSE)
@@ -46,23 +46,24 @@ deidentify_gradescope_evals <- function(gs_csv_path, ids_csv_path,
 #' @param ignore_nrows how many of the last lines to ignore
 #'
 #' @importFrom readr read_csv
+#' @importFrom utils head
 #'
 #' @export
-read_evals <- function(csv_path, ignore_nrows = 5){
-  nrow = length(readLines(gs_csv_path)) - ignore_nrows
-  read_csv(gs_csv_path, show_col_types = FALSE,
-           n_max = nrow)
+read_evals <- function(csv_path, ignore_nrows = 3){
+  remove_last_lines = head(readLines(csv_path), -ignore_nrows) |>
+    paste(collapse = "\n")
+  read_csv(remove_last_lines, show_col_types = FALSE)
 }
 
 #' @importFrom readr write_csv
 #' @importFrom utils tail
 write_evals <- function(de_identified, output_path,
-                        ignored_nrows, original_path){
+                        ignored_nrows = 3, original_path){
   # append remove lines to maintain original format
   write_csv(de_identified, output_path)
   deidentified_lines <- readLines(output_path)
-  # ignored_nrows-1 due to whitespaces in csv file
-  last_lines <- tail(readLines(original_path), ignored_nrows-1)
+  # ignored_nrows + 1 due to whitespaces in csv file
+  last_lines <- tail(readLines(original_path), ignored_nrows+1)
   writeLines(c(deidentified_lines, last_lines), output_path)
 
 }

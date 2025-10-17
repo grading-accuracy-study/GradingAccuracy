@@ -4,7 +4,7 @@
 \alias{read_evals}
 \title{Read Gradescope Evaluations CSV}
 \usage{
-read_evals(csv_path, ignore_nrows = 5)
+read_evals(csv_path, ignore_nrows = 3)
 }
 \arguments{
 \item{csv_path}{path to exported Gradescope evaluations csv}
