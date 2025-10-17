@@ -8,7 +8,7 @@
 #'
 #' @return a single proportion
 #'
-#' @importFrom dplyr mutate rename summarize inner_join select
+#' @importFrom dplyr mutate rename summarize inner_join select n
 #' @importFrom tidyr drop_na
 #'
 #' @export
