@@ -20,7 +20,9 @@ deidentify_gradescope_evals <- function(gs_csv_path, ids_csv_path,
                                         output_path, ignore_nrows = 3){
 
   gs_csv <- read_evals(gs_csv_path, ignore_nrows = ignore_nrows)
-  ids_csv <- read_csv(ids_csv_path, show_col_types = FALSE)
+  ids_csv <- read_csv(ids_csv_path, show_col_types = FALSE) |>
+    mutate(SID = as.numeric(SID),
+           Generated_ID = as.numeric(Generated_ID))
 
   de_identified <- gs_csv |>
     mutate(`Assignment Submission ID` = as.numeric(`Assignment Submission ID`)) |>
@@ -54,7 +56,8 @@ deidentify_gradescope_evals <- function(gs_csv_path, ids_csv_path,
 read_evals <- function(csv_path, ignore_nrows = 3){
   remove_last_lines = head(readLines(csv_path), -ignore_nrows) |>
     paste(collapse = "\n")
-  read_csv(remove_last_lines, show_col_types = FALSE)
+  read_csv(remove_last_lines, show_col_types = FALSE) |>
+    mutate(SID = as.numeric(SID))
 }
 
 #' @importFrom readr write_csv
