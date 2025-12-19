@@ -53,11 +53,50 @@ deidentify_gradescope_evals <- function(gs_csv_path, ids_csv_path,
 #' @importFrom utils head
 #'
 #' @export
-read_evals <- function(csv_path, ignore_nrows = 3){
+read_evals <- function(csv_path, ignore_nrows = 3, output_folder){
   remove_last_lines = head(readLines(csv_path), -ignore_nrows) |>
     paste(collapse = "\n")
   read_csv(remove_last_lines, show_col_types = FALSE) |>
     mutate(SID = as.numeric(SID))
+}
+
+#' @importFrom readr read_csv
+generate_rubric_texts <- function(csv_path, rubric_items,
+                                  output_folder, existing = TRUE){
+  ## UPDATE RUBRIC ITEMS
+  rubric_texts_path <- paste0(output_folder, "rubric_items.csv")
+  grades_df <- read_evals(csv_path)
+  rubric_items <- get_rubric_items(grades_df)
+  n <- length(rubric_items)
+  current_n <- n
+  rubric_texts <- data.frame(row.names = c("File Path",
+                                           paste0("R", 1:n)))
+  if (existing){
+    rubric_texts <- read_csv(rubric_texts_path)
+    current_n <- ncol(rubric_texts)-1
+    # add more rubric-item columsn if needed
+    if (n > current_n){
+      new_cols <- paste0("R", (current_n + 1):n)
+      df[new_cols] <- NA
+    }
+  }
+  row <- c(csv_path, rubric_items,
+           rep(NA, current_n - n))
+
+  ## EXPORTED FILE
+  new_names <- paste0("R", 1:n)
+  colnames(grades_df)[match(rubric_items, colnames(grades_df))] <- new_names
+  write_evals(grades_df, file = paste0(output_folder, csv_path))
+  return (grades_df)
+}
+
+get_rubric_items <- function(grades_df){
+  start <- which(rownames(grades_df) == "Submission Time") + 1
+  end <- which(rownames(grades_df) == "Adjustment") - 1
+  if (length(end) == 0){
+    end <- length(rownames(grades_df))
+  }
+  return (rownames(grades_df)[start:end])
 }
 
 #' @importFrom readr write_csv
