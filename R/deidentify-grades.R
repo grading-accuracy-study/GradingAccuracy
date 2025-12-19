@@ -9,7 +9,7 @@
 #'
 #' @param gs_csv_path path to exported Gradescope csv
 #' @param ids_csv_path path to de-identified table csv
-#' @param ignore_nrows how many lines at the end of csv to exclude
+#' @param ignored_nrows how many lines at the end of csv to exclude
 #' @param output_path path to de-idenfitied Gradescope output
 #'
 #' @importFrom readr read_csv write_csv
@@ -17,9 +17,9 @@
 #'
 #' @export
 deidentify_gradescope_evals <- function(gs_csv_path, ids_csv_path,
-                                        output_path, ignore_nrows = 3){
+                                        output_path, ignored_nrows = 3){
 
-  gs_csv <- read_evals(gs_csv_path, ignore_nrows = ignore_nrows)
+  gs_csv <- read_evals(gs_csv_path, ignored_nrows = ignored_nrows)
   ids_csv <- read_csv(ids_csv_path, show_col_types = FALSE) |>
     mutate(SID = as.numeric(SID),
            Generated_ID = as.numeric(Generated_ID))
@@ -31,7 +31,7 @@ deidentify_gradescope_evals <- function(gs_csv_path, ids_csv_path,
     select(SID, Score:Comments, Tags)
 
     write_evals(de_identified = de_identified, output_path = output_path,
-                ignored_nrows = ignore_nrows, original_path = gs_csv_path)
+                ignored_nrows = ignored_nrows, original_path = gs_csv_path)
 
 }
 
@@ -45,7 +45,7 @@ deidentify_gradescope_evals <- function(gs_csv_path, ids_csv_path,
 #' excluded when loading in the file.
 #'
 #' @param csv_path path to exported Gradescope evaluations csv
-#' @param ignore_nrows how many of the last lines to ignore
+#' @param ignored_nrows how many of the last lines to ignore
 #'
 #' @return a dataframe of Gradescope evaluations
 #'
@@ -53,8 +53,13 @@ deidentify_gradescope_evals <- function(gs_csv_path, ids_csv_path,
 #' @importFrom utils head
 #'
 #' @export
-read_evals <- function(csv_path, ignore_nrows = 3, output_folder){
-  remove_last_lines = head(readLines(csv_path), -ignore_nrows) |>
+read_evals <- function(csv_path, ignored_nrows = 3, output_folder){
+  if (ignored_nrows == 0){
+    df <- read_csv(csv_path, show_col_types = FALSE) |>
+      mutate(SID = as.numeric(SID))
+    return (df)
+  }
+  remove_last_lines = head(readLines(csv_path), -ignored_nrows) |>
     paste(collapse = "\n")
   read_csv(remove_last_lines, show_col_types = FALSE) |>
     mutate(SID = as.numeric(SID))
@@ -73,18 +78,18 @@ read_evals <- function(csv_path, ignore_nrows = 3, output_folder){
 #' @param existing if there is an existing rubric_items.csv
 #'
 #' @return a dataframe with rubric items in "R1", "R2",... format
-#' @importFrom readr read_csv
+#' @importFrom readr read_csv write_csv
 #' @export
-generate_rubric_texts <- function(csv_path, output_folder,
+generate_rubric_texts <- function(csv_path, output_folder, ignored_nrows = 3,
                                   existing = TRUE){
   ## UPDATE RUBRIC ITEMS
   rubric_texts_path <- paste0(output_folder, "rubric_items.csv")
-  grades_df <- read_evals(csv_path)
+  grades_df <- read_evals(csv_path, ignored_nrows = ignored_nrows)
   rubric_items <- get_rubric_items(grades_df)
   n <- length(rubric_items)
   current_n <- n
-  rubric_texts <- data.frame(row.names = c("File Path",
-                                           paste0("R", 1:n)))
+  row <- c(csv_path, rubric_items,
+           rep(NA, current_n - n))
   if (existing){
     rubric_texts <- read_csv(rubric_texts_path)
     current_n <- ncol(rubric_texts)-1
@@ -93,24 +98,30 @@ generate_rubric_texts <- function(csv_path, output_folder,
       new_cols <- paste0("R", (current_n + 1):n)
       df[new_cols] <- NA
     }
+    rubric_texts <- rbind(rubric_texts, row)
+  } else{
+    rubric_texts <- as.data.frame(t(row))
+    colnames(rubric_texts) <- c("File Path",paste0("R", 1:n))
   }
-  row <- c(csv_path, rubric_items,
-           rep(NA, current_n - n))
-
+  write_csv(rubric_texts, file = rubric_texts_path)
   ## EXPORTED FILE
   new_names <- paste0("R", 1:n)
   colnames(grades_df)[match(rubric_items, colnames(grades_df))] <- new_names
-  write_evals(grades_df, file = paste0(output_folder, csv_path))
+  write_evals(grades_df, output_path = paste0(output_folder, csv_path),
+              original_path = csv_path, ignored_nrows = ignored_nrows)
   return (grades_df)
 }
 
 get_rubric_items <- function(grades_df){
-  start <- which(rownames(grades_df) == "Submission Time") + 1
-  end <- which(rownames(grades_df) == "Adjustment") - 1
-  if (length(end) == 0){
-    end <- length(rownames(grades_df))
+  start <- which(colnames(grades_df) == "Submission Time") + 1
+  if (length(start) == 0){
+    start <- which(colnames(grades_df) == "Score") + 1
   }
-  return (rownames(grades_df)[start:end])
+  end <- which(colnames(grades_df) == "Adjustment") - 1
+  if (length(end) == 0){
+    end <- length(colnames(grades_df))
+  }
+  return (colnames(grades_df)[start:end])
 }
 
 #' @importFrom readr write_csv
@@ -119,9 +130,11 @@ write_evals <- function(de_identified, output_path,
                         ignored_nrows = 3, original_path){
   # append remove lines to maintain original format
   write_csv(de_identified, output_path)
-  deidentified_lines <- readLines(output_path)
-  # ignored_nrows + 1 due to whitespaces in csv file
-  last_lines <- tail(readLines(original_path), ignored_nrows+1)
-  writeLines(c(deidentified_lines, last_lines), output_path)
+  if (ignored_nrows > 0){
+    deidentified_lines <- readLines(output_path)
+    # ignored_nrows + 1 due to whitespaces in csv file
+    last_lines <- tail(readLines(original_path), ignored_nrows+1)
+    writeLines(c(deidentified_lines, last_lines), output_path)
+  }
 
 }

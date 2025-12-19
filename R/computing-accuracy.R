@@ -90,7 +90,8 @@ rubric_mean_absolute_error <- function(eval1, eval2, rubric_matching_list){
 #' @return normalized evals dataframe
 #'
 #' @export
-normalize_full_credit <- function(evals, rubric_items){
-  evals[evals$`Full credit.`, rubric_items] <- TRUE
+normalize_full_credit <- function(evals, full_credit, rubric_items){
+  full_credit_row <- evals[[full_credit]]
+  evals[full_credit_row, rubric_items] <- TRUE
   return (evals)
 }
