@@ -4,10 +4,12 @@
 \alias{normalize_full_credit}
 \title{Normalize Full Credit}
 \usage{
-normalize_full_credit(evals, rubric_items)
+normalize_full_credit(evals, full_credit, rubric_items)
 }
 \arguments{
 \item{evals}{dataframe of Gradescope evaluations}
+
+\item{full_credit}{column index or name for full credit column}
 
 \item{rubric_items}{vector of rubric items that sum up to full credit}
 }

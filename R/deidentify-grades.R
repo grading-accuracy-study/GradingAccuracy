@@ -53,7 +53,7 @@ deidentify_gradescope_evals <- function(gs_csv_path, ids_csv_path,
 #' @importFrom utils head
 #'
 #' @export
-read_evals <- function(csv_path, ignored_nrows = 3, output_folder){
+read_evals <- function(csv_path, ignored_nrows = 3){
   if (ignored_nrows == 0){
     df <- read_csv(csv_path, show_col_types = FALSE) |>
       mutate(SID = as.numeric(SID))
@@ -75,6 +75,7 @@ read_evals <- function(csv_path, ignored_nrows = 3, output_folder){
 #'
 #' @param csv_path path to exported Gradescope evaluations csv
 #' @param output_folder folder for rubric_items.csv
+#' @param ignored_nrows how many of the last lines to ignore
 #' @param existing if there is an existing rubric_items.csv
 #'
 #' @return a dataframe with rubric items in "R1", "R2",... format

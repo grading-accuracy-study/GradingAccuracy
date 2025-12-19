@@ -85,6 +85,7 @@ rubric_mean_absolute_error <- function(eval1, eval2, rubric_matching_list){
 #' column names or a numeric vector of column indices.
 #'
 #' @param evals dataframe of Gradescope evaluations
+#' @param full_credit column index or name for full credit column
 #' @param rubric_items vector of rubric items that sum up to full credit
 #'
 #' @return normalized evals dataframe

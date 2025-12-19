@@ -4,12 +4,12 @@
 \alias{read_evals}
 \title{Read Gradescope Evaluations CSV}
 \usage{
-read_evals(csv_path, ignore_nrows = 3)
+read_evals(csv_path, ignored_nrows = 3)
 }
 \arguments{
 \item{csv_path}{path to exported Gradescope evaluations csv}
 
-\item{ignore_nrows}{how many of the last lines to ignore}
+\item{ignored_nrows}{how many of the last lines to ignore}
 }
 \value{
 a dataframe of Gradescope evaluations

@@ -8,7 +8,7 @@ deidentify_gradescope_evals(
   gs_csv_path,
   ids_csv_path,
   output_path,
-  ignore_nrows = 3
+  ignored_nrows = 3
 )
 }
 \arguments{
@@ -18,7 +18,7 @@ deidentify_gradescope_evals(
 
 \item{output_path}{path to de-idenfitied Gradescope output}
 
-\item{ignore_nrows}{how many lines at the end of csv to exclude}
+\item{ignored_nrows}{how many lines at the end of csv to exclude}
 }
 \description{
 This function de-identifies the exported
