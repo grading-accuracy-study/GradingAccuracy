@@ -60,9 +60,23 @@ read_evals <- function(csv_path, ignore_nrows = 3, output_folder){
     mutate(SID = as.numeric(SID))
 }
 
+#' Generate Rubric Texts
+#'
+#' This function generates or updated the rubric_items.csv
+#' with a grades csv file's rubric items. The grades csv is
+#' saved with "R1", "R2", ... labels for the rubric items
+#' as a new csv, and this function returns this new grades csv
+#' as a dataframe.
+#'
+#' @param csv_path path to exported Gradescope evaluations csv
+#' @param output_folder folder for rubric_items.csv
+#' @param existing if there is an existing rubric_items.csv
+#'
+#' @return a dataframe with rubric items in "R1", "R2",... format
 #' @importFrom readr read_csv
-generate_rubric_texts <- function(csv_path, rubric_items,
-                                  output_folder, existing = TRUE){
+#' @export
+generate_rubric_texts <- function(csv_path, output_folder,
+                                  existing = TRUE){
   ## UPDATE RUBRIC ITEMS
   rubric_texts_path <- paste0(output_folder, "rubric_items.csv")
   grades_df <- read_evals(csv_path)
