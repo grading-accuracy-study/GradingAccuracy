@@ -88,12 +88,11 @@ generate_rubric_texts <- function(csv_path, output_folder, ignored_nrows = 3,
   grades_df <- read_evals(csv_path, ignored_nrows = ignored_nrows)
   rubric_items <- get_rubric_items(grades_df)
   n <- length(rubric_items)
-  current_n <- n
+  current_n <- ifelse(existing, ncol(rubric_texts)-1, n)
   row <- c(csv_path, rubric_items,
            rep(NA, current_n - n))
   if (existing){
     rubric_texts <- read_csv(rubric_texts_path)
-    current_n <- ncol(rubric_texts)-1
     # add more rubric-item columsn if needed
     if (n > current_n){
       new_cols <- paste0("R", (current_n + 1):n)
