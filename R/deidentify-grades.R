@@ -123,7 +123,8 @@ get_rubric_items <- function(grades_df){
   if (length(end) == 0){
     end <- length(colnames(grades_df))
   }
-  return (colnames(grades_df)[start:end])
+  rubric_items <- colnames(grades_df)[start:end]
+  return (rubric_items[rubric_items != "SID"])
 }
 
 #' @importFrom readr write_csv
