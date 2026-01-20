@@ -8,7 +8,8 @@ generate_rubric_texts(
   csv_path,
   output_folder,
   ignored_nrows = 3,
-  existing = TRUE
+  existing = TRUE,
+  pensieve = FALSE
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ generate_rubric_texts(
 \item{ignored_nrows}{how many of the last lines to ignore}
 
 \item{existing}{if there is an existing rubric_items.csv}
+
+\item{pensieve}{if source is exported from Pensieve}
 }
 \value{
 a dataframe with rubric items in "R1", "R2",... format

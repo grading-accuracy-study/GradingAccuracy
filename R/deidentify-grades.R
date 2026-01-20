@@ -77,12 +77,13 @@ read_evals <- function(csv_path, ignored_nrows = 3){
 #' @param output_folder folder for rubric_items.csv
 #' @param ignored_nrows how many of the last lines to ignore
 #' @param existing if there is an existing rubric_items.csv
+#' @param pensieve if source is exported from Pensieve
 #'
 #' @return a dataframe with rubric items in "R1", "R2",... format
 #' @importFrom readr read_csv write_csv
 #' @export
 generate_rubric_texts <- function(csv_path, output_folder, ignored_nrows = 3,
-                                  existing = TRUE){
+                                  existing = TRUE, pensieve = FALSE){
   ## UPDATE RUBRIC ITEMS
   rubric_texts_path <- paste0(output_folder, "rubric_items.csv")
   grades_df <- read_evals(csv_path, ignored_nrows = ignored_nrows)
@@ -109,6 +110,13 @@ generate_rubric_texts <- function(csv_path, output_folder, ignored_nrows = 3,
   ## EXPORTED FILE
   new_names <- paste0("R", 1:n)
   colnames(grades_df)[match(rubric_items, colnames(grades_df))] <- new_names
+
+  if (pensieve){
+    for (col in new_names){
+      grades_df[, col] <- !is.na(grades_df[, col])
+    }
+  }
+
   write_evals(grades_df, output_path = paste0(output_folder, csv_path),
               original_path = csv_path, ignored_nrows = ignored_nrows)
   return (grades_df)
