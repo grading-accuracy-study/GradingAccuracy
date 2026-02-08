@@ -17,6 +17,15 @@ isp <- function(eval1, eval2, rubric_matching_list){
   if (length(rubric_matching_list) == 1 && rubric_matching_list == "None"){
     return (NA)
   }
+
+  if (!("SID" %in% colnames(eval1)) || !("SID" %in% colnames(eval2))){
+    stop("Missing SID")
+  }
+
+  if (!("Score" %in% colnames(eval1)) || !("Score" %in% colnames(eval2))){
+    stop("Missing Score")
+  }
+
   eval1 <- eval1 |>
     rename(Score1 = Score) |>
     mutate(SID = as.character(SID)) |>
@@ -54,6 +63,11 @@ rubric_mae <- function(eval1, eval2, rubric_matching_list = NULL){
   if (length(rubric_matching_list) == 1 && rubric_matching_list == "None"){
     return (NA)
   }
+
+  if (!("SID" %in% colnames(eval1)) || !("SID" %in% colnames(eval2))){
+    stop("Missing SID")
+  }
+
   if (is.null(rubric_matching_list)){
     rubric_items <- grep("^R[0-9]+$", names(eval1), value = TRUE)
 
