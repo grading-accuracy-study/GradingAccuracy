@@ -17,6 +17,7 @@
 #' @param mode_of_question mode of question (e.g. "fill in the blank", "open-ended")
 #' @param medium_of_answer medium of student's answer (e.g. "handwritten", "typed")
 #' @param content_of_answer expected content of student's answer (e.g. "English", "math", "code")
+#' @param rubric_items list for matching rubric items, if graded on different rubrics
 #'
 #'
 #' @importFrom jsonlite toJSON write_json
@@ -25,8 +26,10 @@
 create_metadata_json <- function(dir = "", department, course_number, course_name,
                                  upper_div, year, semester, assignment_name,
                                  question_number, question_name = "", mode_of_question,
-                                 medium_of_answer, content_of_answer){
+                                 medium_of_answer, content_of_answer,
+                                 rubric_items = list()){
   course_metadata <- list(
+    course_info = list(
     department = department,
     course_number = course_number,
     course_name = course_name,
@@ -38,12 +41,12 @@ create_metadata_json <- function(dir = "", department, course_number, course_nam
     question_name = question_name,
     mode_of_question = mode_of_question,
     medium_of_answer = medium_of_answer,
-    content_of_answer = content_of_answer
-  )
+    content_of_answer = content_of_answer),
+    rubric_items = rubric_items)
 
   jsonlite::write_json(course_metadata, paste0(dir, "metadata.json"),
                        pretty = TRUE, auto_unbox = TRUE)
 
-  jsonlite::toJSON(course_metadata, pretty = TRUE)
+  jsonlite::toJSON(course_metadata, pretty = TRUE, auto_unbox = TRUE)
 
 }

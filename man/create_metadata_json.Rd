@@ -17,7 +17,8 @@ create_metadata_json(
   question_name = "",
   mode_of_question,
   medium_of_answer,
-  content_of_answer
+  content_of_answer,
+  rubric_items = list()
 )
 }
 \arguments{
@@ -46,6 +47,8 @@ create_metadata_json(
 \item{medium_of_answer}{medium of student's answer (e.g. "handwritten", "typed")}
 
 \item{content_of_answer}{expected content of student's answer (e.g. "English", "math", "code")}
+
+\item{rubric_items}{list for matching rubric items, if graded on different rubrics}
 }
 \description{
 This function creates a JSON file that stores metadata
