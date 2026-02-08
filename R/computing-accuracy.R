@@ -117,6 +117,15 @@ rubric_mae <- function(eval1, eval2, rubric_matching_list = NULL){
 #'
 #' @export
 normalize_full_credit <- function(evals, full_credit, rubric_items){
+  if (is.numeric(rubric_items)){
+    if (max(rubric_items) > ncol(evals)){
+      stop("Rubric items not found")
+    }
+  } else{
+    if (any(!(rubric_items %in% colnames(evals)))){
+      stop("Rubric items not found")
+    }
+  }
   full_credit_row <- evals[[full_credit]]
   evals[full_credit_row, rubric_items] <- TRUE
   return (evals)

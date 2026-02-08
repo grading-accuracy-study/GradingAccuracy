@@ -217,10 +217,110 @@ test_that("rubric_mae -  missing rubric items", {
                                                           nrow = 2)))
 })
 
-# test_that("normalize_full_credit - correctly formatted inputs", {
-#
-# })
-#
-# test_that("normalize_full_credit - missing rubric items", {
-#
-# })
+test_that("normalize_full_credit - reformat all, indices", {
+  eval_before <- data.frame(
+    SID = c(1111, 3333, 2222, 4444, 5555),
+    `Full_Credit` = c(T, T, T, T, T),
+    R2 = c(F, F, F, F, F),
+    R3 = c(F, F, F, F, F)
+  )
+
+  eval_after <- data.frame(
+    SID = c(1111, 3333, 2222, 4444, 5555),
+    `Full_Credit` = c(T, T, T, T, T),
+    R2 = c(T, T, T, T, T),
+    R3 = c(T, T, T, T, T)
+  )
+
+  actual_after <- normalize_full_credit(evals = eval_before, full_credit = 2,
+                                        rubric_items = c(3, 4))
+
+  expect_equal(eval_after, actual_after)
+})
+
+test_that("normalize_full_credit - reformat all, row names", {
+  eval_before <- data.frame(
+    SID = c(1111, 3333, 2222, 4444, 5555),
+    `Full_Credit` = c(T, T, T, T, T),
+    R2 = c(F, F, F, F, F),
+    R3 = c(F, F, F, F, F)
+  )
+
+  eval_after <- data.frame(
+    SID = c(1111, 3333, 2222, 4444, 5555),
+    `Full_Credit` = c(T, T, T, T, T),
+    R2 = c(T, T, T, T, T),
+    R3 = c(T, T, T, T, T)
+  )
+
+  actual_after <- normalize_full_credit(evals = eval_before, full_credit = "Full_Credit",
+                                        rubric_items = c("R2", "R3"))
+
+  expect_equal(eval_after, actual_after)
+})
+
+test_that("normalize_full_credit - reformat few, indices", {
+  eval_before <- data.frame(
+    SID = c(1111, 3333, 2222, 4444, 5555),
+    `Full_Credit` = c(T, F, F, T, T),
+    R2 = c(F, T, F, F, F),
+    R3 = c(F, F, F, F, F)
+  )
+
+  eval_after <- data.frame(
+    SID = c(1111, 3333, 2222, 4444, 5555),
+    `Full_Credit` = c(T, F, F, T, T),
+    R2 = c(T, T, F, T, T),
+    R3 = c(T, F, F, T, T)
+  )
+
+  actual_after <- normalize_full_credit(evals = eval_before, full_credit = 2,
+                                        rubric_items = c(3, 4))
+
+  expect_equal(eval_after, actual_after)
+})
+
+test_that("normalize_full_credit - reformat few, row names", {
+  eval_before <- data.frame(
+    SID = c(1111, 3333, 2222, 4444, 5555),
+    `Full_Credit` = c(T, F, F, T, T),
+    R2 = c(F, T, F, F, F),
+    R3 = c(F, F, F, F, F)
+  )
+
+  eval_after <- data.frame(
+    SID = c(1111, 3333, 2222, 4444, 5555),
+    `Full_Credit` = c(T, F, F, T, T),
+    R2 = c(T, T, F, T, T),
+    R3 = c(T, F, F, T, T)
+  )
+
+  actual_after <- normalize_full_credit(evals = eval_before, full_credit = "Full_Credit",
+                                        rubric_items = c("R2", "R3"))
+
+  expect_equal(eval_after, actual_after)
+})
+
+test_that("normalize_full_credit - missing rubric items, row names", {
+  eval_before <- data.frame(
+    SID = c(1111, 3333, 2222, 4444, 5555),
+    `Full_Credit` = c(T, F, F, T, T),
+    R2 = c(F, T, F, F, F),
+    R3 = c(F, F, F, F, F)
+  )
+
+  expect_error(normalize_full_credit(evals = eval_before, full_credit = "Full_Credit",
+                                        rubric_items = c("R2", "R4")))
+})
+
+test_that("normalize_full_credit - missing rubric items, indices", {
+  eval_before <- data.frame(
+    SID = c(1111, 3333, 2222, 4444, 5555),
+    `Full_Credit` = c(T, F, F, T, T),
+    R2 = c(F, T, F, F, F),
+    R3 = c(F, F, F, F, F)
+  )
+
+  expect_error(normalize_full_credit(evals = eval_before, full_credit = "Full_Credit",
+                                     rubric_items = c(3, 6)))
+})
