@@ -5,6 +5,7 @@
 #'
 #' @param eval1 first dataframe of Gradescope evaluations
 #' @param eval2 second dataframe of Gradescope evaluations
+#' @param rubric_matching_list this is only to check if the comparison is valid
 #'
 #' @return a single proportion
 #'
@@ -12,12 +13,17 @@
 #' @importFrom tidyr drop_na
 #'
 #' @export
-identical_score_prop <- function(eval1, eval2){
+isp <- function(eval1, eval2, rubric_matching_list){
+  if (length(rubric_matching_list) == 1 && rubric_matching_list == "None"){
+    return (NA)
+  }
   eval1 <- eval1 |>
     rename(Score1 = Score) |>
+    mutate(SID = as.character(SID)) |>
     select(SID, Score1)
   eval2 <- eval2 |>
     rename(Score2 = Score) |>
+    mutate(SID = as.character(SID)) |>
     select(SID, Score2)
   inner_join(eval1, eval2, by = "SID") |>
     drop_na() |>
@@ -44,14 +50,21 @@ identical_score_prop <- function(eval1, eval2){
 #' @return double for mean absolute error
 #'
 #' @export
-rubric_mean_absolute_error <- function(eval1, eval2,
-                                       rubric_matching_list = NULL){
+rubric_mae <- function(eval1, eval2, rubric_matching_list = NULL){
+  if (length(rubric_matching_list) == 1 && rubric_matching_list == "None"){
+    return (NA)
+  }
   if (is.null(rubric_matching_list)){
     rubric_items <- grep("^R[0-9]+$", names(eval1), value = TRUE)
 
     rubric_matching_list <- list(
       rubric_items,
       rubric_items
+    )
+  } else{
+    rubric_matching_list <- list(
+      rubric_matching_list[1, ],
+      rubric_matching_list[2, ]
     )
   }
   # convert rubric items of eval 1 into matrix
