@@ -14,7 +14,7 @@ rubric_mean_absolute_error(eval1, eval2, rubric_matching_list)
 \item{rubric_matching_list}{vector of rubric items that sum up to full credit}
 }
 \value{
-normalized evals dataframe
+double for mean absolute error
 }
 \description{
 If we had a rubric with two items, both worth one point, the error contribution of one submission would be:\cr

@@ -8,7 +8,7 @@
 #'
 #' @return a single proportion
 #'
-#' @importFrom dplyr mutate rename summarize inner_join select n
+#' @importFrom dplyr mutate rename summarize inner_join select n pull
 #' @importFrom tidyr drop_na
 #'
 #' @export
@@ -22,12 +22,9 @@ identical_score_prop <- function(eval1, eval2){
   inner_join(eval1, eval2, by = "SID") |>
     drop_na() |>
     summarize(
-      Proportion = mean(Score1 == Score2),
-      Count = n(),
-      `Avg of Score1` = mean(Score1),
-      `Avg of Score2` = mean(Score2),
-      `Avg Abs Diff` = mean(abs(Score1 - Score2))
-    )
+      Proportion = mean(Score1 == Score2)
+    ) |>
+    pull()
 }
 
 #' Mean Absolute Error of Rubric Items
@@ -44,7 +41,7 @@ identical_score_prop <- function(eval1, eval2){
 #' @param eval2 second dataframe of Gradescope evaluations
 #' @param rubric_matching_list vector of rubric items that sum up to full credit
 #'
-#' @return normalized evals dataframe
+#' @return double for mean absolute error
 #'
 #' @export
 rubric_mean_absolute_error <- function(eval1, eval2, rubric_matching_list){
@@ -65,15 +62,7 @@ rubric_mean_absolute_error <- function(eval1, eval2, rubric_matching_list){
   check_equal <- rubric1 != rubric2
   # mean absolute error calculation
   error_per_student <- rowSums(check_equal)
-  MAE <- mean(error_per_student)
-  # MAE per rubric item
-  error_per_rubric <- colMeans(check_equal)
-  n_rubric <- length(error_per_rubric)
-  errors <- as.data.frame(t(c(MAE, error_per_rubric)))
-  colnames(errors) <- c("Mean Absolute Error",
-                        paste0("% Error with Rubric Item #",
-                               1:n_rubric))
-  return (errors)
+  mean(error_per_student)
 }
 
 #' Normalize Full Credit
