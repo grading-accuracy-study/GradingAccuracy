@@ -4,14 +4,14 @@
 \alias{rubric_mean_absolute_error}
 \title{Mean Absolute Error of Rubric Items}
 \usage{
-rubric_mean_absolute_error(eval1, eval2, rubric_matching_list)
+rubric_mean_absolute_error(eval1, eval2, rubric_matching_list = NULL)
 }
 \arguments{
 \item{eval1}{first dataframe of Gradescope evaluations}
 
 \item{eval2}{second dataframe of Gradescope evaluations}
 
-\item{rubric_matching_list}{vector of rubric items that sum up to full credit}
+\item{rubric_matching_list}{vector of rubric items to compare, if NULL, assume the same rubric}
 }
 \value{
 double for mean absolute error

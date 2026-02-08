@@ -39,12 +39,21 @@ identical_score_prop <- function(eval1, eval2){
 #'
 #' @param eval1 first dataframe of Gradescope evaluations
 #' @param eval2 second dataframe of Gradescope evaluations
-#' @param rubric_matching_list vector of rubric items that sum up to full credit
+#' @param rubric_matching_list vector of rubric items to compare, if NULL, assume the same rubric
 #'
 #' @return double for mean absolute error
 #'
 #' @export
-rubric_mean_absolute_error <- function(eval1, eval2, rubric_matching_list){
+rubric_mean_absolute_error <- function(eval1, eval2,
+                                       rubric_matching_list = NULL){
+  if (is.null(rubric_matching_list)){
+    rubric_items <- grep("^R[0-9]+$", names(eval1), value = TRUE)
+
+    rubric_matching_list <- list(
+      rubric_items,
+      rubric_items
+    )
+  }
   # convert rubric items of eval 1 into matrix
   rubric1 <- eval1[, c(rubric_matching_list[[1]])] |>
     as.matrix()

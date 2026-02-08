@@ -22,7 +22,6 @@
 #' @importFrom jsonlite toJSON write_json
 #'
 #' @export
-
 create_metadata_json <- function(dir = "", department, course_number, course_name,
                                  upper_div, year, semester, assignment_name,
                                  question_number, question_name = "", mode_of_question,
