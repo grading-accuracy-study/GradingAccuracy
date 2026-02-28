@@ -2,3 +2,21 @@ url: https://grading-accuracy-study.github.io/GradingAccuracy/
 template:
   bootstrap: 5
 
+reference:
+- title: Data Cleaning and Preparation
+  desc: >
+    These functions are for preparing the original exports for accuracy computations, by deidentifying identifiable information and making any adjustments to rubric items.
+  contents:
+  - read_evals
+  - validate_metadata_json
+  - deidentify_graders
+  - deidentify_gradescope_evals
+  - generate_rubric_texts
+  - normalize_full_credit
+
+- title: Accuracy Functions
+  desc: >
+    These functions are for computing the accuracy rates between different graders.
+  contents:
+  - isp
+  - rubric_mae

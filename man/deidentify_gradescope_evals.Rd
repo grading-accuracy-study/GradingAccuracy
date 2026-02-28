@@ -2,7 +2,7 @@
 % Please edit documentation in R/deidentify-grades.R
 \name{deidentify_gradescope_evals}
 \alias{deidentify_gradescope_evals}
-\title{Deidentify Gradescope}
+\title{Deidentify Gradescope Evaluations}
 \usage{
 deidentify_gradescope_evals(
   gs_csv_path,
