@@ -1,4 +1,4 @@
-# Deidentify Gradescope
+# Deidentify Gradescope Evaluations
 
 This function de-identifies the exported Gradescope csv by swapping all
 columns with identifiable data with the de-identified IDs in an existing

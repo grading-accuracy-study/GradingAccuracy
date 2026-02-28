@@ -62,26 +62,36 @@ contribution of one submission would be
 
 # Package index
 
-## All functions
+## Data Cleaning and Preparation
 
+These functions are for preparing the original exports for accuracy
+computations, by deidentifying identifiable information and making any
+adjustments to rubric items.
+
+- [`read_evals()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/read_evals.md)
+  : Read Gradescope Evaluations CSV
+- [`validate_metadata_json()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/validate_metadata_json.md)
+  : Validate Metadata JSON
 - [`deidentify_graders()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/deidentify_graders.md)
   : Deidentify Graders
 - [`deidentify_gradescope_evals()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/deidentify_gradescope_evals.md)
-  : Deidentify Gradescope
-- [`generate_results_table()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/generate_results_table.md)
-  : Generate Results Table
+  : Deidentify Gradescope Evaluations
 - [`generate_rubric_texts()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/generate_rubric_texts.md)
   : Generate Rubric Texts
-- [`isp()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/isp.md)
-  : Calculate Proportion of Identical Scores
 - [`normalize_full_credit()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/normalize_full_credit.md)
   : Normalize Full Credit
-- [`read_evals()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/read_evals.md)
-  : Read Gradescope Evaluations CSV
+
+## Accuracy Functions
+
+These functions are for computing the accuracy rates between different
+graders.
+
+- [`isp()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/isp.md)
+  : Calculate Proportion of Identical Scores
 - [`rubric_mae()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/rubric_mae.md)
   : Mean Absolute Error of Rubric Items
-- [`validate_metadata_json()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/validate_metadata_json.md)
-  : Validate Metadata JSON
+- [`generate_results_table()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/generate_results_table.md)
+  : Generate Results Table
 
 # Articles
 
