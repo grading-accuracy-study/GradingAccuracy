@@ -99,18 +99,16 @@ generate_results_row <- function(dir) {
 
   # Build single-row dataframe
   results_row <- tibble::tibble(
-    Folder = basename(dir),
+    `Question Name` = basename(dir),
     `Subject` = course_info$department,
     #`Course` = paste(course_info$department, course_info$course_number),
     #`Course Name` = course_info$course_name,
     `Course Level` = ifelse(course_info$upper_div,
-                            "Upper Division", "Lower Division"),
+                            "Upper Division", "Lower Division")
     #`Year` = paste(course_info$semester, course_info$year),
-    `Question Name` = course_info$question_name,
     #`Mode of Question` = course_info$mode_of_question,
     #`Medium of Answer` = course_info$medium_of_answer,
     #`Content of Answer` = course_info$content_of_answer,
-    stringsAsFactors = FALSE
   )
 
   for (nm in names(mae_vals)) {
