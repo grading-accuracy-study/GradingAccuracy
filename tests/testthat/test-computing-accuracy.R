@@ -1,9 +1,3 @@
-test_that("isp - if no valid comparison", {
-  actual_isp <- isp(eval1 = data.frame(), eval2 = data.frame(),
-      rubric_matching_list = "None")
-  expect_true(is.na(actual_isp))
-})
-
 test_that("isp - SIDs same order", {
   eval1 <- data.frame(
     SID = c(1111, 2222, 3333, 4444, 5555),
@@ -13,7 +7,7 @@ test_that("isp - SIDs same order", {
     SID = c(1111, 2222, 3333, 4444, 5555),
     Score = c(0.9, 0.7, 0.25, 0.5, 0.45)
   )
-  actual_isp <- isp(eval1, eval2, list())
+  actual_isp <- isp(eval1, eval2)
 
   expect_equal(actual_isp, 0.6)
 })
@@ -27,7 +21,7 @@ test_that("isp - perfect match", {
     SID = c(1111, 2222, 3333, 4444, 5555),
     Score = c(0.95, 0.75, 0.25, 0.5, 0.45)
   )
-  actual_isp <- isp(eval1, eval2, list())
+  actual_isp <- isp(eval1, eval2)
 
   expect_equal(actual_isp, 1)
 })
@@ -41,7 +35,7 @@ test_that("isp - SIDs in different order", {
     SID = c(1111, 2222, 3333, 4444, 5555),
     Score = c(0.9, 0.7, 0.25, 0.5, 0.45)
   )
-  actual_isp <- isp(eval1, eval2, list())
+  actual_isp <- isp(eval1, eval2)
 
   expect_equal(actual_isp, 0.6)
 })
@@ -55,7 +49,7 @@ test_that("isp - extra studeent", {
     SID = c(1111, 2222, 3333, 4444, 5555),
     Score = c(0.9, 0.7, 0.25, 0.5, 0.45)
   )
-  actual_isp <- isp(eval1, eval2, list())
+  actual_isp <- isp(eval1, eval2)
 
   expect_equal(actual_isp, 0.6)
 })
@@ -68,7 +62,7 @@ test_that("isp - missing SID", {
     SID = c(1111, 2222, 3333, 4444, 5555),
     Score = c(0.9, 0.7, 0.25, 0.5, 0.45)
   )
-  expect_error(isp(eval1, eval2, list()))
+  expect_error(isp(eval1, eval2))
 })
 
 test_that("isp - missing Score", {
@@ -79,16 +73,10 @@ test_that("isp - missing Score", {
     SID = c(1111, 2222, 3333, 4444, 5555),
     Score = c(0.9, 0.7, 0.25, 0.5, 0.45)
   )
-  expect_error(isp(eval1, eval2, list()))
+  expect_error(isp(eval1, eval2))
 })
 
-test_that("rubric_mae - if no valid comparison", {
-  actual_mae <- rubric_mae(eval1 = data.frame(), eval2 = data.frame(),
-                    rubric_matching_list = "None")
-  expect_true(is.na(actual_mae))
-})
-
-test_that("rubric_mae - no provided rubric matching, same SID order", {
+test_that("rubric_mae - same SID order", {
   eval1 <- data.frame(
     SID = c(1111, 2222, 3333, 4444, 5555),
     R1 = c(T, T, T, F, F),
@@ -100,13 +88,12 @@ test_that("rubric_mae - no provided rubric matching, same SID order", {
     R2 = c(T, T, T, T, T)
   )
 
-  actual_mae <- rubric_mae(eval1 = eval1, eval2 = eval2,
-                           rubric_matching_list = NULL)
+  actual_mae <- rubric_mae(eval1 = eval1, eval2 = eval2)
 
   expect_equal(actual_mae, 0.6)
 })
 
-test_that("rubric_mae - no provided rubric matching, different SID order", {
+test_that("rubric_mae - different SID order", {
   eval1 <- data.frame(
     SID = c(1111, 2222, 3333, 4444, 5555),
     R1 = c(T, T, T, F, F),
@@ -118,13 +105,12 @@ test_that("rubric_mae - no provided rubric matching, different SID order", {
     R2 = c(T, T, T, T, T)
   )
 
-  actual_mae <- rubric_mae(eval1 = eval1, eval2 = eval2,
-                           rubric_matching_list = NULL)
+  actual_mae <- rubric_mae(eval1 = eval1, eval2 = eval2)
 
   expect_equal(actual_mae, 0.6)
 })
 
-test_that("rubric_mae - no provided rubric matching, different SID order, extra student", {
+test_that("rubric_mae - different SID order, extra student", {
   eval1 <- data.frame(
     SID = c(1111, 2222, 3333, 4444, 5555, 6666),
     R1 = c(T, T, T, F, F, T),
@@ -136,14 +122,12 @@ test_that("rubric_mae - no provided rubric matching, different SID order, extra 
     R2 = c(T, T, T, T, T)
   )
 
-  actual_mae <- rubric_mae(eval1 = eval1, eval2 = eval2,
-                           rubric_matching_list = NULL)
+  actual_mae <- rubric_mae(eval1 = eval1, eval2 = eval2)
 
   expect_equal(actual_mae, 0.6)
 })
 
-
-test_that("rubric_mae - provided rubric matching with indices", {
+test_that("rubric_mae - mismatched rubrics", {
   eval1 <- data.frame(
     SID = c(1111, 2222, 3333, 4444, 5555),
     R1 = c(F, F, T, T, F),
@@ -156,32 +140,23 @@ test_that("rubric_mae - provided rubric matching with indices", {
     R2 = c(T, T, T, T, T)
   )
 
-  actual_mae <- rubric_mae(eval1 = eval1, eval2 = eval2,
-                           rubric_matching_list = matrix(c(3,2,4,3),
-                                                         nrow = 2))
-
-  expect_equal(actual_mae, 0.6)
+  expect_error(rubric_mae(eval1 = eval1, eval2 = eval2))
 })
 
-
-test_that("rubric_mae - provided rubric matching with rubric names", {
+test_that("rubric_mae - mismatched rubrics, another example", {
   eval1 <- data.frame(
     SID = c(1111, 2222, 3333, 4444, 5555),
     R1 = c(F, F, T, T, F),
-    R2 = c(T, T, T, F, F),
-    R3 = c(T, F, T, F, T)
+    R2 = c(T, T, T, F, F)
   )
   eval2 <- data.frame(
     SID = c(1111, 3333, 2222, 4444, 5555),
     R1 = c(T, F, T, F, F),
-    R2 = c(T, T, T, T, T)
+    R2 = c(T, T, T, T, T),
+    R3 = c(T, F, T, F, T)
   )
 
-  actual_mae <- rubric_mae(eval1 = eval1, eval2 = eval2,
-                           rubric_matching_list = matrix(c("R2","R1","R3","R2"),
-                                                         nrow = 2))
-
-  expect_equal(actual_mae, 0.6)
+  expect_error(rubric_mae(eval1 = eval1, eval2 = eval2))
 })
 
 test_that("rubric_mae - missing SID", {
@@ -199,23 +174,6 @@ test_that("rubric_mae - missing SID", {
                           rubric_matching_list = NULL))
 })
 
-test_that("rubric_mae -  missing rubric items", {
-  eval1 <- data.frame(
-    SID = c(1111, 2222, 3333, 4444, 5555),
-    R1 = c(F, F, T, T, F),
-    R2 = c(T, T, T, F, F),
-    R3 = c(T, F, T, F, T)
-  )
-  eval2 <- data.frame(
-    SID = c(1111, 3333, 2222, 4444, 5555),
-    R1 = c(T, F, T, F, F),
-    R2 = c(T, T, T, T, T)
-  )
-
-  expect_error(rubric_mae(eval1 = eval1, eval2 = eval2,
-                            rubric_matching_list = matrix(c("R2","R1","R3","R4"),
-                                                          nrow = 2)))
-})
 
 test_that("normalize_full_credit - reformat all, indices", {
   eval_before <- data.frame(

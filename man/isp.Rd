@@ -4,14 +4,12 @@
 \alias{isp}
 \title{Calculate Proportion of Identical Scores}
 \usage{
-isp(eval1, eval2, rubric_matching_list)
+isp(eval1, eval2)
 }
 \arguments{
 \item{eval1}{first dataframe of Gradescope evaluations}
 
 \item{eval2}{second dataframe of Gradescope evaluations}
-
-\item{rubric_matching_list}{this is only to check if the comparison is valid}
 }
 \value{
 a single proportion

@@ -1,3 +1,25 @@
+#' Calculate MAE and ISP
+#'
+#' This function calculates the proportion of identical scores
+#' and mean absolute error of rubric items
+#' between two Gradescope evaluation csv
+#'
+#' @param file1 file path for first grades csv
+#' @param file2 file path for second grades csv
+#'
+#' @return a list
+#'
+#' @importFrom readr read_csv
+#'
+#' @export
+compute_mae_and_isp <- function(file1, file2){
+  eval1 <- readr::read_csv(file1, show_col_types = FALSE)
+  eval2 <- readr::read_csv(file2, show_col_types = FALSE)
+  list(MAE = rubric_mae(eval1, eval2),
+       ISP = isp(eval1, eval2))
+}
+
+
 #' Calculate Proportion of Identical Scores
 #'
 #' This function calculates the proportion of identical scores
@@ -5,7 +27,6 @@
 #'
 #' @param eval1 first dataframe of Gradescope evaluations
 #' @param eval2 second dataframe of Gradescope evaluations
-#' @param rubric_matching_list this is only to check if the comparison is valid
 #'
 #' @return a single proportion
 #'
@@ -13,11 +34,7 @@
 #' @importFrom tidyr drop_na
 #'
 #' @export
-isp <- function(eval1, eval2, rubric_matching_list){
-  if (length(rubric_matching_list) == 1 && rubric_matching_list == "None"){
-    return (NA)
-  }
-
+isp <- function(eval1, eval2){
   if (!("SID" %in% colnames(eval1)) || !("SID" %in% colnames(eval2))){
     stop("Missing SID")
   }
@@ -54,33 +71,25 @@ isp <- function(eval1, eval2, rubric_matching_list){
 #'
 #' @param eval1 first dataframe of Gradescope evaluations
 #' @param eval2 second dataframe of Gradescope evaluations
-#' @param rubric_matching_list vector of rubric items to compare, if NULL, assume the same rubric
 #'
 #' @return double for mean absolute error
 #'
 #' @export
-rubric_mae <- function(eval1, eval2, rubric_matching_list = NULL){
-  if (length(rubric_matching_list) == 1 && rubric_matching_list == "None"){
-    return (NA)
-  }
-
+rubric_mae <- function(eval1, eval2){
   if (!("SID" %in% colnames(eval1)) || !("SID" %in% colnames(eval2))){
     stop("Missing SID")
   }
+  rubric_items1 <- grep("^R[0-9]+$", names(eval1), value = TRUE)
+  rubric_items2 <- grep("^R[0-9]+$", names(eval2), value = TRUE)
 
-  if (is.null(rubric_matching_list)){
-    rubric_items <- grep("^R[0-9]+$", names(eval1), value = TRUE)
 
-    rubric_matching_list <- list(
-      rubric_items,
-      rubric_items
-    )
-  } else{
-    rubric_matching_list <- list(
-      rubric_matching_list[1, ],
-      rubric_matching_list[2, ]
-    )
+  if (!identical(rubric_items1, rubric_items2)){
+    stop("Mismatched rubrics")
   }
+
+  rubric_matching_list <- list(
+    rubric_items1,
+    rubric_items2)
   # convert rubric items of eval 1 into matrix
   rubric1 <- eval1[, c(rubric_matching_list[[1]])] |>
     as.matrix()
