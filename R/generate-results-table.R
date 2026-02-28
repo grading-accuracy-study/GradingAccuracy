@@ -6,6 +6,7 @@
 #' @param dir optionally, specify directory
 #'
 #' @returns a dataframe
+#' @importFrom plyr rbind.fill
 #'
 #' @export
 generate_results_table <- function(dir = "."){
@@ -15,7 +16,7 @@ generate_results_table <- function(dir = "."){
   results_table <- data.frame()
   for (course in courses){
     row <- generate_results_row(dir = paste0(dir, course,"/"))
-    results_table <- rbind(results_table, row)
+    results_table <- plyr::rbind.fill(results_table, row)
   }
 
   return (results_table)
