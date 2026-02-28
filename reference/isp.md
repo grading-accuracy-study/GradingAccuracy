@@ -6,7 +6,7 @@ Gradescope evaluation dataframes
 ## Usage
 
 ``` r
-isp(eval1, eval2, rubric_matching_list)
+isp(eval1, eval2)
 ```
 
 ## Arguments
@@ -18,10 +18,6 @@ isp(eval1, eval2, rubric_matching_list)
 - eval2:
 
   second dataframe of Gradescope evaluations
-
-- rubric_matching_list:
-
-  this is only to check if the comparison is valid
 
 ## Value
 

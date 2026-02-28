@@ -24,9 +24,13 @@ adjustments to rubric items.
 These functions are for computing the accuracy rates between different
 graders.
 
+- [`generate_results_table()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/generate_results_table.md)
+  : Generate Results Table
+- [`generate_gt_results_table()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/generate_gt_results_table.md)
+  : Generate Results Table in GT Format
+- [`compute_mae_and_isp()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/compute_mae_and_isp.md)
+  : Calculate MAE and ISP
 - [`isp()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/isp.md)
   : Calculate Proportion of Identical Scores
 - [`rubric_mae()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/rubric_mae.md)
   : Mean Absolute Error of Rubric Items
-- [`generate_results_table()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/generate_results_table.md)
-  : Generate Results Table

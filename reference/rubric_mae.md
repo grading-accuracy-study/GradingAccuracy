@@ -13,7 +13,7 @@ for `eval1` and `eval2` prior to using this function.
 ## Usage
 
 ``` r
-rubric_mae(eval1, eval2, rubric_matching_list = NULL)
+rubric_mae(eval1, eval2)
 ```
 
 ## Arguments
@@ -25,10 +25,6 @@ rubric_mae(eval1, eval2, rubric_matching_list = NULL)
 - eval2:
 
   second dataframe of Gradescope evaluations
-
-- rubric_matching_list:
-
-  vector of rubric items to compare, if NULL, assume the same rubric
 
 ## Value
 
