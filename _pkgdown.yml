@@ -18,6 +18,8 @@ reference:
   desc: >
     These functions are for computing the accuracy rates between different graders.
   contents:
+  - generate_results_table
+  - generate_gt_results_table
+  - compute_mae_and_isp
   - isp
   - rubric_mae
-  - generate_results_table
