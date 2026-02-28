@@ -1,0 +1,23 @@
+---
+title: "Creating a metadata.JSON"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{validating-metadata-json}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(GradingAccuracy)
+```
+
+# Creating a metadata.json
+
+# Validating a metadata.json
