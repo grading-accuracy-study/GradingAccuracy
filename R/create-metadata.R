@@ -1,52 +1,59 @@
-#' Create Metadata JSON
+#' Validate Metadata JSON
 #'
-#' This function creates a JSON file that stores metadata
+#' This function validates a JSON file that stores metadata
 #' about the assignment and its course. The contents of the saved JSON
-#' file is also printed out.
+#' file can be printed out.
 #'
-#' @param dir directory where metadata.json should be saved
-#' @param department department abbreviation (e.g. "STAT", "DATA")
-#' @param course_number course number
-#' @param course_name name of course (e.g. "Introduction to Probability")
-#' @param upper_div if the course is upper-division or lower-division
-#' @param year year of the course
-#' @param semester semester of the course (e.g. "Spring", "Fall")
-#' @param assignment_name name of assignment (e.g. "Midterm 1")
-#' @param question_number number of question, including subparts (e.g. "5c")
-#' @param question_name optionally name of question (e.g. "Data Visualization")
-#' @param mode_of_question mode of question (e.g. "fill in the blank", "open-ended")
-#' @param medium_of_answer medium of student's answer (e.g. "handwritten", "typed")
-#' @param content_of_answer expected content of student's answer (e.g. "English", "math", "code")
-#' @param rubric_items list for matching rubric items, if graded on different rubrics
+#' @param file file path where metadata.json should be saved
+#' @param verbose if course information should be printed out
 #'
 #'
-#' @importFrom jsonlite toJSON write_json
+#' @importFrom jsonlite read_json
+#' @importFrom cli cli_abort cli_h1 cli_alert_success cli_text cli_h3 cli_ul cli_li
 #'
 #' @export
-create_metadata_json <- function(dir = "", department, course_number, course_name,
-                                 upper_div, year, semester, assignment_name,
-                                 question_number, question_name = "", mode_of_question,
-                                 medium_of_answer, content_of_answer,
-                                 rubric_items = list()){
-  course_metadata <- list(
-    course_info = list(
-    department = department,
-    course_number = course_number,
-    course_name = course_name,
-    upper_div = upper_div,
-    year = year,
-    semester = semester,
-    assignment_name = assignment_name,
-    question_number = question_number,
-    question_name = question_name,
-    mode_of_question = mode_of_question,
-    medium_of_answer = medium_of_answer,
-    content_of_answer = content_of_answer),
-    rubric_items = rubric_items)
+validate_metadata_json <- function(file = "./metadata.json", verbose = T){
+  # load in metadata.json
+  metadata <- jsonlite::read_json(file)
+  if (!("course_info" %in% names(metadata))){
+    cli::cli_abort("The course_info argument is missing from the following file: {.file {file}}")
+  }
+  course_info <- metadata$course_info
+  # check for all necessary arguments
+  args <- c("department", "course_number", "course_name", "upper_div",
+            "year", "semester", "assignment_name", "question_number",
+            "question_name", "mode_of_question", "medium_of_answer",
+            "content_of_answer")
+  args_bool <- args %in% names(course_info)
+  if (length(args) != sum(args_bool)){
+    cli::cli_abort("The following arguments are missing from course_info: {.val {args[!args_bool]}}")
+  }
+  # check data types
+  if (!is.logical(course_info$upper_div)){
+    cli::cli_abort("{.val upper_div} should be a boolean.")
+  }
 
-  jsonlite::write_json(course_metadata, paste0(dir, "metadata.json"),
-                       pretty = TRUE, auto_unbox = TRUE)
+  # Course Info Print Out
+  alert <- function(){
+    full_course <- paste(course_info$department, course_info$course_number,
+                         "-", course_info$course_name)
+    # course-level information
+    cli::cli_h1(full_course)
+    upper_div <- ifelse(course_info$upper_div, "An upper-division course from",
+                        "A lower-division course from")
+    cli::cli_text("{upper_div} {course_info$semester} {course_info$year}")
+    # assignment-level information
+    cli::cli_h3(course_info$question_name)
+    cli::cli_text("Question {course_info$question_number} from {course_info$assignment_name}")
+    cli::cli_ul()
+    cli::cli_li("Mode of Question: {course_info$mode_of_question}")
+    cli::cli_li("Medium of Answer: {course_info$medium_of_answer}")
+    cli::cli_li("Content of Answer: {course_info$content_of_answer}")
+  }
 
-  jsonlite::toJSON(course_metadata, pretty = TRUE, auto_unbox = TRUE)
+  cli::cli_alert_success("The following file is successfully validated: {.file {file}}")
 
+  if (verbose){
+    alert()
+  }
 }
