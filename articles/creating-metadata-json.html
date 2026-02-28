@@ -66,12 +66,172 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://grading-accuracy-study.github.io/GradingAccuracy/">GradingAccuracy</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
-<h2 id="creating-a-metadata-json">Creating a metadata.json<a class="anchor" aria-label="anchor" href="#creating-a-metadata-json"></a>
+<h2 id="requirements-for-metadata-json">Requirements for metadata.json<a class="anchor" aria-label="anchor" href="#requirements-for-metadata-json"></a>
 </h2>
+<p>A <code>metadata.json</code> file can be used to keep track of
+information on the course-, assignment- and question-level. While
+additional arguments may be added to keep track of other miscellaneous
+information, this package requires that the <code>metadata.json</code>
+has a <code>course_info</code> object with the following keys (and their
+corresponding values):</p>
+<ul>
+<li>
+<code>department</code> : department abbreviation (e.g. “STAT”,
+“DATA”)</li>
+<li>
+<code>course_number</code> : course number</li>
+<li>
+<code>course_name</code> : name of course (e.g. “Introduction to
+Probability”)</li>
+<li>
+<code>upper_div</code> : if the course is upper-division or
+lower-division</li>
+<li>
+<code>year</code> : year of the course</li>
+<li>
+<code>semester</code> : semester of the course (e.g. “Spring”,
+“Fall”)</li>
+<li>
+<code>assignment_name</code> : name of assignment (e.g. “Midterm
+1”)</li>
+<li>
+<code>question_number</code> : number of question, including
+subparts (e.g. “5c”)</li>
+<li>
+<code>question_name</code> : name of question (e.g. “Data
+Visualization”)</li>
+<li>mode_of_question : mode of question (e.g. “fill in the blank”,
+“open-ended”)</li>
+<li>
+<code>medium_of_answer</code> : medium of student’s answer
+(e.g. “handwritten”, “typed”)</li>
+<li>
+<code>content_of_answer</code> : expected content of student’s
+answer (e.g. “English”, “math”, “code”)</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="at">  </span><span class="fu">"course_info"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="at">    </span><span class="fu">"department"</span><span class="kw">:</span><span class="at"> </span><span class="st">"STAT"</span><span class="kw">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_number"</span><span class="kw">:</span><span class="at"> </span><span class="st">"001"</span><span class="kw">,</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Introduction to Statistics"</span><span class="kw">,</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="at">    </span><span class="fu">"upper_div"</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span><span class="kw">,</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="at">    </span><span class="fu">"year"</span><span class="kw">:</span><span class="at"> </span><span class="dv">2020</span><span class="kw">,</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="at">    </span><span class="fu">"semester"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fall"</span><span class="kw">,</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="at">    </span><span class="fu">"assignment_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Midterm Exam"</span><span class="kw">,</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="at">    </span><span class="fu">"question_number"</span><span class="kw">:</span><span class="at"> </span><span class="st">"12a"</span><span class="kw">,</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="at">    </span><span class="fu">"question_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Calculate Expected Value"</span><span class="kw">,</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="at">    </span><span class="fu">"mode_of_question"</span><span class="kw">:</span><span class="at"> </span><span class="st">"open-ended"</span><span class="kw">,</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="at">    </span><span class="fu">"medium_of_answer"</span><span class="kw">:</span><span class="at"> </span><span class="st">"handwritten"</span><span class="kw">,</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="at">    </span><span class="fu">"content_of_answer"</span><span class="kw">:</span><span class="at"> </span><span class="st">"math"</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="validating-a-metadata-json">Validating a metadata.json<a class="anchor" aria-label="anchor" href="#validating-a-metadata-json"></a>
 </h2>
+<p>The <code><a href="../reference/validate_metadata_json.html">validate_metadata_json()</a></code> function can be used to
+validate that all required arguments and keys are present and correctly
+formatted.</p>
+<div class="section level3">
+<h3 id="correct-metadata-json-file">Correct metadata.json file<a class="anchor" aria-label="anchor" href="#correct-metadata-json-file"></a>
+</h3>
+<p>If you have a correct <code>metadata.json</code> file, like the
+example file above, you will receive the following message:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/validate_metadata_json.html">validate_metadata_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"metadata.json"</span>, package <span class="op">=</span> <span class="st">"GradingAccuracy"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> The following file is successfully validated: <span style="color: #0000BB;">/home/runner/work/_temp/Library/GradingAccuracy/extdata/metadata.json</span></span></span></code></pre></div>
+<p>Optionally, you can also use the <code>verbose</code> argument in
+order to print out the listed course and assignment information stored
+in this JSON file:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/validate_metadata_json.html">validate_metadata_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"metadata.json"</span>, package <span class="op">=</span> <span class="st">"GradingAccuracy"</span><span class="op">)</span>, verbose <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> The following file is successfully validated: <span style="color: #0000BB;">/home/runner/work/_temp/Library/GradingAccuracy/extdata/metadata.json</span></span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">STAT 001 - Introduction to Statistics</span> <span style="color: #00BBBB;">───────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt; A lower-division course from Fall 2020</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Calculate Expected Value</span></span>
+<span><span class="co">#&gt; Question 12a from Midterm Exam</span></span>
+<span><span class="co">#&gt; • Mode of Question: open-ended</span></span>
+<span><span class="co">#&gt; • Medium of Answer: handwritten</span></span>
+<span><span class="co">#&gt; • Content of Answer: math</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="potential-errors">Potential Errors<a class="anchor" aria-label="anchor" href="#potential-errors"></a>
+</h3>
+<div class="section level4">
+<h4 id="missing-course_info">Missing <code>course_info</code><a class="anchor" aria-label="anchor" href="#missing-course_info"></a>
+</h4>
+<p>For example, if you are missing the <code>course_info</code>
+argument, like in the JSON file below:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="at">  </span><span class="fu">"course"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="at">    </span><span class="fu">"department"</span><span class="kw">:</span><span class="at"> </span><span class="st">"STAT"</span><span class="kw">,</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_number"</span><span class="kw">:</span><span class="at"> </span><span class="st">"001"</span><span class="kw">,</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Introduction to Statistics"</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
+<p>you will get the following error:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/validate_metadata_json.html">validate_metadata_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"missing-course-info.json"</span>, package <span class="op">=</span> <span class="st">"GradingAccuracy"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `validate_metadata_json()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> The course_info argument is missing from the following file:</span></span>
+<span><span class="co">#&gt;   <span style="color: #0000BB;">/home/runner/work/_temp/Library/GradingAccuracy/extdata/missing-course-info.json</span></span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="missing-required-keys">Missing Required Keys<a class="anchor" aria-label="anchor" href="#missing-required-keys"></a>
+</h4>
+<p>If you are missing the required keys, like in the JSON file
+below:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="at">  </span><span class="fu">"course_info"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="at">    </span><span class="fu">"department"</span><span class="kw">:</span><span class="at"> </span><span class="st">"STAT"</span><span class="kw">,</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_number"</span><span class="kw">:</span><span class="at"> </span><span class="st">"001"</span><span class="kw">,</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Introduction to Statistics"</span><span class="kw">,</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="at">    </span><span class="fu">"upper_div"</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span><span class="kw">,</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="at">    </span><span class="fu">"year"</span><span class="kw">:</span><span class="at"> </span><span class="dv">2020</span><span class="kw">,</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="at">    </span><span class="fu">"semester"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fall"</span><span class="kw">,</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="at">    </span><span class="fu">"assignment_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Midterm Exam"</span><span class="kw">,</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="at">    </span><span class="fu">"question_number"</span><span class="kw">:</span><span class="at"> </span><span class="st">"12a"</span><span class="kw">,</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="at">    </span><span class="fu">"question_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Calculate Expected Value"</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
+<p>you will get the following error:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/validate_metadata_json.html">validate_metadata_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"missing-keys.json"</span>, package <span class="op">=</span> <span class="st">"GradingAccuracy"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `validate_metadata_json()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> The following arguments are missing from course_info:</span></span>
+<span><span class="co">#&gt;   <span style="color: #0000BB;">"mode_of_question"</span>, <span style="color: #0000BB;">"medium_of_answer"</span>, and <span style="color: #0000BB;">"content_of_answer"</span></span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="incorrect-data-types">Incorrect Data Types<a class="anchor" aria-label="anchor" href="#incorrect-data-types"></a>
+</h4>
+<p>If the required keys have an incorrect data type, like if
+<code>upper-div</code> is not a boolean value as in the example
+below:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="at">  </span><span class="fu">"course_info"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="at">    </span><span class="fu">"department"</span><span class="kw">:</span><span class="at"> </span><span class="st">"STAT"</span><span class="kw">,</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_number"</span><span class="kw">:</span><span class="at"> </span><span class="st">"001"</span><span class="kw">,</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Introduction to Statistics"</span><span class="kw">,</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="at">    </span><span class="fu">"upper_div"</span><span class="kw">:</span><span class="at"> </span><span class="st">"yes"</span><span class="kw">,</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="at">    </span><span class="fu">"year"</span><span class="kw">:</span><span class="at"> </span><span class="dv">2020</span><span class="kw">,</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="at">    </span><span class="fu">"semester"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fall"</span><span class="kw">,</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="at">    </span><span class="fu">"assignment_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Midterm Exam"</span><span class="kw">,</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="at">    </span><span class="fu">"question_number"</span><span class="kw">:</span><span class="at"> </span><span class="st">"12a"</span><span class="kw">,</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="at">    </span><span class="fu">"question_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Calculate Expected Value"</span><span class="kw">,</span></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="at">    </span><span class="fu">"mode_of_question"</span><span class="kw">:</span><span class="at"> </span><span class="st">"open-ended"</span><span class="kw">,</span></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="at">    </span><span class="fu">"medium_of_answer"</span><span class="kw">:</span><span class="at"> </span><span class="st">"handwritten"</span><span class="kw">,</span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="at">    </span><span class="fu">"content_of_answer"</span><span class="kw">:</span><span class="at"> </span><span class="st">"math"</span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
+<p>you will get the following error:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/validate_metadata_json.html">validate_metadata_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"wrong-boolean.json"</span>, package <span class="op">=</span> <span class="st">"GradingAccuracy"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `validate_metadata_json()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> <span style="color: #0000BB;">"upper_div"</span> should be a boolean.</span></span></code></pre></div>
+</div>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

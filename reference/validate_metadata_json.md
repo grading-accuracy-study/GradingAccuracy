@@ -7,7 +7,7 @@ printed out.
 ## Usage
 
 ``` r
-validate_metadata_json(file = "./metadata.json", verbose = T)
+validate_metadata_json(file = "./metadata.json", verbose = F)
 ```
 
 ## Arguments
