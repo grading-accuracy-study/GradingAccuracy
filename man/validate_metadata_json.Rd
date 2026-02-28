@@ -4,7 +4,7 @@
 \alias{validate_metadata_json}
 \title{Validate Metadata JSON}
 \usage{
-validate_metadata_json(file = "./metadata.json", verbose = T)
+validate_metadata_json(file = "./metadata.json", verbose = F)
 }
 \arguments{
 \item{file}{file path where metadata.json should be saved}

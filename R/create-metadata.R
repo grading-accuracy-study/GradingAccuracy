@@ -12,7 +12,7 @@
 #' @importFrom cli cli_abort cli_h1 cli_alert_success cli_text cli_h3 cli_ul cli_li
 #'
 #' @export
-validate_metadata_json <- function(file = "./metadata.json", verbose = T){
+validate_metadata_json <- function(file = "./metadata.json", verbose = F){
   # load in metadata.json
   metadata <- jsonlite::read_json(file)
   if (!("course_info" %in% names(metadata))){

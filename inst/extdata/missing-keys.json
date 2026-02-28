@@ -1,0 +1,13 @@
+{
+  "course_info": {
+    "department": "STAT",
+    "course_number": "001",
+    "course_name": "Introduction to Statistics",
+    "upper_div": false,
+    "year": 2020,
+    "semester": "Fall",
+    "assignment_name": "Midterm Exam",
+    "question_number": "12a",
+    "question_name": "Calculate Expected Value"
+  }
+}
