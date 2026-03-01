@@ -94,11 +94,11 @@ generate_rubric_texts <- function(csv_path, output_folder, ignored_nrows = 3,
     rubric_texts <- read_csv(rubric_texts_path)
     current_n <- ncol(rubric_texts)-1
     row <- c(csv_path, rubric_items,
-             rep(NA, current_n - n))
+             rep(NA, max(current_n - n, 0)))
     # add more rubric-item columsn if needed
     if (n > current_n){
       new_cols <- paste0("R", (current_n + 1):n)
-      df[new_cols] <- NA
+      rubric_texts[new_cols] <- NA
     }
     rubric_texts <- rbind(rubric_texts, row)
   } else{
