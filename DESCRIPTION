@@ -1,9 +1,9 @@
 Package: GradingAccuracy
-Title: What the Package Does (One Line, Title Case)
+Title: Grading Accuracy Calculations
 Version: 0.0.0.9000
 Authors@R: 
     person("Nikita", "Jayaprakash", , "nikita.jp@gmail.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Description: This R package is used for loading in grades in .csv format, deidentifying them using existing lookup tables, and computing various accuracy metrics in order to compare grading from different sources.
 License: GPL (>= 3)
 Imports: readr, dplyr, tidyr, utils, jsonlite, tibble, cli, gt, plyr
 Encoding: UTF-8
