@@ -126,3 +126,45 @@ generate_results_row <- function(dir) {
 
   return (results_row)
 }
+
+#' Generate Metadata Table
+#'
+#' This function parses through the data/scores folders and generates
+#' the metadata table using the metadata.jsons for each assignment.
+#'
+#' @param dir optionally, specify directory
+#'
+#' @returns a dataframe
+#'
+#' @export
+generate_metadata_table <- function(dir = "."){
+  dir = paste0(dir , "/data/scores/")
+  courses <- list.dirs(path = dir,
+                       full.names = F, recursive = FALSE)
+  metadata_table <- data.frame()
+  for (course in courses){
+    row <- generate_metadata_row(dir = paste0(dir, course,"/"))
+    metadata_table <- rbind(metadata_table, row)
+  }
+
+  return (metadata_table)
+}
+
+#' @importFrom tibble tibble
+#' @importFrom jsonlite fromJSON
+generate_metadata_row <- function(dir){
+  metadata <- fromJSON(paste0(dir, "/metadata.json"))
+  course_info <- metadata$course_info
+  tibble::tibble(
+    `Question Name` = basename(dir),
+    `Subject` = course_info$department,
+    `Course` = paste(course_info$department, course_info$course_number),
+    `Course Name` = course_info$course_name,
+    `Course Level` = ifelse(course_info$upper_div,
+                            "Upper Division", "Lower Division"),
+    `Semester` = paste(course_info$semester, course_info$year),
+    `Mode of Question` = course_info$mode_of_question,
+    `Medium of Answer` = course_info$medium_of_answer,
+    `Content of Answer` = course_info$content_of_answer
+  )
+}
