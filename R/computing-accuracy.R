@@ -8,7 +8,7 @@
 #'
 #' @returns a gt object
 #' @importFrom readr read_csv
-#' @importFrom dplyr bind_rows left_join relocate arrange
+#' @importFrom dplyr bind_rows left_join relocate arrange desc
 #' @importFrom gt gt cols_hide tab_style cell_fill cells_body
 #' @importFrom tibble as_tibble
 #' @export
@@ -55,7 +55,7 @@ find_differences_gt <- function(file1, file2){
   combined <- dplyr::bind_rows(df1, df2) |>
     dplyr::left_join(name_lookup, by = "SID") |>
     dplyr::relocate(Name, SID, Grader, `Absolute Error`) |>
-    dplyr::arrange(`Absolute Error`, Name, SID, Grader)
+    dplyr::arrange(dplyr::desc(`Absolute Error`), Name, SID, Grader)
   # Logical matrix of mismatches
   mismatch_matrix <- rubric1 != rubric2
   # Keep rownames for matching
