@@ -31,10 +31,14 @@ generate_results_table <- function(dir = "."){
 #' @returns a gt object
 #' @importFrom gt gt tab_spanner cols_label_with
 #' @importFrom tidyr starts_with
+#' @importFrom dplyr across mutate where
 #'
 #' @export
 generate_gt_results_table <- function(results_table){
-  gt::gt(results_table) |>
+  results_table |>
+    dplyr::mutate(dplyr::across(dplyr::where(is.numeric),
+                                round, digits = 3)) |>
+    gt::gt() |>
     gt::tab_spanner(
       label = "MAE",
       columns = starts_with("MAE_")
