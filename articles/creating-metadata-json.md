@@ -21,7 +21,7 @@ following keys (and their corresponding values):
 - `assignment_name` : name of assignment (e.g. “Midterm 1”)
 - `question_number` : number of question, including subparts (e.g. “5c”)
 - `question_name` : name of question (e.g. “Data Visualization”)
-- mode_of_question : mode of question (e.g. “fill in the blank”,
+- `mode_of_question` : mode of question (e.g. “fill in the blank”,
   “open-ended”)
 - `medium_of_answer` : medium of student’s answer (e.g. “handwritten”,
   “typed”)
