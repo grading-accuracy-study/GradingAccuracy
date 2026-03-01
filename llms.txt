@@ -86,6 +86,8 @@ adjustments to rubric items.
 These functions are for computing the accuracy rates between different
 graders.
 
+- [`generate_metadata_table()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/generate_metadata_table.md)
+  : Generate Metadata Table
 - [`generate_results_table()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/generate_results_table.md)
   : Generate Results Table
 - [`generate_gt_results_table()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/generate_gt_results_table.md)
