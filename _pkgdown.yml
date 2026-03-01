@@ -20,6 +20,7 @@ reference:
   contents:
   - generate_results_table
   - generate_gt_results_table
+  - find_differences_gt
   - compute_mae_and_isp
   - isp
   - rubric_mae
