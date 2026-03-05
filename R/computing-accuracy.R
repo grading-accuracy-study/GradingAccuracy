@@ -17,7 +17,7 @@ find_differences_gt <- function(file1, file2){
   gt_table <- combined |>
     gt::gt(groupname_col = "Name") |>
     gt::cols_hide(columns = "Name")
-  rubric_cols <- colnames(mismatch_matrix)
+  rubric_cols <- colnames(mismatch_matrix)[-length(colnames(mismatch_matrix))]
   for (col in rubric_cols) {
     # Students where this rubric differs
     diff_students <- rownames(mismatch_matrix)[mismatch_matrix[, col]]
@@ -84,7 +84,7 @@ find_differences_table <- function(file1, file2){
   mismatch_matrix <- rubric1 != rubric2
   # Keep rownames for matching
   rownames(mismatch_matrix) <- rownames(rubric1)
-  colnames(mismatch_matrix) <- rownames(rubric1)
+
   return(list(combined = combined, mismatch_matrix = mismatch_matrix))
 }
 
