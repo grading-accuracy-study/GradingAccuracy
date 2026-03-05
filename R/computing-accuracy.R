@@ -7,12 +7,36 @@
 #' @param file2 file path for second grades for comparison
 #'
 #' @returns a gt object
-#' @importFrom readr read_csv
-#' @importFrom dplyr bind_rows left_join relocate arrange desc
 #' @importFrom gt gt cols_hide tab_style cell_fill cells_body
-#' @importFrom tibble as_tibble
 #' @export
 find_differences_gt <- function(file1, file2){
+  find_diff <- find_differences(file1, file2)
+  combined <- find_diff$combined
+  mismatch_matrix <- find_diff$mismatch_matrix
+  # create gt table for display
+  gt_table <- combined |>
+    gt::gt(groupname_col = "Name") |>
+    gt::cols_hide(columns = "Name")
+  rubric_cols <- colnames(mismatch_matrix)
+  for (col in rubric_cols) {
+    # Students where this rubric differs
+    diff_students <- rownames(mismatch_matrix)[mismatch_matrix[, col]]
+    gt_table <- gt_table |>
+      gt::tab_style(
+        style = gt::cell_fill(color = "pink"),
+        locations = gt::cells_body(
+          columns = col,
+          rows = SID %in% diff_students
+        )
+      )
+  }
+  gt_table
+}
+
+#' @importFrom readr read_csv
+#' @importFrom dplyr bind_rows left_join relocate arrange desc
+#' @importFrom tibble as_tibble
+find_differences <- function(file1, file2){
   # load in data
   eval1 <- readr::read_csv(file1, show_col_types = F)
   eval2 <- readr::read_csv(file2, show_col_types = F)
@@ -60,24 +84,8 @@ find_differences_gt <- function(file1, file2){
   mismatch_matrix <- rubric1 != rubric2
   # Keep rownames for matching
   rownames(mismatch_matrix) <- rownames(rubric1)
-  # create gt table for display
-  gt_table <- combined |>
-    gt::gt(groupname_col = "Name") |>
-    gt::cols_hide(columns = "Name")
-  rubric_cols <- colnames(rubric1)
-  for (col in rubric_cols) {
-    # Students where this rubric differs
-    diff_students <- rownames(mismatch_matrix)[mismatch_matrix[, col]]
-    gt_table <- gt_table |>
-      gt::tab_style(
-        style = gt::cell_fill(color = "pink"),
-        locations = gt::cells_body(
-          columns = col,
-          rows = SID %in% diff_students
-        )
-      )
-  }
-  gt_table
+  colnames(mismatch_matrix) <- rownames(rubric1)
+  return(list(combined = combined, mismatch_matrix = mismatch_matrix))
 }
 
 
