@@ -32,6 +32,8 @@ graders.
   : Generate Results Table in GT Format
 - [`find_differences_gt()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/find_differences_gt.md)
   : Find Differences as GT Table
+- [`find_differences_xlsx()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/find_differences_xlsx.md)
+  : Find Differences as Excel Spreadsheet
 - [`compute_mae_and_isp()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/compute_mae_and_isp.md)
   : Calculate MAE and ISP
 - [`isp()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/isp.md)
