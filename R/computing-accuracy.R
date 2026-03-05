@@ -1,3 +1,64 @@
+#' Find Differences as Excel Spreadsheet
+#'
+#' This function saves an Excel spreadsheet with the differences
+#' in rubric items with mismatched rubrics highlighted.
+#'
+#' @param file1 file path for first grades for comparison
+#' @param file2 file path for second grades for comparison
+#' @param existing if workbook exists
+#' @param sheet_name name of sheet in workbook
+#' @param dir optionally, where workbook is saved
+#'
+#' @importFrom openxlsx loadWorkbook createWorkbook removeWorksheet addWorksheet writeData createStyle addStyle saveWorkbook
+#' @export
+find_differences_xlsx <- function(file1, file2, existing, sheet_name,
+                                  dir = "."){
+  find_diff <- find_differences_table(file1, file2)
+  combined <- find_diff$combined
+  mismatch_matrix <- find_diff$mismatch_matrix
+  output_file <- paste0(dir, "/rubric_differences.xlsx")
+  if (existing && file.exists(output_file)) {
+    wb <- loadWorkbook(output_file)
+  } else {
+    wb <- createWorkbook()
+  }
+
+  # If sheet already exists, remove it
+  if (sheet_name %in% names(wb)) {
+    removeWorksheet(wb, sheet_name)
+  }
+
+  addWorksheet(wb, sheet_name)
+
+  writeData(wb, sheet_name, combined)
+
+  pink_style <- createStyle(fgFill = "#FFC0CB")
+  rubric_cols <- colnames(mismatch_matrix)[-length(colnames(mismatch_matrix))]
+
+  for (col in rubric_cols) {
+
+    diff_students <- rownames(mismatch_matrix)[mismatch_matrix[, col]]
+
+    for (student in diff_students) {
+
+      rows_to_color <- which(combined$SID == student)
+      col_index <- which(names(combined) == col)
+
+      addStyle(
+        wb,
+        sheet = sheet_name,
+        style = pink_style,
+        rows = rows_to_color + 1,  # +1 for header
+        cols = col_index,
+        gridExpand = TRUE,
+        stack = TRUE
+      )
+    }
+  }
+
+  saveWorkbook(wb, output_file, overwrite = TRUE)
+}
+
 #' Find Differences as GT Table
 #'
 #' This function displays a table of differences in rubric items
