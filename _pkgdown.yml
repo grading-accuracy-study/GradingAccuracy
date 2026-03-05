@@ -22,6 +22,7 @@ reference:
   - generate_results_table
   - generate_gt_results_table
   - find_differences_gt
+  - find_differences_xlsx
   - compute_mae_and_isp
   - isp
   - rubric_mae
