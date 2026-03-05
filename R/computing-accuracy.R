@@ -10,7 +10,7 @@
 #' @importFrom gt gt cols_hide tab_style cell_fill cells_body
 #' @export
 find_differences_gt <- function(file1, file2){
-  find_diff <- find_differences(file1, file2)
+  find_diff <- find_differences_table(file1, file2)
   combined <- find_diff$combined
   mismatch_matrix <- find_diff$mismatch_matrix
   # create gt table for display
@@ -36,7 +36,7 @@ find_differences_gt <- function(file1, file2){
 #' @importFrom readr read_csv
 #' @importFrom dplyr bind_rows left_join relocate arrange desc
 #' @importFrom tibble as_tibble
-find_differences <- function(file1, file2){
+find_differences_table <- function(file1, file2){
   # load in data
   eval1 <- readr::read_csv(file1, show_col_types = F)
   eval2 <- readr::read_csv(file2, show_col_types = F)
