@@ -95,7 +95,7 @@ export_grading_differences_gt <- function(find_differences){
 }
 
 
-#' Find Differences with respect to Experts Table
+#' Find Differences with respect to AI Table
 #'
 #' Find the differences between AI grading and experts and return
 #' all graded assignments that are different and a matrix of which rubrics
@@ -110,7 +110,7 @@ export_grading_differences_gt <- function(find_differences){
 #' @importFrom dplyr bind_rows left_join relocate arrange desc
 #' @importFrom tibble as_tibble
 #' @export
-find_differences_wrt_experts <- function(experts_file, ai_file){
+find_differences_wrt_AI <- function(experts_file, ai_file){
   # load in data
   experts_eval <- readr::read_csv(experts_file, show_col_types = F)
   ai_eval <- readr::read_csv(ai_file, show_col_types = F)
@@ -170,9 +170,9 @@ find_differences_wrt_experts <- function(experts_file, ai_file){
 #' are mismatched. Note that all mismatches between AI and expert grading
 #' are removed to prevent redundancy.
 #'
-#' @param experts_file file with expert graders
-#' @param ai_file file with AI graders
-#' @param student_file file with student graders
+#' @param experts_file file with experts graders
+#' @param ai_file file with ai graders
+#' @param ai_diffs find_differences results for experts v. AI
 #'
 #' @return a list of a df and a matrix
 #'
@@ -180,15 +180,13 @@ find_differences_wrt_experts <- function(experts_file, ai_file){
 #' @importFrom dplyr bind_rows left_join relocate arrange desc filter
 #' @importFrom tibble as_tibble
 #' @export
-find_differences_wrt_students <- function(experts_file, ai_file, student_file){
+find_differences_wrt_students <- function(student_file, ai_file, ai_diffs){
   # load in data
   experts_eval <- readr::read_csv(experts_file, show_col_types = F)
-  ai_eval <- readr::read_csv(ai_file, show_col_types = F)
   student_eval <- readr::read_csv(student_file, show_col_types = F)
 
   # find expert vs. AI differences to remove
-  ai_diffs <- find_differences(experts_eval, student_eval)
-  ai_errors <- rownames(rubric1)[diffs$error_per_student > 0]
+  ai_errors <- rownames(ai_diffs)
   experts_eval <- experts_eval |>
     filter(SID %in% ai_errors)
   student_eval <- student_eval |>
