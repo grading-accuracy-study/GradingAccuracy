@@ -201,6 +201,10 @@ find_differences_wrt_students <- function(experts_file, student_file,
   # find differences in rubric toggles
   diffs <- find_differences(experts_eval, student_eval)
   `Absolute Error` <- diffs$error_per_student
+  if (sum(`Absolute Error`) == 0){
+    # all match
+    return (NULL)
+  }
   rubric1 <- diffs$rubric1
   rubric2 <- diffs$rubric2
   # add error
