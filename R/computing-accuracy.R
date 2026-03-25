@@ -208,8 +208,10 @@ find_differences_wrt_students <- function(experts_file, student_file, ai_diffs){
   name_lookup <- NULL
   if ("Name" %in% colnames(experts_eval)) {
     name_lookup <- experts_eval[, c("SID", "Name")]
-  } else {
+  } else if ("Name" %in% colnames(experts_eval)){
     name_lookup <- student_eval[, c("SID", "Name")]
+  } else {
+    name_lookup <- ai_diffs$combined[, c("SID", "Name")]
   }
   name_lookup$SID <- as.character(name_lookup$SID)
   # Convert matrices back to data frames
