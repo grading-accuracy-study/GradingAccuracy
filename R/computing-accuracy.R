@@ -171,7 +171,8 @@ find_differences_wrt_AI <- function(experts_file, ai_file){
 #' are removed to prevent redundancy.
 #'
 #' @param experts_file file with experts graders
-#' @param student_file file with ai graders
+#' @param student_file file with student graders
+#' @param ai_file file with ai graders
 #' @param ai_diffs find_differences results for experts v. AI
 #'
 #' @return a list of a df and a matrix
@@ -180,7 +181,8 @@ find_differences_wrt_AI <- function(experts_file, ai_file){
 #' @importFrom dplyr bind_rows left_join relocate arrange desc filter
 #' @importFrom tibble as_tibble
 #' @export
-find_differences_wrt_students <- function(experts_file, student_file, ai_diffs){
+find_differences_wrt_students <- function(experts_file, student_file,
+                                          ai_file, ai_diffs){
   # load in data
   experts_eval <- readr::read_csv(experts_file, show_col_types = F)
   student_eval <- readr::read_csv(student_file, show_col_types = F)
@@ -211,7 +213,8 @@ find_differences_wrt_students <- function(experts_file, student_file, ai_diffs){
   } else if ("Name" %in% colnames(experts_eval)){
     name_lookup <- student_eval[, c("SID", "Name")]
   } else {
-    name_lookup <- ai_diffs$combined[, c("SID", "Name")]
+    ai_eval <- readr::read_csv(ai_file, show_col_types = F)
+    name_lookup <- ai_eval[, c("SID", "Name")]
   }
   name_lookup$SID <- as.character(name_lookup$SID)
   # Convert matrices back to data frames
