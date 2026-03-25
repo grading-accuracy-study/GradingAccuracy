@@ -9,6 +9,7 @@ items between two graders with mismatched rubrics highlighted.
 export_grading_differences_xlsx(
   find_differences,
   existing,
+  students = T,
   sheet_name,
   dir = "."
 )
@@ -23,6 +24,10 @@ export_grading_differences_xlsx(
 - existing:
 
   if workbook exists
+
+- students:
+
+  if true, comparing with students; if false, comparing with AI
 
 - sheet_name:
 
