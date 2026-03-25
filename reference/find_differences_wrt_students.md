@@ -8,22 +8,22 @@ removed to prevent redundancy.
 ## Usage
 
 ``` r
-find_differences_wrt_students(experts_file, ai_file, student_file)
+find_differences_wrt_students(experts_file, student_file, ai_diffs)
 ```
 
 ## Arguments
 
 - experts_file:
 
-  file with expert graders
-
-- ai_file:
-
-  file with AI graders
+  file with experts graders
 
 - student_file:
 
-  file with student graders
+  file with ai graders
+
+- ai_diffs:
+
+  find_differences results for experts v. AI
 
 ## Value
 
