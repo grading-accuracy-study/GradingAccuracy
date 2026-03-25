@@ -188,7 +188,7 @@ find_differences_wrt_students <- function(experts_file, student_file,
   student_eval <- readr::read_csv(student_file, show_col_types = F)
 
   # find expert vs. AI differences to remove
-  ai_errors <- rownames(ai_diffs)
+  ai_errors <- rownames(ai_diffs$mismatch_matrix)
   experts_eval <- experts_eval |>
     filter(!(SID %in% ai_errors))
   student_eval <- student_eval |>
