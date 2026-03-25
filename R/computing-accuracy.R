@@ -1,21 +1,19 @@
-#' Find Differences with respect to Experts as Excel Spreadsheet
+#' Export Differences between Two Graders as Excel Spreadsheet
 #'
 #' This function saves an Excel spreadsheet with the differences
-#' in rubric items with respect to experts with mismatched rubrics highlighted.
+#' in rubric items between two graders with mismatched rubrics highlighted.
 #'
-#' @param file1 file path for first grades for comparison
-#' @param file2 file path for second grades for comparison
+#' @param find_differences object from the function find_differences_table()
 #' @param existing if workbook exists
 #' @param sheet_name name of sheet in workbook
 #' @param dir optionally, where workbook is saved
 #'
 #' @importFrom openxlsx loadWorkbook createWorkbook removeWorksheet addWorksheet writeData createStyle addStyle saveWorkbook
 #' @export
-find_differences_wrt_experts_xlsx <- function(file1, file2, existing, sheet_name,
+export_grading_differences_xlsx <- function(find_differences, existing, sheet_name,
                                   dir = "."){
-  find_diff <- find_differences_table(file1, file2)
-  combined <- find_diff$combined
-  mismatch_matrix <- find_diff$mismatch_matrix
+  combined <- find_differences$combined
+  mismatch_matrix <- find_differences$mismatch_matrix
   output_file <- paste0(dir, "/rubric_differences_wrt_experts.xlsx")
   if (existing && file.exists(output_file)) {
     wb <- loadWorkbook(output_file)
@@ -59,21 +57,19 @@ find_differences_wrt_experts_xlsx <- function(file1, file2, existing, sheet_name
   saveWorkbook(wb, output_file, overwrite = TRUE)
 }
 
-#' Find Differences with respect to Experts as GT Table
+#' Export Differences between Two Graders as GT Table
 #'
-#' This function displays a table of differences in rubric items
-#' in GT format, with mismatched rubrics highlighted.
+#' This function exports the differences in rubric items
+#' in GT format between two graders with mismatched rubrics highlighted.
 #'
-#' @param file1 file path for first grades for comparison
-#' @param file2 file path for second grades for comparison
+#' @param find_differences object from the function find_differences_table()
 #'
 #' @returns a gt object
 #' @importFrom gt gt cols_hide tab_style cell_fill cells_body
 #' @export
-find_differences_wrt_experts_gt <- function(file1, file2){
-  find_diff <- find_differences_table(file1, file2)
-  combined <- find_diff$combined
-  mismatch_matrix <- find_diff$mismatch_matrix
+export_grading_differences_gt <- function(find_differences){
+  combined <- find_differences$combined
+  mismatch_matrix <- find_differences$mismatch_matrix
   # create gt table for display
   gt_table <- combined |>
     gt::gt(groupname_col = "Name") |>
@@ -94,16 +90,29 @@ find_differences_wrt_experts_gt <- function(file1, file2){
   gt_table
 }
 
+
+#' Find Differences with respect to Experts Table
+#'
+#' Find the differences between AI grading and experts and return
+#' all graded assignments that are different and a matrix of which rubrics
+#' are mismatched.
+#'
+#' @param experts_file file with expert graders
+#' @param ai_file file with AI graders
+#'
+#' @return a list of a df and a matrix
+#'
 #' @importFrom readr read_csv
 #' @importFrom dplyr bind_rows left_join relocate arrange desc
 #' @importFrom tibble as_tibble
-find_differences_table <- function(file1, file2){
+#' @export
+find_differences_wrt_experts <- function(experts_file, ai_file){
   # load in data
-  eval1 <- readr::read_csv(file1, show_col_types = F)
-  eval2 <- readr::read_csv(file2, show_col_types = F)
+  experts_eval <- readr::read_csv(experts_file, show_col_types = F)
+  ai_eval <- readr::read_csv(ai_file, show_col_types = F)
 
   # find differences in rubric toggles
-  diffs <- find_differences(eval1, eval2)
+  diffs <- find_differences(experts_eval, ai_eval)
   `Absolute Error` <- diffs$error_per_student
   rubric1 <- diffs$rubric1
   rubric2 <- diffs$rubric2
@@ -116,10 +125,10 @@ find_differences_table <- function(file1, file2){
 
   # find names from original dataframes
   name_lookup <- NULL
-  if ("Name" %in% colnames(eval1)) {
-    name_lookup <- eval1[, c("SID", "Name")]
+  if ("Name" %in% colnames(experts_eval)) {
+    name_lookup <- experts_eval[, c("SID", "Name")]
   } else {
-    name_lookup <- eval2[, c("SID", "Name")]
+    name_lookup <- ai_eval[, c("SID", "Name")]
   }
   name_lookup$SID <- as.character(name_lookup$SID)
   # Convert matrices back to data frames
@@ -129,8 +138,8 @@ find_differences_table <- function(file1, file2){
   df1$SID <- rownames(rubric1)
   df2$SID <- rownames(rubric2)
   # add grader
-  df1$Grader <- sub("-.*$", "", basename(file1))
-  df2$Grader <- sub("-.*$", "", basename(file2))
+  df1$Grader <- sub("-.*$", "", basename(experts_eval))
+  df2$Grader <- sub("-.*$", "", basename(ai_eval))
   # convert rubric items to booleans
   # Find rubric columns
   rubric_cols <- grep("^R[0-9]+$", names(df1), value = TRUE)
