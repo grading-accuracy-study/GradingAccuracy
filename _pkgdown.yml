@@ -21,8 +21,8 @@ reference:
   - generate_metadata_table
   - generate_results_table
   - generate_gt_results_table
-  - find_differences_gt
-  - find_differences_xlsx
+  - find_differences_wrt_experts_gt
+  - find_differences_wrt_experts_xlsx
   - compute_mae_and_isp
   - isp
   - rubric_mae

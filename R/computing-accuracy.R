@@ -1,7 +1,7 @@
-#' Find Differences as Excel Spreadsheet
+#' Find Differences with respect to Experts as Excel Spreadsheet
 #'
 #' This function saves an Excel spreadsheet with the differences
-#' in rubric items with mismatched rubrics highlighted.
+#' in rubric items with respect to experts with mismatched rubrics highlighted.
 #'
 #' @param file1 file path for first grades for comparison
 #' @param file2 file path for second grades for comparison
@@ -11,12 +11,12 @@
 #'
 #' @importFrom openxlsx loadWorkbook createWorkbook removeWorksheet addWorksheet writeData createStyle addStyle saveWorkbook
 #' @export
-find_differences_xlsx <- function(file1, file2, existing, sheet_name,
+find_differences_wrt_experts_xlsx <- function(file1, file2, existing, sheet_name,
                                   dir = "."){
   find_diff <- find_differences_table(file1, file2)
   combined <- find_diff$combined
   mismatch_matrix <- find_diff$mismatch_matrix
-  output_file <- paste0(dir, "/rubric_differences.xlsx")
+  output_file <- paste0(dir, "/rubric_differences_wrt_experts.xlsx")
   if (existing && file.exists(output_file)) {
     wb <- loadWorkbook(output_file)
   } else {
@@ -59,7 +59,7 @@ find_differences_xlsx <- function(file1, file2, existing, sheet_name,
   saveWorkbook(wb, output_file, overwrite = TRUE)
 }
 
-#' Find Differences as GT Table
+#' Find Differences with respect to Experts as GT Table
 #'
 #' This function displays a table of differences in rubric items
 #' in GT format, with mismatched rubrics highlighted.
@@ -70,7 +70,7 @@ find_differences_xlsx <- function(file1, file2, existing, sheet_name,
 #' @returns a gt object
 #' @importFrom gt gt cols_hide tab_style cell_fill cells_body
 #' @export
-find_differences_gt <- function(file1, file2){
+find_differences_wrt_experts_gt <- function(file1, file2){
   find_diff <- find_differences_table(file1, file2)
   combined <- find_diff$combined
   mismatch_matrix <- find_diff$mismatch_matrix
