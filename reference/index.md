@@ -30,10 +30,12 @@ graders.
   : Generate Results Table
 - [`generate_gt_results_table()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/generate_gt_results_table.md)
   : Generate Results Table in GT Format
-- [`find_differences_wrt_experts_gt()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/find_differences_wrt_experts_gt.md)
-  : Find Differences with respect to Experts as GT Table
-- [`find_differences_wrt_experts_xlsx()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/find_differences_wrt_experts_xlsx.md)
-  : Find Differences with respect to Experts as Excel Spreadsheet
+- [`export_grading_differences_xlsx()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/export_grading_differences_xlsx.md)
+  : Export Differences between Two Graders as Excel Spreadsheet
+- [`export_grading_differences_gt()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/export_grading_differences_gt.md)
+  : Export Differences between Two Graders as GT Table
+- [`find_differences_wrt_experts()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/find_differences_wrt_experts.md)
+  : Find Differences with respect to Experts Table
 - [`compute_mae_and_isp()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/compute_mae_and_isp.md)
   : Calculate MAE and ISP
 - [`isp()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/isp.md)
