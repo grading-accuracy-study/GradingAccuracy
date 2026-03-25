@@ -159,6 +159,85 @@ find_differences_wrt_experts <- function(experts_file, ai_file){
 }
 
 
+#' Find Differences with respect to Students Table
+#'
+#' Find the differences between students grading and experts and return
+#' all graded assignments that are different and a matrix of which rubrics
+#' are mismatched. Note that all mismatches between AI and expert grading
+#' are removed to prevent redundancy.
+#'
+#' @param experts_file file with expert graders
+#' @param ai_file file with AI graders
+#' @param student_file file with student graders
+#'
+#' @return a list of a df and a matrix
+#'
+#' @importFrom readr read_csv
+#' @importFrom dplyr bind_rows left_join relocate arrange desc filter
+#' @importFrom tibble as_tibble
+#' @export
+find_differences_wrt_students <- function(experts_file, ai_file, student_file){
+  # load in data
+  experts_eval <- readr::read_csv(experts_file, show_col_types = F)
+  ai_eval <- readr::read_csv(ai_file, show_col_types = F)
+  student_eval <- readr::read_csv(student_file, show_col_types = F)
+
+  # find expert vs. AI differences to remove
+  ai_diffs <- find_differences(experts_eval, student_eval)
+  ai_errors <- rownames(rubric1)[diffs$error_per_student > 0]
+  experts_eval <- experts_eval |>
+    filter(SID %in% ai_errors)
+  student_eval <- student_eval |>
+    filter(SID %in% ai_errors)
+
+  # find differences in rubric toggles
+  diffs <- find_differences(experts_eval, student_eval)
+  `Absolute Error` <- diffs$error_per_student
+  rubric1 <- diffs$rubric1
+  rubric2 <- diffs$rubric2
+  # add error
+  rubric1 <- cbind(rubric1, `Absolute Error`)
+  rubric2 <- cbind(rubric2, `Absolute Error`)
+  # filter for students with errors
+  rubric1 <- rubric1[(`Absolute Error`>0), ]
+  rubric2 <- rubric2[(`Absolute Error`>0), ]
+
+  # find names from original dataframes
+  name_lookup <- NULL
+  if ("Name" %in% colnames(experts_eval)) {
+    name_lookup <- experts_eval[, c("SID", "Name")]
+  } else {
+    name_lookup <- student_eval[, c("SID", "Name")]
+  }
+  name_lookup$SID <- as.character(name_lookup$SID)
+  # Convert matrices back to data frames
+  df1 <- tibble::as_tibble(rubric1)
+  df2 <- tibble::as_tibble(rubric2)
+  # add back SIDs
+  df1$SID <- rownames(rubric1)
+  df2$SID <- rownames(rubric2)
+  # add grader
+  df1$Grader <- sub("-.*$", "", basename(experts_file))
+  df2$Grader <- sub("-.*$", "", basename(student_file))
+  # convert rubric items to booleans
+  # Find rubric columns
+  rubric_cols <- grep("^R[0-9]+$", names(df1), value = TRUE)
+  df1[rubric_cols] <- lapply(df1[rubric_cols], as.logical)
+  df2[rubric_cols] <- lapply(df2[rubric_cols], as.logical)
+  # add names for easy lookup
+  combined <- dplyr::bind_rows(df1, df2) |>
+    dplyr::left_join(name_lookup, by = "SID") |>
+    dplyr::relocate(Name, SID, Grader, `Absolute Error`) |>
+    dplyr::arrange(dplyr::desc(`Absolute Error`), Name, SID, Grader)
+  # Logical matrix of mismatches
+  mismatch_matrix <- rubric1 != rubric2
+  # Keep rownames for matching
+  rownames(mismatch_matrix) <- rownames(rubric1)
+
+  return(list(combined = combined, mismatch_matrix = mismatch_matrix))
+}
+
+
 #' Calculate MAE and ISP
 #'
 #' This function calculates the proportion of identical scores

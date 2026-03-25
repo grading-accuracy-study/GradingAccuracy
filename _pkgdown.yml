@@ -24,6 +24,7 @@ reference:
   - export_grading_differences_xlsx
   - export_grading_differences_gt
   - find_differences_wrt_experts
+  - find_differences_wrt_students
   - compute_mae_and_isp
   - isp
   - rubric_mae
