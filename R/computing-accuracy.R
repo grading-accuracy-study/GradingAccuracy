@@ -138,8 +138,8 @@ find_differences_wrt_experts <- function(experts_file, ai_file){
   df1$SID <- rownames(rubric1)
   df2$SID <- rownames(rubric2)
   # add grader
-  df1$Grader <- sub("-.*$", "", basename(experts_eval))
-  df2$Grader <- sub("-.*$", "", basename(ai_eval))
+  df1$Grader <- sub("-.*$", "", basename(experts_file))
+  df2$Grader <- sub("-.*$", "", basename(ai_file))
   # convert rubric items to booleans
   # Find rubric columns
   rubric_cols <- grep("^R[0-9]+$", names(df1), value = TRUE)
