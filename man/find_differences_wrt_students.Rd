@@ -4,14 +4,14 @@
 \alias{find_differences_wrt_students}
 \title{Find Differences with respect to Students Table}
 \usage{
-find_differences_wrt_students(experts_file, ai_file, student_file)
+find_differences_wrt_students(experts_file, student_file, ai_diffs)
 }
 \arguments{
-\item{experts_file}{file with expert graders}
+\item{experts_file}{file with experts graders}
 
-\item{ai_file}{file with AI graders}
+\item{student_file}{file with ai graders}
 
-\item{student_file}{file with student graders}
+\item{ai_diffs}{find_differences results for experts v. AI}
 }
 \value{
 a list of a df and a matrix

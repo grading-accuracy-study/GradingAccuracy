@@ -171,7 +171,7 @@ find_differences_wrt_AI <- function(experts_file, ai_file){
 #' are removed to prevent redundancy.
 #'
 #' @param experts_file file with experts graders
-#' @param ai_file file with ai graders
+#' @param student_file file with ai graders
 #' @param ai_diffs find_differences results for experts v. AI
 #'
 #' @return a list of a df and a matrix
@@ -180,7 +180,7 @@ find_differences_wrt_AI <- function(experts_file, ai_file){
 #' @importFrom dplyr bind_rows left_join relocate arrange desc filter
 #' @importFrom tibble as_tibble
 #' @export
-find_differences_wrt_students <- function(student_file, ai_file, ai_diffs){
+find_differences_wrt_students <- function(experts_file, student_file, ai_diffs){
   # load in data
   experts_eval <- readr::read_csv(experts_file, show_col_types = F)
   student_eval <- readr::read_csv(student_file, show_col_types = F)
