@@ -8,7 +8,7 @@ removed to prevent redundancy.
 ## Usage
 
 ``` r
-find_differences_wrt_students(experts_file, student_file, ai_diffs)
+find_differences_wrt_students(experts_file, student_file, ai_file, ai_diffs)
 ```
 
 ## Arguments
@@ -18,6 +18,10 @@ find_differences_wrt_students(experts_file, student_file, ai_diffs)
   file with experts graders
 
 - student_file:
+
+  file with student graders
+
+- ai_file:
 
   file with ai graders
 
