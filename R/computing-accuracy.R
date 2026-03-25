@@ -6,15 +6,19 @@
 #' @param find_differences object from the function find_differences_table()
 #' @param existing if workbook exists
 #' @param sheet_name name of sheet in workbook
+#' @param students if true, comparing with students; if false, comparing with AI
 #' @param dir optionally, where workbook is saved
 #'
 #' @importFrom openxlsx loadWorkbook createWorkbook removeWorksheet addWorksheet writeData createStyle addStyle saveWorkbook
 #' @export
-export_grading_differences_xlsx <- function(find_differences, existing, sheet_name,
-                                  dir = "."){
+export_grading_differences_xlsx <- function(find_differences, existing, students = T,
+                                            sheet_name, dir = "."){
   combined <- find_differences$combined
   mismatch_matrix <- find_differences$mismatch_matrix
-  output_file <- paste0(dir, "/rubric_differences_wrt_experts.xlsx")
+  output_file <- paste0(dir, "/rubric_differences_wrt_AI.xlsx")
+  if (students){
+    output_file <- paste0(dir, "/rubric_differences_wrt_students.xlsx")
+  }
   if (existing && file.exists(output_file)) {
     wb <- loadWorkbook(output_file)
   } else {

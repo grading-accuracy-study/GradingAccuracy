@@ -7,6 +7,7 @@
 export_grading_differences_xlsx(
   find_differences,
   existing,
+  students = T,
   sheet_name,
   dir = "."
 )
@@ -15,6 +16,8 @@ export_grading_differences_xlsx(
 \item{find_differences}{object from the function find_differences_table()}
 
 \item{existing}{if workbook exists}
+
+\item{students}{if true, comparing with students; if false, comparing with AI}
 
 \item{sheet_name}{name of sheet in workbook}
 
