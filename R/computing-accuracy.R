@@ -120,7 +120,7 @@ find_differences_wrt_AI <- function(experts_file, ai_file){
   `Absolute Error` <- diffs$error_per_student
   if (sum(`Absolute Error`) == 0){
     # all match
-    return NULL
+    return (NULL)
   }
   rubric1 <- diffs$rubric1
   rubric2 <- diffs$rubric2
