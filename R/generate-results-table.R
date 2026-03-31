@@ -3,14 +3,13 @@
 #' This function parses through the data/scores folders and generates
 #' the results table for grading accuracy comparison.
 #'
-#' @param dir optionally, specify directory
+#' @param dir specify directory
 #'
 #' @returns a dataframe
 #' @importFrom plyr rbind.fill
 #'
 #' @export
 generate_results_table <- function(dir = "."){
-  dir = paste0(dir , "/data/scores/")
   courses <- list.dirs(path = dir,
                        full.names = F, recursive = FALSE)
   results_table <- data.frame()
@@ -132,13 +131,12 @@ generate_results_row <- function(dir) {
 #' This function parses through the data/scores folders and generates
 #' the metadata table using the metadata.jsons for each assignment.
 #'
-#' @param dir optionally, specify directory
+#' @param dir specify directory
 #'
 #' @returns a dataframe
 #'
 #' @export
 generate_metadata_table <- function(dir = "."){
-  dir = paste0(dir , "/data/scores/")
   courses <- list.dirs(path = dir,
                        full.names = F, recursive = FALSE)
   metadata_table <- data.frame()

@@ -7,7 +7,7 @@
 generate_results_table(dir = ".")
 }
 \arguments{
-\item{dir}{optionally, specify directory}
+\item{dir}{specify directory}
 }
 \value{
 a dataframe
