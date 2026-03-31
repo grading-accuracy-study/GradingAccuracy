@@ -128,8 +128,8 @@ find_differences_wrt_AI <- function(experts_file, ai_file){
   rubric1 <- cbind(rubric1, `Absolute Error`)
   rubric2 <- cbind(rubric2, `Absolute Error`)
   # filter for students with errors
-  rubric1 <- rubric1[(`Absolute Error`>0), ]
-  rubric2 <- rubric2[(`Absolute Error`>0), ]
+  rubric1 <- rubric1[(`Absolute Error`>0), , drop = F]
+  rubric2 <- rubric2[(`Absolute Error`>0), , drop = F]
 
   # find names from original dataframes
   name_lookup <- NULL
@@ -211,8 +211,8 @@ find_differences_wrt_students <- function(experts_file, student_file,
   rubric1 <- cbind(rubric1, `Absolute Error`)
   rubric2 <- cbind(rubric2, `Absolute Error`)
   # filter for students with errors
-  rubric1 <- rubric1[(`Absolute Error`>0), ]
-  rubric2 <- rubric2[(`Absolute Error`>0), ]
+  rubric1 <- rubric1[(`Absolute Error`>0), , drop = F]
+  rubric2 <- rubric2[(`Absolute Error`>0), , drop = F]
 
   # find names from original dataframes
   name_lookup <- NULL
