@@ -13,7 +13,7 @@ generate_results_table(dir = ".")
 
 - dir:
 
-  optionally, specify directory
+  specify directory
 
 ## Value
 

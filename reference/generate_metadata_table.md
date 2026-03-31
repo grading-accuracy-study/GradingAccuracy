@@ -13,7 +13,7 @@ generate_metadata_table(dir = ".")
 
 - dir:
 
-  optionally, specify directory
+  specify directory
 
 ## Value
 
