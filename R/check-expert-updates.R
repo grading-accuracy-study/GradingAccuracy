@@ -51,9 +51,13 @@ check_expert_updates_row <- function(pre_dir, post_dir){
   # check original differences from pre-expert grades and AI
   ai_changes <- rowSums(experts_pre[diff_SIDs, , drop = F] != AI_grades[diff_SIDs,  , drop = F])
   total_ai_changes <- sum(ai_changes > 0)
+  # total AI diffs
+  diffs <- rowSums(experts_pre[students, ] != AI_grades[students,])
+  total_ai_diffs <- sum(diffs > 0)
   # student QA/QC step
   total_stud_changes <- NA
   total_stud_diffs <- NA
+  total_both_diffs <- NA
   if (file.exists(paste0(post_dir, "students-calibrated.csv"))){
     # changes from student-comparison
     total_stud_changes <- total_changes - total_ai_changes
@@ -64,18 +68,18 @@ check_expert_updates_row <- function(pre_dir, post_dir){
                  collapse = " "))
     }
     # total student diffs
-    diffs <- rowSums(experts_pre[students, ] != students_grades[students,])
-    total_stud_diffs <- sum(diffs > 0)
+    stud_diffs <- rowSums(experts_pre[students, ] != students_grades[students,])
+    total_stud_diffs <- sum(stud_diffs > 0)
+    # expert - both diffs
+    total_both_diffs <- sum(stud_diffs > 0 & diffs > 0)
   }
-  # total AI diffs
-  diffs <- rowSums(experts_pre[students, ] != AI_grades[students,])
-  total_ai_diffs <- sum(diffs > 0)
   # create row
   expert_updates_row <- tibble::tibble(
     `Question Name` = basename(pre_dir),
     `Total Students` = length(students),
     `Expert-AI Diffs (pre)` = total_ai_diffs,
     `Expert-Student Diffs (pre)` = total_stud_diffs,
+    `Expert-Both Diffs (pre)` = total_both_diffs,
     `Total QA/QC Changes` = total_changes,
     `Changes from AI Comparison` = total_ai_changes,
     `Changes from Student Comparison` = total_stud_changes
