@@ -64,11 +64,11 @@ check_expert_updates_row <- function(pre_dir, post_dir){
                  collapse = " "))
     }
     # total student diffs
-    diffs <- rowSums(experts_pre[students, ] == students_grades[students,])
+    diffs <- rowSums(experts_pre[students, ] != students_grades[students,])
     total_stud_diffs <- sum(diffs > 0)
   }
   # total AI diffs
-  diffs <- rowSums(experts_pre[students, ] == AI_grades[students,])
+  diffs <- rowSums(experts_pre[students, ] != AI_grades[students,])
   total_ai_diffs <- sum(diffs > 0)
   # create row
   expert_updates_row <- tibble::tibble(
