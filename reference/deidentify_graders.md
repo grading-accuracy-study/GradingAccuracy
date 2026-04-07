@@ -7,7 +7,7 @@ for the graders as a csv.
 ## Usage
 
 ``` r
-deidentify_graders(csv_path, roster_csv, output_path)
+deidentify_graders(csv_path, roster_csv, output_path, ignored_nrows = 3)
 ```
 
 ## Arguments
@@ -23,3 +23,7 @@ deidentify_graders(csv_path, roster_csv, output_path)
 - output_path:
 
   path to save deidentified grades
+
+- ignored_nrows:
+
+  how many of the last lines to ignore
