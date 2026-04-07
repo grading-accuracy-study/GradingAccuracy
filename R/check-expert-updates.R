@@ -31,10 +31,15 @@ check_expert_updates_row <- function(pre_dir, post_dir){
   # same order
   students <- rownames(experts_pre)
   if (!all(students %in% rownames(experts_post))){
-    stop("Mismatched students in experts-pre and experts-post")
+    missing <- students[!(students %in% rownames(experts_post))]
+    stop(paste0("Mismatched students in experts-pre and experts-post:",
+                missing))
+
   }
   if (!all(students %in% rownames(AI_grades))){
-    stop("Missing students in AI grades")
+    missing <- students[!(students %in% rownames(AI_grades))]
+    stop(paste0("Missing students in AI grades:",
+                missing))
   }
   experts_pre <- experts_pre[students, , drop = FALSE]
   experts_post <- experts_post[students, , drop = FALSE]
@@ -54,7 +59,8 @@ check_expert_updates_row <- function(pre_dir, post_dir){
     total_stud_changes <- total_changes - total_ai_changes
     students_grades <- load_as_rubric_mat(paste0(pre_dir, "students-calibrated.csv"))
     if (!all(students %in% rownames(students_grades))){
-      stop("Missing students in student grades")
+      missing <- students[!(students %in% rownames(students_grades))]
+      stop(paste0("Missing students in student grades:", missing))
     }
     # total student diffs
     diffs <- experts_pre[students, ] == students_grades[students,]
