@@ -48,6 +48,7 @@ check_expert_updates_row <- function(pre_dir, post_dir){
   total_ai_changes <- sum(ai_changes > 0)
   # student QA/QC step
   total_stud_changes <- NA
+  total_stud_diffs <- NA
   if (file.exists(paste0(post_dir, "students-calibrated.csv"))){
     # changes from student-comparison
     total_stud_changes <- total_changes - total_ai_changes
