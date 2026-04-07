@@ -22,13 +22,14 @@ students_lookup_table <- function(csv_path, roster_csv){
 #' @param csv_path path to exported Gradescope evaluations csv
 #' @param roster_csv path to roster csv
 #' @param output_path path to save deidentified grades
+#' @param ignored_nrows how many of the last lines to ignore
 #'
 #' @importFrom readr read_csv write_csv
 #' @importFrom dplyr left_join join_by mutate select
 #' @export
 deidentify_graders <- function(csv_path, roster_csv,
-                               output_path){
-  gradescope_csv <- read_evals(csv_path) |>
+                              output_path, ignored_nrows = 3){
+  gradescope_csv <- read_evals(csv_path, ignored_nrows = ignored_nrows) |>
     dplyr::filter(!is.na(Grader))
   graders <- unique(gradescope_csv$Grader)
   n <- length(graders)
@@ -41,6 +42,6 @@ deidentify_graders <- function(csv_path, roster_csv,
     dplyr::left_join(lookup, by = dplyr::join_by("Grader" == "Name")) |>
     dplyr::mutate(Grader = Generated_Names) |>
     dplyr::select(-Generated_Names) |>
-    write_evals(output_path = output_path,
+    write_evals(output_path = output_path, ignored_nrows = ignored_nrows,
                 original_path = csv_path)
 }

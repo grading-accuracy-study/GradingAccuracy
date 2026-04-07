@@ -4,7 +4,7 @@
 \alias{deidentify_graders}
 \title{Deidentify Graders}
 \usage{
-deidentify_graders(csv_path, roster_csv, output_path)
+deidentify_graders(csv_path, roster_csv, output_path, ignored_nrows = 3)
 }
 \arguments{
 \item{csv_path}{path to exported Gradescope evaluations csv}
@@ -12,6 +12,8 @@ deidentify_graders(csv_path, roster_csv, output_path)
 \item{roster_csv}{path to roster csv}
 
 \item{output_path}{path to save deidentified grades}
+
+\item{ignored_nrows}{how many of the last lines to ignore}
 }
 \description{
 This function swaps the original grader names with fake names
