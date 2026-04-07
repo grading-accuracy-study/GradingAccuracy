@@ -21,6 +21,7 @@ reference:
   - generate_metadata_table
   - generate_results_table
   - generate_gt_results_table
+  - expert_updates_table
   - export_grading_differences_xlsx
   - export_grading_differences_gt
   - find_differences_wrt_AI

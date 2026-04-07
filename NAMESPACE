@@ -3,6 +3,7 @@
 export(compute_mae_and_isp)
 export(deidentify_graders)
 export(deidentify_gradescope_evals)
+export(expert_updates_table)
 export(export_grading_differences_gt)
 export(export_grading_differences_xlsx)
 export(find_differences_wrt_AI)
