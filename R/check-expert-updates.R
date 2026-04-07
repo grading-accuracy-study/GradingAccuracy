@@ -51,6 +51,7 @@ check_expert_updates_row <- function(pre_dir, post_dir){
                              total_diffs - total_ai_diffs, NA)
   expert_updates_row <- tibble::tibble(
     `Question Name` = basename(pre_dir),
+    `Total Students` = length(students),
     `Total QA/QC Changes` = total_diffs,
     `Changes from AI Comparison` = total_ai_diffs,
     `Changes from Student Comparison` = total_stud_diffs
