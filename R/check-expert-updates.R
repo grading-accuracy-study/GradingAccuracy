@@ -39,22 +39,38 @@ check_expert_updates_row <- function(pre_dir, post_dir){
   experts_pre <- experts_pre[students, , drop = FALSE]
   experts_post <- experts_post[students, , drop = FALSE]
   # count how many differences
-  diffs <- rowSums(experts_pre != experts_post)
-  total_diffs <- sum(diffs > 0)
+  changes <- rowSums(experts_pre != experts_post)
+  total_changes <- sum(changes > 0)
   # students with updated grades
-  diff_SIDs <- rownames(experts_pre)[diffs > 0]
+  diff_SIDs <- rownames(experts_pre)[changes > 0]
   # check original differences from pre-expert grades and AI
-  ai_diffs <- rowSums(experts_pre[diff_SIDs, , drop = F] != AI_grades[diff_SIDs,  , drop = F])
-  total_ai_diffs <- sum(ai_diffs > 0)
+  ai_changes <- rowSums(experts_pre[diff_SIDs, , drop = F] != AI_grades[diff_SIDs,  , drop = F])
+  total_ai_changes <- sum(ai_changes > 0)
   # student QA/QC step
-  total_stud_diffs <- ifelse(file.exists(paste0(post_dir, "students-calibrated.csv")),
-                             total_diffs - total_ai_diffs, NA)
+  total_stud_changes <- NA
+  if (file.exists(paste0(post_dir, "students-calibrated.csv"))){
+    # changes from student-comparison
+    total_stud_changes <- total_changes - total_ai_changes
+    students_grades <- load_as_rubric_mat(paste0(pre_dir, "students-calibrated.csv"))
+    if (!all(students %in% rownames(students_grades))){
+      stop("Missing students in student grades")
+    }
+    # total student diffs
+    diffs <- experts_pre[students, ] == students_grades[students,]
+    total_stud_diffs <- sum(diffs > 0)
+  }
+  # total AI diffs
+  diffs <- experts_pre[students, ] == AI_grades[students,]
+  total_ai_diffs <- sum(diffs > 0)
+  # create row
   expert_updates_row <- tibble::tibble(
     `Question Name` = basename(pre_dir),
     `Total Students` = length(students),
-    `Total QA/QC Changes` = total_diffs,
-    `Changes from AI Comparison` = total_ai_diffs,
-    `Changes from Student Comparison` = total_stud_diffs
+    `Expert-AI Diffs (pre)` = total_ai_diffs,
+    `Expert-Student Diffs (pre)` = total_stud_diffs,
+    `Total QA/QC Changes` = total_changes,
+    `Changes from AI Comparison` = total_ai_changes,
+    `Changes from Student Comparison` = total_stud_changes
   )
   return(expert_updates_row)
 }
