@@ -92,6 +92,8 @@ graders.
   : Generate Results Table
 - [`generate_gt_results_table()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/generate_gt_results_table.md)
   : Generate Results Table in GT Format
+- [`expert_updates_table()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/expert_updates_table.md)
+  : Calculate Differences in Expert Grades After QA/QC
 - [`export_grading_differences_xlsx()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/export_grading_differences_xlsx.md)
   : Export Differences between Two Graders as Excel Spreadsheet
 - [`export_grading_differences_gt()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/export_grading_differences_gt.md)
