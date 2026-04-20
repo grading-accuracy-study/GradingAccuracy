@@ -23,7 +23,7 @@ validate_metadata_json <- function(file = "./metadata.json", verbose = F){
   args <- c("department", "course_number", "course_name", "upper_div",
             "year", "semester", "assignment_name", "question_number",
             "question_name", "mode_of_question", "medium_of_answer",
-            "content_of_answer")
+            "content_of_answer", "scoring_type", "is_proctored")
   args_bool <- args %in% names(course_info)
   if (length(args) != sum(args_bool)){
     cli::cli_abort("The following arguments are missing from course_info: {.val {args[!args_bool]}}")
@@ -31,6 +31,11 @@ validate_metadata_json <- function(file = "./metadata.json", verbose = F){
   # check data types
   if (!is.logical(course_info$upper_div)){
     cli::cli_abort("{.val upper_div} should be a boolean.")
+  }
+
+  # check data types
+  if (!is.logical(course_info$is_proctored)){
+    cli::cli_abort("{.val is_proctored} should be a boolean.")
   }
 
   # Course Info Print Out
