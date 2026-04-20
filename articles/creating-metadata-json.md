@@ -27,6 +27,10 @@ following keys (and their corresponding values):
   “typed”)
 - `content_of_answer` : expected content of student’s answer
   (e.g. “English”, “math”, “code”)
+- `scoring_type` : whether the scoring is positive (i.e. additive) or
+  negative (i.e. subtractice)
+- `is_proctored` : whether the assignment was taken in a proctored
+  environment or if it was take-home
 
 ``` yaml
 {
@@ -42,7 +46,9 @@ following keys (and their corresponding values):
     "question_name": "Calculate Expected Value",
     "mode_of_question": "open-ended",
     "medium_of_answer": "handwritten",
-    "content_of_answer": "math"
+    "content_of_answer": "math",
+    "scoring_type": "positive",
+    "is_proctored": true
   }
 }
 ```
@@ -134,7 +140,8 @@ you will get the following error:
 validate_metadata_json(system.file("extdata", "missing-keys.json", package = "GradingAccuracy"))
 #> Error in `validate_metadata_json()`:
 #> ! The following arguments are missing from course_info:
-#>   "mode_of_question", "medium_of_answer", and "content_of_answer"
+#>   "mode_of_question", "medium_of_answer", "content_of_answer", "scoring_type",
+#>   and "is_proctored"
 ```
 
 #### Incorrect Data Types
@@ -156,7 +163,9 @@ not a boolean value as in the example below:
     "question_name": "Calculate Expected Value",
     "mode_of_question": "open-ended",
     "medium_of_answer": "handwritten",
-    "content_of_answer": "math"
+    "content_of_answer": "math",
+    "scoring_type": "positive",
+    "is_proctored": true
   }
 }
 ```

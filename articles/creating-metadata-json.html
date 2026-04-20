@@ -109,6 +109,12 @@ blank”, “open-ended”)</li>
 <li>
 <code>content_of_answer</code> : expected content of student’s
 answer (e.g. “English”, “math”, “code”)</li>
+<li>
+<code>scoring_type</code> : whether the scoring is positive
+(i.e. additive) or negative (i.e. subtractice)</li>
+<li>
+<code>is_proctored</code> : whether the assignment was taken in a
+proctored environment or if it was take-home</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="kw">{</span></span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="at">  </span><span class="fu">"course_info"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
@@ -123,9 +129,11 @@ answer (e.g. “English”, “math”, “code”)</li>
 <span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="at">    </span><span class="fu">"question_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Calculate Expected Value"</span><span class="kw">,</span></span>
 <span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="at">    </span><span class="fu">"mode_of_question"</span><span class="kw">:</span><span class="at"> </span><span class="st">"open-ended"</span><span class="kw">,</span></span>
 <span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="at">    </span><span class="fu">"medium_of_answer"</span><span class="kw">:</span><span class="at"> </span><span class="st">"handwritten"</span><span class="kw">,</span></span>
-<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="at">    </span><span class="fu">"content_of_answer"</span><span class="kw">:</span><span class="at"> </span><span class="st">"math"</span></span>
-<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
-<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="at">    </span><span class="fu">"content_of_answer"</span><span class="kw">:</span><span class="at"> </span><span class="st">"math"</span><span class="kw">,</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="at">    </span><span class="fu">"scoring_type"</span><span class="kw">:</span><span class="at"> </span><span class="st">"positive"</span><span class="kw">,</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="at">    </span><span class="fu">"is_proctored"</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="validating-a-metadata-json">Validating a metadata.json<a class="anchor" aria-label="anchor" href="#validating-a-metadata-json"></a>
@@ -202,7 +210,8 @@ below:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/validate_metadata_json.html">validate_metadata_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"missing-keys.json"</span>, package <span class="op">=</span> <span class="st">"GradingAccuracy"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `validate_metadata_json()`:</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> The following arguments are missing from course_info:</span></span>
-<span><span class="co">#&gt;   <span style="color: #0000BB;">"mode_of_question"</span>, <span style="color: #0000BB;">"medium_of_answer"</span>, and <span style="color: #0000BB;">"content_of_answer"</span></span></span></code></pre></div>
+<span><span class="co">#&gt;   <span style="color: #0000BB;">"mode_of_question"</span>, <span style="color: #0000BB;">"medium_of_answer"</span>, <span style="color: #0000BB;">"content_of_answer"</span>, <span style="color: #0000BB;">"scoring_type"</span>,</span></span>
+<span><span class="co">#&gt;   and <span style="color: #0000BB;">"is_proctored"</span></span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="incorrect-data-types">Incorrect Data Types<a class="anchor" aria-label="anchor" href="#incorrect-data-types"></a>
@@ -223,9 +232,11 @@ below:</p>
 <span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="at">    </span><span class="fu">"question_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Calculate Expected Value"</span><span class="kw">,</span></span>
 <span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="at">    </span><span class="fu">"mode_of_question"</span><span class="kw">:</span><span class="at"> </span><span class="st">"open-ended"</span><span class="kw">,</span></span>
 <span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="at">    </span><span class="fu">"medium_of_answer"</span><span class="kw">:</span><span class="at"> </span><span class="st">"handwritten"</span><span class="kw">,</span></span>
-<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="at">    </span><span class="fu">"content_of_answer"</span><span class="kw">:</span><span class="at"> </span><span class="st">"math"</span></span>
-<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
-<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="at">    </span><span class="fu">"content_of_answer"</span><span class="kw">:</span><span class="at"> </span><span class="st">"math"</span><span class="kw">,</span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="at">    </span><span class="fu">"scoring_type"</span><span class="kw">:</span><span class="at"> </span><span class="st">"positive"</span><span class="kw">,</span></span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="at">    </span><span class="fu">"is_proctored"</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
 <p>you will get the following error:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/validate_metadata_json.html">validate_metadata_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"wrong-boolean.json"</span>, package <span class="op">=</span> <span class="st">"GradingAccuracy"</span><span class="op">)</span><span class="op">)</span></span>
