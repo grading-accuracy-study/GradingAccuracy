@@ -186,9 +186,9 @@ update_scores_in_metadata <- function(folder = "./",
                          show_col_types = FALSE)
   }
   metadata <- jsonlite::read_json(file)
-  metadata[["course_info"]][["mean_score"]] = mean(students$Score)
   experts <- read_csv(paste0(folder, "experts-calibrated.csv"),
                       show_col_types = FALSE)
+  metadata[["course_info"]][["mean_score"]] = mean(experts$Score/max(experts$Score))
   metadata[["course_info"]][["n_submissions"]] = nrow(experts)
   jsonlite::write_json(metadata, file, pretty = T,
                        auto_unbox = T)
