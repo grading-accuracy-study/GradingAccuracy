@@ -149,8 +149,8 @@ update_scores <- function(csv, metadata = "./metadata.json",
     as.matrix()
   scores <- t(t(rubric_mat) * rubric_pts) |>
     rowSums()
-  if (!identical(students["Score"], scores)){
-    new_scores <- students$SID[students["Score"] != scores]
+  new_scores <- students$SID[students["Score"] != scores]
+  if (length(new_scores) != 0){
     cli::cli_alert_warning("The following students now have different scores: {.val {new_scores}}")
   }
   students["Score"] <- scores
