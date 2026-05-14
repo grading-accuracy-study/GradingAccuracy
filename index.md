@@ -29,6 +29,7 @@ normalize_full_credit(expert_rubric_items)
 student_evals \<- read_evals(student_csv_path) \|\>
 normalize_full_credit(student_rubric_items)
 
+
     -   where `expert_csv_path` and `student_csv_path` are the paths to the de-identified Gradescope evaluations of the expert graders and student graders respectively
 
     -   where `expert_rubric_items` and `student_rubric_items` are the vectors of which rubric items are equivalent to marking an assignment as "Full credit." for the expert evaluations and student evaluations respectively (Note that these vectors can be string vectors with the column names or numeric vectors with the column indices

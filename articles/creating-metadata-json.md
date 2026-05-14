@@ -1,6 +1,7 @@
 # Creating a metadata.JSON
 
 ``` r
+
 library(GradingAccuracy)
 ```
 
@@ -48,7 +49,21 @@ following keys (and their corresponding values):
     "medium_of_answer": "handwritten",
     "content_of_answer": "math",
     "scoring_type": "positive",
-    "is_proctored": true
+    "is_proctored": true,
+    "n_submissions": 0,
+    "mean_score": 0.0
+  },
+  "rubric": {
+    "calibrated": {
+      "rubric_items": {
+        "R1": "Fully credit.",
+        "R2": "Stated correct equation for expected value.",
+        "R3": "Some work in the right direction",
+        "R4": "Incorrect."
+      },
+      "scores": [1.0, 0.5, 0.5, 0.0]
+    },
+    "uncalibrated": null
   }
 }
 ```
@@ -66,8 +81,9 @@ If you have a correct `metadata.json` file, like the example file above,
 you will receive the following message:
 
 ``` r
-validate_metadata_json(system.file("extdata", "metadata.json", package = "GradingAccuracy"))
-#> ✔ The following file is successfully validated: /home/runner/work/_temp/Library/GradingAccuracy/extdata/metadata.json
+
+validate_metadata_json(system.file("extdata", "metadata-calibrated.json", package = "GradingAccuracy"))
+#> ✔ The following file is successfully validated: /home/runner/work/_temp/Library/GradingAccuracy/extdata/metadata-calibrated.json
 ```
 
 Optionally, you can also use the `verbose` argument in order to print
@@ -75,8 +91,9 @@ out the listed course and assignment information stored in this JSON
 file:
 
 ``` r
-validate_metadata_json(system.file("extdata", "metadata.json", package = "GradingAccuracy"), verbose = T)
-#> ✔ The following file is successfully validated: /home/runner/work/_temp/Library/GradingAccuracy/extdata/metadata.json
+
+validate_metadata_json(system.file("extdata", "metadata-calibrated.json", package = "GradingAccuracy"), verbose = T)
+#> ✔ The following file is successfully validated: /home/runner/work/_temp/Library/GradingAccuracy/extdata/metadata-calibrated.json
 #> 
 #> ── STAT 001 - Introduction to Statistics ───────────────────────────────────────
 #> A lower-division course from Fall 2020
@@ -108,6 +125,7 @@ JSON file below:
 you will get the following error:
 
 ``` r
+
 validate_metadata_json(system.file("extdata", "missing-course-info.json", package = "GradingAccuracy"))
 #> Error in `validate_metadata_json()`:
 #> ! The course_info argument is missing from the following file:
@@ -129,7 +147,9 @@ If you are missing the required keys, like in the JSON file below:
     "semester": "Fall",
     "assignment_name": "Midterm Exam",
     "question_number": "12a",
-    "question_name": "Calculate Expected Value"
+    "question_name": "Calculate Expected Value",
+    "n_submissions": 0,
+    "mean_score": 0.0
   }
 }
 ```
@@ -137,11 +157,11 @@ If you are missing the required keys, like in the JSON file below:
 you will get the following error:
 
 ``` r
+
 validate_metadata_json(system.file("extdata", "missing-keys.json", package = "GradingAccuracy"))
 #> Error in `validate_metadata_json()`:
-#> ! The following arguments are missing from course_info:
-#>   "mode_of_question", "medium_of_answer", "content_of_answer", "scoring_type",
-#>   and "is_proctored"
+#> ! The rubric argument is missing from the following file:
+#>   /home/runner/work/_temp/Library/GradingAccuracy/extdata/missing-keys.json
 ```
 
 #### Incorrect Data Types
@@ -165,7 +185,9 @@ not a boolean value as in the example below:
     "medium_of_answer": "handwritten",
     "content_of_answer": "math",
     "scoring_type": "positive",
-    "is_proctored": true
+    "is_proctored": true,
+    "n_submissions": 0,
+    "mean_score": 0.0
   }
 }
 ```
@@ -173,7 +195,9 @@ not a boolean value as in the example below:
 you will get the following error:
 
 ``` r
+
 validate_metadata_json(system.file("extdata", "wrong-boolean.json", package = "GradingAccuracy"))
 #> Error in `validate_metadata_json()`:
-#> ! "upper_div" should be a boolean.
+#> ! The rubric argument is missing from the following file:
+#>   /home/runner/work/_temp/Library/GradingAccuracy/extdata/wrong-boolean.json
 ```

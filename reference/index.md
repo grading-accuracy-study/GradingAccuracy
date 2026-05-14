@@ -10,6 +10,10 @@ adjustments to rubric items.
   : Read Gradescope Evaluations CSV
 - [`validate_metadata_json()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/validate_metadata_json.md)
   : Validate Metadata JSON
+- [`update_scores()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/update_scores.md)
+  : Update student scores based on metadata rubric items
+- [`update_scores_in_metadata()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/update_scores_in_metadata.md)
+  : Update Scores in metadata JSON
 - [`deidentify_graders()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/deidentify_graders.md)
   : Deidentify Graders
 - [`deidentify_gradescope_evals()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/deidentify_gradescope_evals.md)

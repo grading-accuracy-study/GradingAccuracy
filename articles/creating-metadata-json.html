@@ -131,9 +131,23 @@ proctored environment or if it was take-home</li>
 <span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="at">    </span><span class="fu">"medium_of_answer"</span><span class="kw">:</span><span class="at"> </span><span class="st">"handwritten"</span><span class="kw">,</span></span>
 <span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="at">    </span><span class="fu">"content_of_answer"</span><span class="kw">:</span><span class="at"> </span><span class="st">"math"</span><span class="kw">,</span></span>
 <span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="at">    </span><span class="fu">"scoring_type"</span><span class="kw">:</span><span class="at"> </span><span class="st">"positive"</span><span class="kw">,</span></span>
-<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="at">    </span><span class="fu">"is_proctored"</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
-<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="at">    </span><span class="fu">"is_proctored"</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span><span class="kw">,</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="at">    </span><span class="fu">"n_submissions"</span><span class="kw">:</span><span class="at"> </span><span class="dv">0</span><span class="kw">,</span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="at">    </span><span class="fu">"mean_score"</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.0</span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="at">  </span><span class="kw">},</span></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="at">  </span><span class="fu">"rubric"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a><span class="at">    </span><span class="fu">"calibrated"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a><span class="at">      </span><span class="fu">"rubric_items"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a><span class="at">        </span><span class="fu">"R1"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fully credit."</span><span class="kw">,</span></span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a><span class="at">        </span><span class="fu">"R2"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Stated correct equation for expected value."</span><span class="kw">,</span></span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a><span class="at">        </span><span class="fu">"R3"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Some work in the right direction"</span><span class="kw">,</span></span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a><span class="at">        </span><span class="fu">"R4"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Incorrect."</span></span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a><span class="at">      </span><span class="kw">},</span></span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a><span class="at">      </span><span class="fu">"scores"</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="fl">1.0</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.5</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.5</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.0</span><span class="kw">]</span></span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a><span class="at">    </span><span class="kw">},</span></span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a><span class="at">    </span><span class="fu">"uncalibrated"</span><span class="kw">:</span><span class="at"> </span><span class="ch">null</span></span>
+<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
+<span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="validating-a-metadata-json">Validating a metadata.json<a class="anchor" aria-label="anchor" href="#validating-a-metadata-json"></a>
@@ -147,14 +161,14 @@ formatted.</p>
 <p>If you have a correct <code>metadata.json</code> file, like the
 example file above, you will receive the following message:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/validate_metadata_json.html">validate_metadata_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"metadata.json"</span>, package <span class="op">=</span> <span class="st">"GradingAccuracy"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> The following file is successfully validated: <span style="color: #0000BB;">/home/runner/work/_temp/Library/GradingAccuracy/extdata/metadata.json</span></span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/validate_metadata_json.html">validate_metadata_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"metadata-calibrated.json"</span>, package <span class="op">=</span> <span class="st">"GradingAccuracy"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> The following file is successfully validated: <span style="color: #0000BB;">/home/runner/work/_temp/Library/GradingAccuracy/extdata/metadata-calibrated.json</span></span></span></code></pre></div>
 <p>Optionally, you can also use the <code>verbose</code> argument in
 order to print out the listed course and assignment information stored
 in this JSON file:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/validate_metadata_json.html">validate_metadata_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"metadata.json"</span>, package <span class="op">=</span> <span class="st">"GradingAccuracy"</span><span class="op">)</span>, verbose <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> The following file is successfully validated: <span style="color: #0000BB;">/home/runner/work/_temp/Library/GradingAccuracy/extdata/metadata.json</span></span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/validate_metadata_json.html">validate_metadata_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"metadata-calibrated.json"</span>, package <span class="op">=</span> <span class="st">"GradingAccuracy"</span><span class="op">)</span>, verbose <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> The following file is successfully validated: <span style="color: #0000BB;">/home/runner/work/_temp/Library/GradingAccuracy/extdata/metadata-calibrated.json</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">STAT 001 - Introduction to Statistics</span> <span style="color: #00BBBB;">───────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt; A lower-division course from Fall 2020</span></span>
@@ -202,16 +216,17 @@ below:</p>
 <span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="at">    </span><span class="fu">"semester"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fall"</span><span class="kw">,</span></span>
 <span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="at">    </span><span class="fu">"assignment_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Midterm Exam"</span><span class="kw">,</span></span>
 <span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="at">    </span><span class="fu">"question_number"</span><span class="kw">:</span><span class="at"> </span><span class="st">"12a"</span><span class="kw">,</span></span>
-<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="at">    </span><span class="fu">"question_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Calculate Expected Value"</span></span>
-<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
-<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="at">    </span><span class="fu">"question_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Calculate Expected Value"</span><span class="kw">,</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="at">    </span><span class="fu">"n_submissions"</span><span class="kw">:</span><span class="at"> </span><span class="dv">0</span><span class="kw">,</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="at">    </span><span class="fu">"mean_score"</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.0</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
 <p>you will get the following error:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/validate_metadata_json.html">validate_metadata_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"missing-keys.json"</span>, package <span class="op">=</span> <span class="st">"GradingAccuracy"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `validate_metadata_json()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> The following arguments are missing from course_info:</span></span>
-<span><span class="co">#&gt;   <span style="color: #0000BB;">"mode_of_question"</span>, <span style="color: #0000BB;">"medium_of_answer"</span>, <span style="color: #0000BB;">"content_of_answer"</span>, <span style="color: #0000BB;">"scoring_type"</span>,</span></span>
-<span><span class="co">#&gt;   and <span style="color: #0000BB;">"is_proctored"</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> The rubric argument is missing from the following file:</span></span>
+<span><span class="co">#&gt;   <span style="color: #0000BB;">/home/runner/work/_temp/Library/GradingAccuracy/extdata/missing-keys.json</span></span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="incorrect-data-types">Incorrect Data Types<a class="anchor" aria-label="anchor" href="#incorrect-data-types"></a>
@@ -234,14 +249,17 @@ below:</p>
 <span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="at">    </span><span class="fu">"medium_of_answer"</span><span class="kw">:</span><span class="at"> </span><span class="st">"handwritten"</span><span class="kw">,</span></span>
 <span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="at">    </span><span class="fu">"content_of_answer"</span><span class="kw">:</span><span class="at"> </span><span class="st">"math"</span><span class="kw">,</span></span>
 <span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="at">    </span><span class="fu">"scoring_type"</span><span class="kw">:</span><span class="at"> </span><span class="st">"positive"</span><span class="kw">,</span></span>
-<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="at">    </span><span class="fu">"is_proctored"</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
-<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="at">    </span><span class="fu">"is_proctored"</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span><span class="kw">,</span></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="at">    </span><span class="fu">"n_submissions"</span><span class="kw">:</span><span class="at"> </span><span class="dv">0</span><span class="kw">,</span></span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a><span class="at">    </span><span class="fu">"mean_score"</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.0</span></span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
 <p>you will get the following error:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/validate_metadata_json.html">validate_metadata_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"wrong-boolean.json"</span>, package <span class="op">=</span> <span class="st">"GradingAccuracy"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `validate_metadata_json()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> <span style="color: #0000BB;">"upper_div"</span> should be a boolean.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> The rubric argument is missing from the following file:</span></span>
+<span><span class="co">#&gt;   <span style="color: #0000BB;">/home/runner/work/_temp/Library/GradingAccuracy/extdata/wrong-boolean.json</span></span></span></code></pre></div>
 </div>
 </div>
 </div>

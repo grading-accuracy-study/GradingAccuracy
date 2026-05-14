@@ -1,8 +1,8 @@
 # Validate Metadata JSON
 
 This function validates a JSON file that stores metadata about the
-assignment and its course. The contents of the saved JSON file can be
-printed out.
+assignment, its course and rubric items. The contents of the saved JSON
+file can be printed out.
 
 ## Usage
 
