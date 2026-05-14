@@ -9,6 +9,8 @@ reference:
   contents:
   - read_evals
   - validate_metadata_json
+  - update_scores
+  - update_scores_in_metadata
   - deidentify_graders
   - deidentify_gradescope_evals
   - generate_rubric_texts

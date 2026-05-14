@@ -40,7 +40,7 @@ A `metadata.json` file can be used to keep track of information on the course-, 
 
 
 ``` yaml
-`r xfun::file_string(system.file("extdata", "metadata.json", package = "GradingAccuracy"))`
+`r xfun::file_string(system.file("extdata", "metadata-calibrated.json", package = "GradingAccuracy"))`
 ```
 
 # Validating a metadata.json
@@ -52,13 +52,13 @@ The `validate_metadata_json()` function can be used to validate that all require
 If you have a correct `metadata.json` file, like the example file above, you will receive the following message:
 
 ```{r}
-validate_metadata_json(system.file("extdata", "metadata.json", package = "GradingAccuracy"))
+validate_metadata_json(system.file("extdata", "metadata-calibrated.json", package = "GradingAccuracy"))
 ```
 
 Optionally, you can also use the `verbose` argument in order to print out the listed course and assignment information stored in this JSON file:
 
 ```{r}
-validate_metadata_json(system.file("extdata", "metadata.json", package = "GradingAccuracy"), verbose = T)
+validate_metadata_json(system.file("extdata", "metadata-calibrated.json", package = "GradingAccuracy"), verbose = T)
 ```
 
 ## Potential Errors

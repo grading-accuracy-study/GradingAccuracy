@@ -13,6 +13,6 @@ validate_metadata_json(file = "./metadata.json", verbose = F)
 }
 \description{
 This function validates a JSON file that stores metadata
-about the assignment and its course. The contents of the saved JSON
+about the assignment, its course and rubric items. The contents of the saved JSON
 file can be printed out.
 }
