@@ -13,6 +13,8 @@
     "medium_of_answer": "handwritten",
     "content_of_answer": "math",
     "scoring_type": "positive",
-    "is_proctored": true
+    "is_proctored": true,
+    "n_submissions": 0,
+    "mean_score": 0.0
   }
 }
