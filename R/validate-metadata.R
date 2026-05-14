@@ -73,7 +73,7 @@ validate_metadata_json <- function(file = "./metadata.json", verbose = F){
       cli::cli_abort("{.val uncalibrated} rubric items is not the same length as {.val uncalibrated} scores.")
     }
     # check scores are numbers
-    if (is.numeric(unlist(uncalibrated[["scores"]]))){
+    if (!is.numeric(unlist(uncalibrated[["scores"]]))){
       cli::cli_abort("{.val scores} of {.val uncalibrated} rubric is not numeric values.")
     }
     expected_rubric_keys <- paste0("R", 1:num_rubric)
