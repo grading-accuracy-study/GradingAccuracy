@@ -72,8 +72,10 @@
 information on the course-, assignment- and question-level. While
 additional arguments may be added to keep track of other miscellaneous
 information, this package requires that the <code>metadata.json</code>
-has a <code>course_info</code> object with the following keys (and their
-corresponding values):</p>
+has a <code>course_info</code> object and a
+<code>rubric object</code>.</p>
+<p>The <code>course_info</code> object must have the following keys (and
+their corresponding values):</p>
 <ul>
 <li>
 <code>department</code> : department abbreviation (e.g. “STAT”,
@@ -111,10 +113,34 @@ blank”, “open-ended”)</li>
 answer (e.g. “English”, “math”, “code”)</li>
 <li>
 <code>scoring_type</code> : whether the scoring is positive
-(i.e. additive) or negative (i.e. subtractice)</li>
+(i.e. additive) or negative (i.e. subtractive)</li>
 <li>
 <code>is_proctored</code> : whether the assignment was taken in a
 proctored environment or if it was take-home</li>
+<li>
+<code>n_submissions</code>: the number of student submissions, which
+can be programmatically updated with
+<code><a href="../reference/update_scores_in_metadata.html">update_scores_in_metadata()</a></code>
+</li>
+<li>
+<code>mean_score</code>: the mean score of experts using, which can
+be programmatically updated with
+<code><a href="../reference/update_scores_in_metadata.html">update_scores_in_metadata()</a></code> (which uses
+<code>mean(experts$Score/max(experts$Score))</code>)</li>
+</ul>
+<p>The <code>rubric</code> object must have a <code>calibrated</code>
+rubric object and optionally an <code>uncalibrated</code> object that
+follows the same structure. A rubric object (either
+<code>calibrated</code> or <code>uncalibrated</code>) must have the
+following structure:</p>
+<ul>
+<li>
+<code>rubric_items</code> which is a nested list that has keys named
+as “R1”, “R2”, etc. with values as strings of the rubric
+description</li>
+<li>
+<code>scores</code>, which is a numbered vector that has the
+corresponding point value of rubric items “R1”, “R2”,…</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="kw">{</span></span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="at">  </span><span class="fu">"course_info"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
@@ -180,7 +206,8 @@ in this JSON file:</p>
 <span><span class="co">#&gt; • Content of Answer: math</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="potential-errors">Potential Errors<a class="anchor" aria-label="anchor" href="#potential-errors"></a>
+<h3 id="course_infopotential-errors">
+<code>course_info</code>:Potential Errors<a class="anchor" aria-label="anchor" href="#course_infopotential-errors"></a>
 </h3>
 <div class="section level4">
 <h4 id="missing-course_info">Missing <code>course_info</code><a class="anchor" aria-label="anchor" href="#missing-course_info"></a>
@@ -261,6 +288,11 @@ below:</p>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> The rubric argument is missing from the following file:</span></span>
 <span><span class="co">#&gt;   <span style="color: #0000BB;">/home/runner/work/_temp/Library/GradingAccuracy/extdata/wrong-boolean.json</span></span></span></code></pre></div>
 </div>
+</div>
+<div class="section level3">
+<h3 id="rubricpotential-errors">
+<code>rubric</code>:Potential Errors<a class="anchor" aria-label="anchor" href="#rubricpotential-errors"></a>
+</h3>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

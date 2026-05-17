@@ -10,8 +10,11 @@ library(GradingAccuracy)
 A `metadata.json` file can be used to keep track of information on the
 course-, assignment- and question-level. While additional arguments may
 be added to keep track of other miscellaneous information, this package
-requires that the `metadata.json` has a `course_info` object with the
-following keys (and their corresponding values):
+requires that the `metadata.json` has a `course_info` object and a
+`rubric object`.
+
+The `course_info` object must have the following keys (and their
+corresponding values):
 
 - `department` : department abbreviation (e.g. “STAT”, “DATA”)
 - `course_number` : course number
@@ -29,9 +32,26 @@ following keys (and their corresponding values):
 - `content_of_answer` : expected content of student’s answer
   (e.g. “English”, “math”, “code”)
 - `scoring_type` : whether the scoring is positive (i.e. additive) or
-  negative (i.e. subtractice)
+  negative (i.e. subtractive)
 - `is_proctored` : whether the assignment was taken in a proctored
   environment or if it was take-home
+- `n_submissions`: the number of student submissions, which can be
+  programmatically updated with
+  [`update_scores_in_metadata()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/update_scores_in_metadata.md)
+- `mean_score`: the mean score of experts using, which can be
+  programmatically updated with
+  [`update_scores_in_metadata()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/update_scores_in_metadata.md)
+  (which uses `mean(experts$Score/max(experts$Score))`)
+
+The `rubric` object must have a `calibrated` rubric object and
+optionally an `uncalibrated` object that follows the same structure. A
+rubric object (either `calibrated` or `uncalibrated`) must have the
+following structure:
+
+- `rubric_items` which is a nested list that has keys named as “R1”,
+  “R2”, etc. with values as strings of the rubric description
+- `scores`, which is a numbered vector that has the corresponding point
+  value of rubric items “R1”, “R2”,…
 
 ``` yaml
 {
@@ -105,7 +125,7 @@ validate_metadata_json(system.file("extdata", "metadata-calibrated.json", packag
 #> • Content of Answer: math
 ```
 
-### Potential Errors
+### `course_info`:Potential Errors
 
 #### Missing `course_info`
 
@@ -201,3 +221,5 @@ validate_metadata_json(system.file("extdata", "wrong-boolean.json", package = "G
 #> ! The rubric argument is missing from the following file:
 #>   /home/runner/work/_temp/Library/GradingAccuracy/extdata/wrong-boolean.json
 ```
+
+### `rubric`:Potential Errors
