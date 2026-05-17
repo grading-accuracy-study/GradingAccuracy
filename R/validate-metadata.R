@@ -66,7 +66,7 @@ validate_metadata_json <- function(file = "./metadata.json", verbose = F){
     cli::cli_abort("{.val rubric_items} of {.val calibrated} rubric are misnamed (i.e. should be R1, R2, etc.).")
   }
   # if there is an uncalibrated rubric, same checks
-  if (!is.null(uncalibrated)){
+  if (!is.null(uncalibrated) && length(uncalibrated) != 0){
     num_rubric <- length(uncalibrated[["rubric_items"]])
     # check equal number of rubric items and corresponding scores
     if (num_rubric != length(uncalibrated[["scores"]])){
