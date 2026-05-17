@@ -21,7 +21,9 @@ library(GradingAccuracy)
 
 # Requirements for metadata.json
 
-A `metadata.json` file can be used to keep track of information on the course-, assignment- and question-level. While additional arguments may be added to keep track of other miscellaneous information, this package requires that the `metadata.json` has a `course_info` object with the following keys (and their corresponding values):
+A `metadata.json` file can be used to keep track of information on the course-, assignment- and question-level. While additional arguments may be added to keep track of other miscellaneous information, this package requires that the `metadata.json` has a `course_info` object and a `rubric object`.
+
+The `course_info` object must have the following keys (and their corresponding values):
 
 - `department` : department abbreviation (e.g. "STAT", "DATA")
 - `course_number` : course number
@@ -35,9 +37,16 @@ A `metadata.json` file can be used to keep track of information on the course-, 
 - `mode_of_question` : mode of question (e.g. "fill in the blank", "open-ended")
 - `medium_of_answer` : medium of student's answer (e.g. "handwritten", "typed")
 - `content_of_answer` : expected content of student's answer (e.g. "English", "math", "code")
-- `scoring_type` : whether the scoring is positive (i.e. additive) or negative (i.e. subtractice)
+- `scoring_type` : whether the scoring is positive (i.e. additive) or negative (i.e. subtractive)
 - `is_proctored` : whether the assignment was taken in a proctored environment or if it was take-home
+- `n_submissions`: the number of student submissions, which can be programmatically updated with `update_scores_in_metadata()`
+- `mean_score`: the mean score of experts using, which can be programmatically updated with `update_scores_in_metadata()` (which uses `mean(experts$Score/max(experts$Score))`)
 
+
+The `rubric` object must have a `calibrated` rubric object and optionally an `uncalibrated` object that follows the same structure. A rubric object (either `calibrated` or `uncalibrated`) must have the following structure:
+
+  - `rubric_items` which is a nested list that has keys named as "R1", "R2", etc. with values as strings of the rubric description
+  - `scores`, which is a numbered vector that has the corresponding point value of rubric items "R1", "R2",...
 
 ``` yaml
 `r xfun::file_string(system.file("extdata", "metadata-calibrated.json", package = "GradingAccuracy"))`
@@ -61,7 +70,7 @@ Optionally, you can also use the `verbose` argument in order to print out the li
 validate_metadata_json(system.file("extdata", "metadata-calibrated.json", package = "GradingAccuracy"), verbose = T)
 ```
 
-## Potential Errors
+## `course_info`:Potential Errors
 
 ### Missing `course_info`
 
@@ -122,3 +131,5 @@ testthat::expect_error(validate_metadata_json(system.file("extdata", "wrong-bool
 ```{r, error = T}
 validate_metadata_json(system.file("extdata", "wrong-boolean.json", package = "GradingAccuracy"))
 ```
+
+## `rubric`:Potential Errors
