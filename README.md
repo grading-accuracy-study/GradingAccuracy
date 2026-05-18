@@ -1,63 +1,195 @@
 # Accuracy Calculations
 
-## Deidentifying Evaluations
+## Deidentifying PDF Submissions of Students
 
 Use this instructions on this [repo](https://github.com/nikita-jaya/DeIdentificationScripts) to deidentify Gradescope submissions.
 
-The following code will de-identify the exported evaluations of the original Gradescope submissions:
+## Load This Package
 
-```{r}
-deidentify_gradescope_evals(gs_csv_path, ids_csv_path, output_path)
+```{r, message = F, warning=F}
+remotes::install_github("grading-accuracy-study/GradingAccuracy")
+library(GradingAccuracy)
+library(tidyverse)
 ```
 
--   where `gs_csv_path` is the path to the original Gradescope evaluations
+## Check metadata JSON
 
--   `ids_csv_path` is the lookup-table
-
--   `output_path` is the path to where the de-identified original Gradescope evaluations will be saved as a .csv
-
-## Loading in Evaluations
-
-The following code loads in the evaluations and normalized the "Full credit." rubric item.
+Specify a folder where the de-identified, processed files are saved.
 
 ```{r}
-expert_evals <- read_evals(expert_csv_path) |>
-  normalize_full_credit(expert_rubric_items)
-
-student_evals <- read_evals(student_csv_path) |>
-  normalize_full_credit(student_rubric_items)
-
+exported_folder <- "./Midterm Exam/"
 ```
 
--   where `expert_csv_path` and `student_csv_path` are the paths to the de-identified Gradescope evaluations of the expert graders and student graders respectively
-
--   where `expert_rubric_items` and `student_rubric_items` are the vectors of which rubric items are equivalent to marking an assignment as "Full credit." for the expert evaluations and student evaluations respectively (Note that these vectors can be string vectors with the column names or numeric vectors with the column indices
-
-## Accuracy Calculations
-
-### Proportion of Identical Scores
-
-The following code will output the proportion of scores that are identical, the count of submissions that were compared, the average score of `expert_evals`, the average score of `student_evals`, and the average of the absolute difference between the two evaluations of the same assignment.
+Store the `metadata.json` in this folder, and check that it meets all formatting requirements
+using `validate_metadata_json()`.
 
 ```{r}
-identical_score_prop(expert_evals, student_evals)
+validate_metadata_json(paste0(exported_folder, "metadata.json"),
+                       verbose = T)
 ```
 
-### Mean Absolute Error
+## Processing Exports from a Deidentified Gradescope
 
-If we had a rubric with two items, both worth one point, the error contribution of one submission would be
+The following process is used for processing exports from a de-identified Gradescope.
+This means that the only identifiable data we are removing is the names of the graders.
+The students are already de-identified in the Gradescope prior to exporting. This is often
+relevant to the expert grades.
 
--   For expert answer {1, 0}
+The `roster_csv` is a csv file with a column for "Name", "Email" and a false "SID".
 
-    -   0 if grader is {1, 0}
+The following code using `deidentify_graders()` reads in the `original-experts.csv`, de-identifies the graders using the `roster.csv`,
+and exports the csv with deidentified graders and a lookup table for the real and fake names of the graders.
 
-    -   1 if grader is {0, 0} or {1, 1}
+```{r, message = F}
+roster_csv <- "../Roster.csv"
+deidentify_graders("original-experts.csv", roster_csv,
+                   "experts-calibrated.csv")
+```
 
-    -   2 if grader is {0, 1}
+## Normalize Full Credit
+
+It's occasionally necessary to normalize a full credit option.
+The following code using `normalize_full_credit()` does so by normalizing the full credit
+option to the equivalent rubric items and removing the full credit option.
 
 ```{r}
-rubric_mean_absolute_error(expert_evals, student_evals,
-                           rubric_matching_list)
+students <- read_evals("students-uncalibrated.csv") 
+students <- normalize_full_credit(students, full_credit = 4,
+                      rubric_items = c(5:8))
+# remove full credit + rubric items
+students <- students[, -c(4, 9:11)]
+write_csv(students, "students-uncalibrated.csv")
 ```
 
--   where `rubric_matching_list` is an R list with two vector of corresponding rubric items from each evaluation
+
+Then, we use `generate_rubric_texts()` to create a `rubric_items.csv` that has the original rubric items
+and their mapping to the "R1", "R2" structure. This function also changes the headers of the `experts-calibrated.csv`
+to the "R1", "R2" structure and saves it in the `exported_folder`. For the first
+grades that are processed, `existing` should be false to create a new `rubric_items.csv` file
+and true afterwards to keep updating.
+
+```{r}
+expert <- generate_rubric_texts(csv_path = "experts-calibrated.csv",
+                                 output_folder =exported_folder,
+                                 existing = F)
+```
+
+The following code is some additional data-processing to remove unnecessary columns.
+
+```{r}
+read_evals(paste0(exported_folder, "experts-calibrated.csv")) |>
+  select(Name, SID, Score:Tags) |>
+  write_csv(paste0(exported_folder, "experts-calibrated.csv"))
+```
+
+The `update_scores()` function updates the "Score" column in the `experts-calibrated.csv`
+based on the point-values from the `metadata.json`. Remember to specify whether you want to overwrite
+the original csv and/or if you want to use the `calibrated` or `uncalibrated` rubric.
+
+```{r}
+expert <- update_scores(csv = paste0(exported_folder, "experts-calibrated.csv"),
+              metadata = paste0(exported_folder, "metadata.json"),
+              overwrite = T, calibrated = T)
+```
+
+
+## Processing Exports from the Original Gradescope
+
+The following process is used for processing exports from the original Gradescope.
+This means that we are removing is the names of the students.
+This is often relevant to the student grades.
+
+We use `deidentify_gradescope_evals()` to take the original export `original-students-calibrated.csv` and
+deidentify using the `deidentified-lookup-table.csv`, so they can be mapped to the other
+deidentified grades. The deidentified grades are exported to `students-calibrated.csv`.
+
+```{r, message = F}
+deidentify_gradescope_evals("original-students-calibrated.csv", 
+                            "deidentified-lookup-table.csv",
+                            "students-calibrated.csv")
+```
+
+We similarly use `generate_rubric_texts()` to change the headers into the "R1", "R2" structure.
+Since the `existing` argument defaults to false, this will add another row to the `rubric-items.csv`.
+
+```{r, message = F}
+student <- generate_rubric_texts(csv_path = "students-calibrated.csv",
+                                 output_folder =exported_folder)
+```
+We drop NA values from the SID column because there are often student grades that are unused
+for this study (due to random sampling or invalid submissions).
+
+```{r}
+read_evals(paste0(exported_folder, "students-calibrated.csv")) |>
+  drop_na(SID) |>
+  write_csv(paste0(exported_folder, "students-calibrated.csv"))
+```
+
+We similarly update the scores using the metadata point-values using `update_scores()`.
+
+```{r}
+student <- update_scores(csv = paste0(exported_folder, "students-calibrated.csv"),
+              metadata = paste0(exported_folder, "metadata.json"),
+              overwrite = T, calibrated = T)
+```
+
+Additionally, we can now use `update_scores_in_metadata()` to update the `n_submissions` and `mean_score`. 
+While these metrics are computed based on the expert grades, there is a check to make sure that there is 
+an equal number of students in the student-graded and expert-graded exports.
+
+```{r}
+update_scores_in_metadata(folder = exported_folder,
+                          file = paste0(exported_folder, "metadata.json"))
+```
+
+### Processing Exports from Pensive
+
+Pensive exports have slight deviations from the Gradescope exports and hence require unique data processing.
+
+Pensive requires manual de-identification with the following code:
+
+```{r, message = F}
+roster_pensieve <- read_csv("../Roster_Pensieve.csv")
+roster <- read_csv(roster_csv) |>
+  rbind(roster_pensieve)
+# add SID
+read_csv("original-pensive-calibrated.csv") |>
+  left_join(roster, by = c("Name", "Email")) |>
+  relocate(SID) |>
+  write_csv("pensive-calibrated.csv")
+```
+
+We once again use `generate_rubric_texts()`, but note the slightly different arguments.
+
+```{r, message = F}
+pensieve <- generate_rubric_texts("pensive-calibrated.csv",
+                                  ignored_nrows = 0, 
+                                  pensieve = T,
+                                  exported_folder)
+```
+
+We remove unnecessary columns.
+
+```{r, message = F}
+read_csv(paste0(exported_folder, "pensive-calibrated.csv")) |>
+  select(-c(`Assignment ID`, `Problem ID`, Email)) |>
+  write_csv(paste0(exported_folder, "pensive-calibrated.csv")) 
+```
+
+Finally, we update the scores using the metadata point-values using `update_scores()`.
+
+```{r}
+pensive <- update_scores(csv = paste0(exported_folder, "pensive-calibrated.csv"),
+              metadata = paste0(exported_folder, "metadata.json"),
+              overwrite = T, calibrated = T)
+```
+
+## A Final Check
+
+As a final check, it's useful to make sure that all SIDs across all files are present uniformly.
+
+```{r}
+identical(sort(expert$SID),sort(pensive$SID))
+identical(sort(expert$SID),sort(student$SID))
+identical(sort(student$SID),sort(pensive$SID))
+```
