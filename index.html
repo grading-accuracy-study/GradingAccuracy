@@ -54,55 +54,75 @@
 <div class="page-header"><h1 id="accuracy-calculations">Accuracy Calculations<a class="anchor" aria-label="anchor" href="#accuracy-calculations"></a>
 </h1></div>
 <div class="section level2">
-<h2 id="deidentifying-evaluations">Deidentifying Evaluations<a class="anchor" aria-label="anchor" href="#deidentifying-evaluations"></a>
+<h2 id="deidentifying-pdf-submissions-of-students">Deidentifying PDF Submissions of Students<a class="anchor" aria-label="anchor" href="#deidentifying-pdf-submissions-of-students"></a>
 </h2>
 <p>Use this instructions on this <a href="https://github.com/nikita-jaya/DeIdentificationScripts" class="external-link">repo</a> to deidentify Gradescope submissions.</p>
-<p>The following code will de-identify the exported evaluations of the original Gradescope submissions:</p>
-<p><code>{r} deidentify_gradescope_evals(gs_csv_path, ids_csv_path, output_path)</code></p>
-<ul>
-<li><p>where <code>gs_csv_path</code> is the path to the original Gradescope evaluations</p></li>
-<li><p><code>ids_csv_path</code> is the lookup-table</p></li>
-<li><p><code>output_path</code> is the path to where the de-identified original Gradescope evaluations will be saved as a .csv</p></li>
-</ul>
 </div>
 <div class="section level2">
-<h2 id="loading-in-evaluations">Loading in Evaluations<a class="anchor" aria-label="anchor" href="#loading-in-evaluations"></a>
+<h2 id="load-this-package">Load This Package<a class="anchor" aria-label="anchor" href="#load-this-package"></a>
 </h2>
-<p>The following code loads in the evaluations and normalized the “Full credit.” rubric item.</p>
-<p>```{r} expert_evals &lt;- read_evals(expert_csv_path) |&gt; normalize_full_credit(expert_rubric_items)</p>
-<p>student_evals &lt;- read_evals(student_csv_path) |&gt; normalize_full_credit(student_rubric_items)</p>
-<pre><code>
--   where `expert_csv_path` and `student_csv_path` are the paths to the de-identified Gradescope evaluations of the expert graders and student graders respectively
-
--   where `expert_rubric_items` and `student_rubric_items` are the vectors of which rubric items are equivalent to marking an assignment as "Full credit." for the expert evaluations and student evaluations respectively (Note that these vectors can be string vectors with the column names or numeric vectors with the column indices
-
-## Accuracy Calculations
-
-### Proportion of Identical Scores
-
-The following code will output the proportion of scores that are identical, the count of submissions that were compared, the average score of `expert_evals`, the average score of `student_evals`, and the average of the absolute difference between the two evaluations of the same assignment.
-
-```{r}
-identical_score_prop(expert_evals, student_evals)</code></pre>
-<div class="section level3">
-<h3 id="mean-absolute-error">Mean Absolute Error<a class="anchor" aria-label="anchor" href="#mean-absolute-error"></a>
-</h3>
-<p>If we had a rubric with two items, both worth one point, the error contribution of one submission would be</p>
-<ul>
-<li>
-<p>For expert answer {1, 0}</p>
-<ul>
-<li><p>0 if grader is {1, 0}</p></li>
-<li><p>1 if grader is {0, 0} or {1, 1}</p></li>
-<li><p>2 if grader is {0, 1}</p></li>
-</ul>
-</li>
-</ul>
-<p><code>{r} rubric_mean_absolute_error(expert_evals, student_evals,                            rubric_matching_list)</code></p>
-<ul>
-<li>where <code>rubric_matching_list</code> is an R list with two vector of corresponding rubric items from each evaluation</li>
-</ul>
+<p><code>{r, message = F, warning=F} remotes::install_github("grading-accuracy-study/GradingAccuracy") library(GradingAccuracy) library(tidyverse)</code></p>
 </div>
+<div class="section level2">
+<h2 id="check-metadata-json">Check metadata JSON<a class="anchor" aria-label="anchor" href="#check-metadata-json"></a>
+</h2>
+<p>Specify a folder where the de-identified, processed files are saved.</p>
+<p><code>{r} exported_folder &lt;- "./Midterm Exam/"</code></p>
+<p>Store the <code>metadata.json</code> in this folder, and check that it meets all formatting requirements using <code><a href="reference/validate_metadata_json.html">validate_metadata_json()</a></code>.</p>
+<p><code>{r} validate_metadata_json(paste0(exported_folder, "metadata.json"),                        verbose = T)</code></p>
+</div>
+<div class="section level2">
+<h2 id="processing-exports-from-a-deidentified-gradescope">Processing Exports from a Deidentified Gradescope<a class="anchor" aria-label="anchor" href="#processing-exports-from-a-deidentified-gradescope"></a>
+</h2>
+<p>The following process is used for processing exports from a de-identified Gradescope. This means that the only identifiable data we are removing is the names of the graders. The students are already de-identified in the Gradescope prior to exporting. This is often relevant to the expert grades.</p>
+<p>The <code>roster_csv</code> is a csv file with a column for “Name”, “Email” and a false “SID”.</p>
+<p>The following code using <code><a href="reference/deidentify_graders.html">deidentify_graders()</a></code> reads in the <code>original-experts.csv</code>, de-identifies the graders using the <code>roster.csv</code>, and exports the csv with deidentified graders and a lookup table for the real and fake names of the graders.</p>
+<p><code>{r, message = F} roster_csv &lt;- "../Roster.csv" deidentify_graders("original-experts.csv", roster_csv,                    "experts-calibrated.csv")</code></p>
+</div>
+<div class="section level2">
+<h2 id="normalize-full-credit">Normalize Full Credit<a class="anchor" aria-label="anchor" href="#normalize-full-credit"></a>
+</h2>
+<p>It’s occasionally necessary to normalize a full credit option. The following code using <code><a href="reference/normalize_full_credit.html">normalize_full_credit()</a></code> does so by normalizing the full credit option to the equivalent rubric items and removing the full credit option.</p>
+<p><code>{r} students &lt;- read_evals("students-uncalibrated.csv")  students &lt;- normalize_full_credit(students, full_credit = 4,                       rubric_items = c(5:8)) # remove full credit + rubric items students &lt;- students[, -c(4, 9:11)] write_csv(students, "students-uncalibrated.csv")</code></p>
+<p>Then, we use <code><a href="reference/generate_rubric_texts.html">generate_rubric_texts()</a></code> to create a <code>rubric_items.csv</code> that has the original rubric items and their mapping to the “R1”, “R2” structure. This function also changes the headers of the <code>experts-calibrated.csv</code> to the “R1”, “R2” structure and saves it in the <code>exported_folder</code>. For the first grades that are processed, <code>existing</code> should be false to create a new <code>rubric_items.csv</code> file and true afterwards to keep updating.</p>
+<p><code>{r} expert &lt;- generate_rubric_texts(csv_path = "experts-calibrated.csv",                                  output_folder =exported_folder,                                  existing = F)</code></p>
+<p>The following code is some additional data-processing to remove unnecessary columns.</p>
+<p><code>{r} read_evals(paste0(exported_folder, "experts-calibrated.csv")) |&gt;   select(Name, SID, Score:Tags) |&gt;   write_csv(paste0(exported_folder, "experts-calibrated.csv"))</code></p>
+<p>The <code><a href="reference/update_scores.html">update_scores()</a></code> function updates the “Score” column in the <code>experts-calibrated.csv</code> based on the point-values from the <code>metadata.json</code>. Remember to specify whether you want to overwrite the original csv and/or if you want to use the <code>calibrated</code> or <code>uncalibrated</code> rubric.</p>
+<p><code>{r} expert &lt;- update_scores(csv = paste0(exported_folder, "experts-calibrated.csv"),               metadata = paste0(exported_folder, "metadata.json"),               overwrite = T, calibrated = T)</code></p>
+</div>
+<div class="section level2">
+<h2 id="processing-exports-from-the-original-gradescope">Processing Exports from the Original Gradescope<a class="anchor" aria-label="anchor" href="#processing-exports-from-the-original-gradescope"></a>
+</h2>
+<p>The following process is used for processing exports from the original Gradescope. This means that we are removing is the names of the students. This is often relevant to the student grades.</p>
+<p>We use <code><a href="reference/deidentify_gradescope_evals.html">deidentify_gradescope_evals()</a></code> to take the original export <code>original-students-calibrated.csv</code> and deidentify using the <code>deidentified-lookup-table.csv</code>, so they can be mapped to the other deidentified grades. The deidentified grades are exported to <code>students-calibrated.csv</code>.</p>
+<p><code>{r, message = F} deidentify_gradescope_evals("original-students-calibrated.csv",                              "deidentified-lookup-table.csv",                             "students-calibrated.csv")</code></p>
+<p>We similarly use <code><a href="reference/generate_rubric_texts.html">generate_rubric_texts()</a></code> to change the headers into the “R1”, “R2” structure. Since the <code>existing</code> argument defaults to false, this will add another row to the <code>rubric-items.csv</code>.</p>
+<p><code>{r, message = F} student &lt;- generate_rubric_texts(csv_path = "students-calibrated.csv",                                  output_folder =exported_folder)</code> We drop NA values from the SID column because there are often student grades that are unused for this study (due to random sampling or invalid submissions).</p>
+<p><code>{r} read_evals(paste0(exported_folder, "students-calibrated.csv")) |&gt;   drop_na(SID) |&gt;   write_csv(paste0(exported_folder, "students-calibrated.csv"))</code></p>
+<p>We similarly update the scores using the metadata point-values using <code><a href="reference/update_scores.html">update_scores()</a></code>.</p>
+<p><code>{r} student &lt;- update_scores(csv = paste0(exported_folder, "students-calibrated.csv"),               metadata = paste0(exported_folder, "metadata.json"),               overwrite = T, calibrated = T)</code></p>
+<p>Additionally, we can now use <code><a href="reference/update_scores_in_metadata.html">update_scores_in_metadata()</a></code> to update the <code>n_submissions</code> and <code>mean_score</code>. While these metrics are computed based on the expert grades, there is a check to make sure that there is an equal number of students in the student-graded and expert-graded exports.</p>
+<p><code>{r} update_scores_in_metadata(folder = exported_folder,                           file = paste0(exported_folder, "metadata.json"))</code></p>
+<div class="section level3">
+<h3 id="processing-exports-from-pensive">Processing Exports from Pensive<a class="anchor" aria-label="anchor" href="#processing-exports-from-pensive"></a>
+</h3>
+<p>Pensive exports have slight deviations from the Gradescope exports and hence require unique data processing.</p>
+<p>Pensive requires manual de-identification with the following code:</p>
+<p><code>{r, message = F} roster_pensieve &lt;- read_csv("../Roster_Pensieve.csv") roster &lt;- read_csv(roster_csv) |&gt;   rbind(roster_pensieve) # add SID read_csv("original-pensive-calibrated.csv") |&gt;   left_join(roster, by = c("Name", "Email")) |&gt;   relocate(SID) |&gt;   write_csv("pensive-calibrated.csv")</code></p>
+<p>We once again use <code><a href="reference/generate_rubric_texts.html">generate_rubric_texts()</a></code>, but note the slightly different arguments.</p>
+<p><code>{r, message = F} pensieve &lt;- generate_rubric_texts("pensive-calibrated.csv",                                   ignored_nrows = 0,                                    pensieve = T,                                   exported_folder)</code></p>
+<p>We remove unnecessary columns.</p>
+<p><code>{r, message = F} read_csv(paste0(exported_folder, "pensive-calibrated.csv")) |&gt;   select(-c(`Assignment ID`, `Problem ID`, Email)) |&gt;   write_csv(paste0(exported_folder, "pensive-calibrated.csv"))</code></p>
+<p>Finally, we update the scores using the metadata point-values using <code><a href="reference/update_scores.html">update_scores()</a></code>.</p>
+<p><code>{r} pensive &lt;- update_scores(csv = paste0(exported_folder, "pensive-calibrated.csv"),               metadata = paste0(exported_folder, "metadata.json"),               overwrite = T, calibrated = T)</code></p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="a-final-check">A Final Check<a class="anchor" aria-label="anchor" href="#a-final-check"></a>
+</h2>
+<p>As a final check, it’s useful to make sure that all SIDs across all files are present uniformly.</p>
+<p><code>{r} identical(sort(expert$SID),sort(pensive$SID)) identical(sort(expert$SID),sort(student$SID)) identical(sort(student$SID),sort(pensive$SID))</code></p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">
