@@ -61,15 +61,21 @@
 <div class="section level2">
 <h2 id="load-this-package">Load This Package<a class="anchor" aria-label="anchor" href="#load-this-package"></a>
 </h2>
-<p><code>{r, message = F, warning=F} remotes::install_github("grading-accuracy-study/GradingAccuracy") library(GradingAccuracy) library(tidyverse)</code></p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"grading-accuracy-study/GradingAccuracy"</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://grading-accuracy-study.github.io/GradingAccuracy/">GradingAccuracy</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="check-metadata-json">Check metadata JSON<a class="anchor" aria-label="anchor" href="#check-metadata-json"></a>
 </h2>
 <p>Specify a folder where the de-identified, processed files are saved.</p>
-<p><code>{r} exported_folder &lt;- "./Midterm Exam/"</code></p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">exported_folder</span> <span class="op">&lt;-</span> <span class="st">"./Midterm Exam/"</span></span></code></pre></div>
 <p>Store the <code>metadata.json</code> in this folder, and check that it meets all formatting requirements using <code><a href="reference/validate_metadata_json.html">validate_metadata_json()</a></code>.</p>
-<p><code>{r} validate_metadata_json(paste0(exported_folder, "metadata.json"),                        verbose = T)</code></p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/validate_metadata_json.html">validate_metadata_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">exported_folder</span>, <span class="st">"metadata.json"</span><span class="op">)</span>,</span>
+<span>                       verbose <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="processing-exports-from-a-deidentified-gradescope">Processing Exports from a Deidentified Gradescope<a class="anchor" aria-label="anchor" href="#processing-exports-from-a-deidentified-gradescope"></a>
@@ -77,52 +83,105 @@
 <p>The following process is used for processing exports from a de-identified Gradescope. This means that the only identifiable data we are removing is the names of the graders. The students are already de-identified in the Gradescope prior to exporting. This is often relevant to the expert grades.</p>
 <p>The <code>roster_csv</code> is a csv file with a column for “Name”, “Email” and a false “SID”.</p>
 <p>The following code using <code><a href="reference/deidentify_graders.html">deidentify_graders()</a></code> reads in the <code>original-experts.csv</code>, de-identifies the graders using the <code>roster.csv</code>, and exports the csv with deidentified graders and a lookup table for the real and fake names of the graders.</p>
-<p><code>{r, message = F} roster_csv &lt;- "../Roster.csv" deidentify_graders("original-experts.csv", roster_csv,                    "experts-calibrated.csv")</code></p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">roster_csv</span> <span class="op">&lt;-</span> <span class="st">"../Roster.csv"</span></span>
+<span><span class="fu"><a href="reference/deidentify_graders.html">deidentify_graders</a></span><span class="op">(</span><span class="st">"original-experts.csv"</span>, <span class="va">roster_csv</span>,</span>
+<span>                   <span class="st">"experts-calibrated.csv"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="normalize-full-credit">Normalize Full Credit<a class="anchor" aria-label="anchor" href="#normalize-full-credit"></a>
 </h2>
 <p>It’s occasionally necessary to normalize a full credit option. The following code using <code><a href="reference/normalize_full_credit.html">normalize_full_credit()</a></code> does so by normalizing the full credit option to the equivalent rubric items and removing the full credit option.</p>
-<p><code>{r} students &lt;- read_evals("students-uncalibrated.csv")  students &lt;- normalize_full_credit(students, full_credit = 4,                       rubric_items = c(5:8)) # remove full credit + rubric items students &lt;- students[, -c(4, 9:11)] write_csv(students, "students-uncalibrated.csv")</code></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">students</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_evals.html">read_evals</a></span><span class="op">(</span><span class="st">"students-uncalibrated.csv"</span><span class="op">)</span> </span>
+<span><span class="va">students</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/normalize_full_credit.html">normalize_full_credit</a></span><span class="op">(</span><span class="va">students</span>, full_credit <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>                      rubric_items <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># remove full credit + rubric items</span></span>
+<span><span class="va">students</span> <span class="op">&lt;-</span> <span class="va">students</span><span class="op">[</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">9</span><span class="op">:</span><span class="fl">11</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="fu">write_csv</span><span class="op">(</span><span class="va">students</span>, <span class="st">"students-uncalibrated.csv"</span><span class="op">)</span></span></code></pre></div>
 <p>Then, we use <code><a href="reference/generate_rubric_texts.html">generate_rubric_texts()</a></code> to create a <code>rubric_items.csv</code> that has the original rubric items and their mapping to the “R1”, “R2” structure. This function also changes the headers of the <code>experts-calibrated.csv</code> to the “R1”, “R2” structure and saves it in the <code>exported_folder</code>. For the first grades that are processed, <code>existing</code> should be false to create a new <code>rubric_items.csv</code> file and true afterwards to keep updating.</p>
-<p><code>{r} expert &lt;- generate_rubric_texts(csv_path = "experts-calibrated.csv",                                  output_folder =exported_folder,                                  existing = F)</code></p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">expert</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/generate_rubric_texts.html">generate_rubric_texts</a></span><span class="op">(</span>csv_path <span class="op">=</span> <span class="st">"experts-calibrated.csv"</span>,</span>
+<span>                                 output_folder <span class="op">=</span><span class="va">exported_folder</span>,</span>
+<span>                                 existing <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <p>The following code is some additional data-processing to remove unnecessary columns.</p>
-<p><code>{r} read_evals(paste0(exported_folder, "experts-calibrated.csv")) |&gt;   select(Name, SID, Score:Tags) |&gt;   write_csv(paste0(exported_folder, "experts-calibrated.csv"))</code></p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/read_evals.html">read_evals</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">exported_folder</span>, <span class="st">"experts-calibrated.csv"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">Name</span>, <span class="va">SID</span>, <span class="va">Score</span><span class="op">:</span><span class="va">Tags</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">write_csv</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">exported_folder</span>, <span class="st">"experts-calibrated.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>The <code><a href="reference/update_scores.html">update_scores()</a></code> function updates the “Score” column in the <code>experts-calibrated.csv</code> based on the point-values from the <code>metadata.json</code>. Remember to specify whether you want to overwrite the original csv and/or if you want to use the <code>calibrated</code> or <code>uncalibrated</code> rubric.</p>
-<p><code>{r} expert &lt;- update_scores(csv = paste0(exported_folder, "experts-calibrated.csv"),               metadata = paste0(exported_folder, "metadata.json"),               overwrite = T, calibrated = T)</code></p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">expert</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/update_scores.html">update_scores</a></span><span class="op">(</span>csv <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">exported_folder</span>, <span class="st">"experts-calibrated.csv"</span><span class="op">)</span>,</span>
+<span>              metadata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">exported_folder</span>, <span class="st">"metadata.json"</span><span class="op">)</span>,</span>
+<span>              overwrite <span class="op">=</span> <span class="cn">T</span>, calibrated <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="processing-exports-from-the-original-gradescope">Processing Exports from the Original Gradescope<a class="anchor" aria-label="anchor" href="#processing-exports-from-the-original-gradescope"></a>
 </h2>
 <p>The following process is used for processing exports from the original Gradescope. This means that we are removing is the names of the students. This is often relevant to the student grades.</p>
 <p>We use <code><a href="reference/deidentify_gradescope_evals.html">deidentify_gradescope_evals()</a></code> to take the original export <code>original-students-calibrated.csv</code> and deidentify using the <code>deidentified-lookup-table.csv</code>, so they can be mapped to the other deidentified grades. The deidentified grades are exported to <code>students-calibrated.csv</code>.</p>
-<p><code>{r, message = F} deidentify_gradescope_evals("original-students-calibrated.csv",                              "deidentified-lookup-table.csv",                             "students-calibrated.csv")</code></p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/deidentify_gradescope_evals.html">deidentify_gradescope_evals</a></span><span class="op">(</span><span class="st">"original-students-calibrated.csv"</span>, </span>
+<span>                            <span class="st">"deidentified-lookup-table.csv"</span>,</span>
+<span>                            <span class="st">"students-calibrated.csv"</span><span class="op">)</span></span></code></pre></div>
 <p>We similarly use <code><a href="reference/generate_rubric_texts.html">generate_rubric_texts()</a></code> to change the headers into the “R1”, “R2” structure. Since the <code>existing</code> argument defaults to false, this will add another row to the <code>rubric-items.csv</code>.</p>
-<p><code>{r, message = F} student &lt;- generate_rubric_texts(csv_path = "students-calibrated.csv",                                  output_folder =exported_folder)</code> We drop NA values from the SID column because there are often student grades that are unused for this study (due to random sampling or invalid submissions).</p>
-<p><code>{r} read_evals(paste0(exported_folder, "students-calibrated.csv")) |&gt;   drop_na(SID) |&gt;   write_csv(paste0(exported_folder, "students-calibrated.csv"))</code></p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">student</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/generate_rubric_texts.html">generate_rubric_texts</a></span><span class="op">(</span>csv_path <span class="op">=</span> <span class="st">"students-calibrated.csv"</span>,</span>
+<span>                                 output_folder <span class="op">=</span><span class="va">exported_folder</span><span class="op">)</span></span></code></pre></div>
+<p>We drop NA values from the SID column because there are often student grades that are unused for this study (due to random sampling or invalid submissions).</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/read_evals.html">read_evals</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">exported_folder</span>, <span class="st">"students-calibrated.csv"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">drop_na</span><span class="op">(</span><span class="va">SID</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">write_csv</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">exported_folder</span>, <span class="st">"students-calibrated.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>We similarly update the scores using the metadata point-values using <code><a href="reference/update_scores.html">update_scores()</a></code>.</p>
-<p><code>{r} student &lt;- update_scores(csv = paste0(exported_folder, "students-calibrated.csv"),               metadata = paste0(exported_folder, "metadata.json"),               overwrite = T, calibrated = T)</code></p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">student</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/update_scores.html">update_scores</a></span><span class="op">(</span>csv <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">exported_folder</span>, <span class="st">"students-calibrated.csv"</span><span class="op">)</span>,</span>
+<span>              metadata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">exported_folder</span>, <span class="st">"metadata.json"</span><span class="op">)</span>,</span>
+<span>              overwrite <span class="op">=</span> <span class="cn">T</span>, calibrated <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 <p>Additionally, we can now use <code><a href="reference/update_scores_in_metadata.html">update_scores_in_metadata()</a></code> to update the <code>n_submissions</code> and <code>mean_score</code>. While these metrics are computed based on the expert grades, there is a check to make sure that there is an equal number of students in the student-graded and expert-graded exports.</p>
-<p><code>{r} update_scores_in_metadata(folder = exported_folder,                           file = paste0(exported_folder, "metadata.json"))</code></p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/update_scores_in_metadata.html">update_scores_in_metadata</a></span><span class="op">(</span>folder <span class="op">=</span> <span class="va">exported_folder</span>,</span>
+<span>                          file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">exported_folder</span>, <span class="st">"metadata.json"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="processing-exports-from-pensive">Processing Exports from Pensive<a class="anchor" aria-label="anchor" href="#processing-exports-from-pensive"></a>
 </h3>
 <p>Pensive exports have slight deviations from the Gradescope exports and hence require unique data processing.</p>
 <p>Pensive requires manual de-identification with the following code:</p>
-<p><code>{r, message = F} roster_pensieve &lt;- read_csv("../Roster_Pensieve.csv") roster &lt;- read_csv(roster_csv) |&gt;   rbind(roster_pensieve) # add SID read_csv("original-pensive-calibrated.csv") |&gt;   left_join(roster, by = c("Name", "Email")) |&gt;   relocate(SID) |&gt;   write_csv("pensive-calibrated.csv")</code></p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">roster_pensieve</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span><span class="st">"../Roster_Pensieve.csv"</span><span class="op">)</span></span>
+<span><span class="va">roster</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span><span class="va">roster_csv</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">roster_pensieve</span><span class="op">)</span></span>
+<span><span class="co"># add SID</span></span>
+<span><span class="fu">read_csv</span><span class="op">(</span><span class="st">"original-pensive-calibrated.csv"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">roster</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Name"</span>, <span class="st">"Email"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">relocate</span><span class="op">(</span><span class="va">SID</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">write_csv</span><span class="op">(</span><span class="st">"pensive-calibrated.csv"</span><span class="op">)</span></span></code></pre></div>
 <p>We once again use <code><a href="reference/generate_rubric_texts.html">generate_rubric_texts()</a></code>, but note the slightly different arguments.</p>
-<p><code>{r, message = F} pensieve &lt;- generate_rubric_texts("pensive-calibrated.csv",                                   ignored_nrows = 0,                                    pensieve = T,                                   exported_folder)</code></p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pensieve</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/generate_rubric_texts.html">generate_rubric_texts</a></span><span class="op">(</span><span class="st">"pensive-calibrated.csv"</span>,</span>
+<span>                                  ignored_nrows <span class="op">=</span> <span class="fl">0</span>, </span>
+<span>                                  pensieve <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>                                  <span class="va">exported_folder</span><span class="op">)</span></span></code></pre></div>
 <p>We remove unnecessary columns.</p>
-<p><code>{r, message = F} read_csv(paste0(exported_folder, "pensive-calibrated.csv")) |&gt;   select(-c(`Assignment ID`, `Problem ID`, Email)) |&gt;   write_csv(paste0(exported_folder, "pensive-calibrated.csv"))</code></p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">read_csv</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">exported_folder</span>, <span class="st">"pensive-calibrated.csv"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">`Assignment ID`</span>, <span class="va">`Problem ID`</span>, <span class="va">Email</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">write_csv</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">exported_folder</span>, <span class="st">"pensive-calibrated.csv"</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
 <p>Finally, we update the scores using the metadata point-values using <code><a href="reference/update_scores.html">update_scores()</a></code>.</p>
-<p><code>{r} pensive &lt;- update_scores(csv = paste0(exported_folder, "pensive-calibrated.csv"),               metadata = paste0(exported_folder, "metadata.json"),               overwrite = T, calibrated = T)</code></p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pensive</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/update_scores.html">update_scores</a></span><span class="op">(</span>csv <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">exported_folder</span>, <span class="st">"pensive-calibrated.csv"</span><span class="op">)</span>,</span>
+<span>              metadata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">exported_folder</span>, <span class="st">"metadata.json"</span><span class="op">)</span>,</span>
+<span>              overwrite <span class="op">=</span> <span class="cn">T</span>, calibrated <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="a-final-check">A Final Check<a class="anchor" aria-label="anchor" href="#a-final-check"></a>
 </h2>
 <p>As a final check, it’s useful to make sure that all SIDs across all files are present uniformly.</p>
-<p><code>{r} identical(sort(expert$SID),sort(pensive$SID)) identical(sort(expert$SID),sort(student$SID)) identical(sort(student$SID),sort(pensive$SID))</code></p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">expert</span><span class="op">$</span><span class="va">SID</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">pensive</span><span class="op">$</span><span class="va">SID</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">expert</span><span class="op">$</span><span class="va">SID</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">student</span><span class="op">$</span><span class="va">SID</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">student</span><span class="op">$</span><span class="va">SID</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">pensive</span><span class="op">$</span><span class="va">SID</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">
