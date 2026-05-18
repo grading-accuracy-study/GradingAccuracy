@@ -142,6 +142,10 @@ description</li>
 <code>scores</code>, which is a numbered vector that has the
 corresponding point value of rubric items “R1”, “R2”,…</li>
 </ul>
+<div class="section level3">
+<h3 id="correct-metadata-json-with-only-a-calibrated-rubric">Correct Metadata.json with only a <code>calibrated</code>
+rubric<a class="anchor" aria-label="anchor" href="#correct-metadata-json-with-only-a-calibrated-rubric"></a>
+</h3>
 <div class="sourceCode" id="cb2"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="kw">{</span></span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="at">  </span><span class="fu">"course_info"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="at">    </span><span class="fu">"department"</span><span class="kw">:</span><span class="at"> </span><span class="st">"STAT"</span><span class="kw">,</span></span>
@@ -175,6 +179,51 @@ corresponding point value of rubric items “R1”, “R2”,…</li>
 <span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
 <span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
 </div>
+<div class="section level3">
+<h3 id="correct-metadata-json-with-a-calibrated-and-uncalibratedrubric">Correct Metadata.json with a <code>calibrated</code> and
+<code>uncalibrated</code>rubric<a class="anchor" aria-label="anchor" href="#correct-metadata-json-with-a-calibrated-and-uncalibratedrubric"></a>
+</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="at">  </span><span class="fu">"course_info"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="at">    </span><span class="fu">"department"</span><span class="kw">:</span><span class="at"> </span><span class="st">"STAT"</span><span class="kw">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_number"</span><span class="kw">:</span><span class="at"> </span><span class="st">"001"</span><span class="kw">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Introduction to Statistics"</span><span class="kw">,</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="at">    </span><span class="fu">"upper_div"</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span><span class="kw">,</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="at">    </span><span class="fu">"year"</span><span class="kw">:</span><span class="at"> </span><span class="dv">2020</span><span class="kw">,</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="at">    </span><span class="fu">"semester"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fall"</span><span class="kw">,</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="at">    </span><span class="fu">"assignment_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Midterm Exam"</span><span class="kw">,</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="at">    </span><span class="fu">"question_number"</span><span class="kw">:</span><span class="at"> </span><span class="st">"12a"</span><span class="kw">,</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="at">    </span><span class="fu">"question_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Calculate Expected Value"</span><span class="kw">,</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="at">    </span><span class="fu">"mode_of_question"</span><span class="kw">:</span><span class="at"> </span><span class="st">"open-ended"</span><span class="kw">,</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="at">    </span><span class="fu">"medium_of_answer"</span><span class="kw">:</span><span class="at"> </span><span class="st">"handwritten"</span><span class="kw">,</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="at">    </span><span class="fu">"content_of_answer"</span><span class="kw">:</span><span class="at"> </span><span class="st">"math"</span><span class="kw">,</span></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="at">    </span><span class="fu">"scoring_type"</span><span class="kw">:</span><span class="at"> </span><span class="st">"positive"</span><span class="kw">,</span></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="at">    </span><span class="fu">"is_proctored"</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span><span class="kw">,</span></span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="at">    </span><span class="fu">"n_submissions"</span><span class="kw">:</span><span class="at"> </span><span class="dv">0</span><span class="kw">,</span></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="at">    </span><span class="fu">"mean_score"</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.0</span></span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="at">  </span><span class="kw">},</span></span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="at">  </span><span class="fu">"rubric"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="at">    </span><span class="fu">"calibrated"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="at">      </span><span class="fu">"rubric_items"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="at">        </span><span class="fu">"R1"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fully credit."</span><span class="kw">,</span></span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="at">        </span><span class="fu">"R2"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Stated correct equation for expected value."</span><span class="kw">,</span></span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a><span class="at">        </span><span class="fu">"R3"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Some work in the right direction"</span><span class="kw">,</span></span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a><span class="at">        </span><span class="fu">"R4"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Incorrect."</span></span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a><span class="at">      </span><span class="kw">},</span></span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a><span class="at">      </span><span class="fu">"scores"</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="fl">1.0</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.5</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.5</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.0</span><span class="kw">]</span></span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a><span class="at">    </span><span class="kw">},</span></span>
+<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a><span class="at">    </span><span class="fu">"uncalibrated"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a><span class="at">      </span><span class="fu">"rubric_items"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a><span class="at">        </span><span class="fu">"R1"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fully credit."</span><span class="kw">,</span></span>
+<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a><span class="at">        </span><span class="fu">"R2"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Started correct approach, but incorrect solution."</span><span class="kw">,</span></span>
+<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a><span class="at">        </span><span class="fu">"R3"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Some work in the right direction"</span></span>
+<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a><span class="at">      </span><span class="kw">},</span></span>
+<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a><span class="at">      </span><span class="fu">"scores"</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="fl">1.0</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.5</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.25</span><span class="kw">]</span></span>
+<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a><span class="at">    </span><span class="kw">}</span></span>
+<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
+<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
+</div>
+</div>
 <div class="section level2">
 <h2 id="validating-a-metadata-json">Validating a metadata.json<a class="anchor" aria-label="anchor" href="#validating-a-metadata-json"></a>
 </h2>
@@ -186,13 +235,13 @@ formatted.</p>
 </h3>
 <p>If you have a correct <code>metadata.json</code> file, like the
 example file above, you will receive the following message:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/validate_metadata_json.html">validate_metadata_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"metadata-calibrated.json"</span>, package <span class="op">=</span> <span class="st">"GradingAccuracy"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> The following file is successfully validated: <span style="color: #0000BB;">/home/runner/work/_temp/Library/GradingAccuracy/extdata/metadata-calibrated.json</span></span></span></code></pre></div>
 <p>Optionally, you can also use the <code>verbose</code> argument in
 order to print out the listed course and assignment information stored
 in this JSON file:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/validate_metadata_json.html">validate_metadata_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"metadata-calibrated.json"</span>, package <span class="op">=</span> <span class="st">"GradingAccuracy"</span><span class="op">)</span>, verbose <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> The following file is successfully validated: <span style="color: #0000BB;">/home/runner/work/_temp/Library/GradingAccuracy/extdata/metadata-calibrated.json</span></span></span>
 <span><span class="co">#&gt; </span></span>
@@ -206,23 +255,23 @@ in this JSON file:</p>
 <span><span class="co">#&gt; • Content of Answer: math</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="course_infopotential-errors">
-<code>course_info</code>:Potential Errors<a class="anchor" aria-label="anchor" href="#course_infopotential-errors"></a>
+<h3 id="course_info-potential-errors">
+<code>course_info</code>: Potential Errors<a class="anchor" aria-label="anchor" href="#course_info-potential-errors"></a>
 </h3>
 <div class="section level4">
 <h4 id="missing-course_info">Missing <code>course_info</code><a class="anchor" aria-label="anchor" href="#missing-course_info"></a>
 </h4>
 <p>For example, if you are missing the <code>course_info</code>
 argument, like in the JSON file below:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="kw">{</span></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="at">  </span><span class="fu">"course"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="at">    </span><span class="fu">"department"</span><span class="kw">:</span><span class="at"> </span><span class="st">"STAT"</span><span class="kw">,</span></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_number"</span><span class="kw">:</span><span class="at"> </span><span class="st">"001"</span><span class="kw">,</span></span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Introduction to Statistics"</span></span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="at">  </span><span class="fu">"course"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="at">    </span><span class="fu">"department"</span><span class="kw">:</span><span class="at"> </span><span class="st">"STAT"</span><span class="kw">,</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_number"</span><span class="kw">:</span><span class="at"> </span><span class="st">"001"</span><span class="kw">,</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Introduction to Statistics"</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
 <p>you will get the following error:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/validate_metadata_json.html">validate_metadata_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"missing-course-info.json"</span>, package <span class="op">=</span> <span class="st">"GradingAccuracy"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `validate_metadata_json()`:</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> The course_info argument is missing from the following file:</span></span>
@@ -233,23 +282,23 @@ argument, like in the JSON file below:</p>
 </h4>
 <p>If you are missing the required keys, like in the JSON file
 below:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="kw">{</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="at">  </span><span class="fu">"course_info"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="at">    </span><span class="fu">"department"</span><span class="kw">:</span><span class="at"> </span><span class="st">"STAT"</span><span class="kw">,</span></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_number"</span><span class="kw">:</span><span class="at"> </span><span class="st">"001"</span><span class="kw">,</span></span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Introduction to Statistics"</span><span class="kw">,</span></span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="at">    </span><span class="fu">"upper_div"</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span><span class="kw">,</span></span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="at">    </span><span class="fu">"year"</span><span class="kw">:</span><span class="at"> </span><span class="dv">2020</span><span class="kw">,</span></span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="at">    </span><span class="fu">"semester"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fall"</span><span class="kw">,</span></span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="at">    </span><span class="fu">"assignment_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Midterm Exam"</span><span class="kw">,</span></span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="at">    </span><span class="fu">"question_number"</span><span class="kw">:</span><span class="at"> </span><span class="st">"12a"</span><span class="kw">,</span></span>
-<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="at">    </span><span class="fu">"question_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Calculate Expected Value"</span><span class="kw">,</span></span>
-<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="at">    </span><span class="fu">"n_submissions"</span><span class="kw">:</span><span class="at"> </span><span class="dv">0</span><span class="kw">,</span></span>
-<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="at">    </span><span class="fu">"mean_score"</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.0</span></span>
-<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
-<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="at">  </span><span class="fu">"course_info"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="at">    </span><span class="fu">"department"</span><span class="kw">:</span><span class="at"> </span><span class="st">"STAT"</span><span class="kw">,</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_number"</span><span class="kw">:</span><span class="at"> </span><span class="st">"001"</span><span class="kw">,</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Introduction to Statistics"</span><span class="kw">,</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="at">    </span><span class="fu">"upper_div"</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span><span class="kw">,</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="at">    </span><span class="fu">"year"</span><span class="kw">:</span><span class="at"> </span><span class="dv">2020</span><span class="kw">,</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="at">    </span><span class="fu">"semester"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fall"</span><span class="kw">,</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="at">    </span><span class="fu">"assignment_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Midterm Exam"</span><span class="kw">,</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="at">    </span><span class="fu">"question_number"</span><span class="kw">:</span><span class="at"> </span><span class="st">"12a"</span><span class="kw">,</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="at">    </span><span class="fu">"question_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Calculate Expected Value"</span><span class="kw">,</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="at">    </span><span class="fu">"n_submissions"</span><span class="kw">:</span><span class="at"> </span><span class="dv">0</span><span class="kw">,</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a><span class="at">    </span><span class="fu">"mean_score"</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.0</span></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
 <p>you will get the following error:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/validate_metadata_json.html">validate_metadata_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"missing-keys.json"</span>, package <span class="op">=</span> <span class="st">"GradingAccuracy"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `validate_metadata_json()`:</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> The rubric argument is missing from the following file:</span></span>
@@ -261,28 +310,28 @@ below:</p>
 <p>If the required keys have an incorrect data type, like if
 <code>upper-div</code> is not a boolean value as in the example
 below:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="kw">{</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="at">  </span><span class="fu">"course_info"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="at">    </span><span class="fu">"department"</span><span class="kw">:</span><span class="at"> </span><span class="st">"STAT"</span><span class="kw">,</span></span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_number"</span><span class="kw">:</span><span class="at"> </span><span class="st">"001"</span><span class="kw">,</span></span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Introduction to Statistics"</span><span class="kw">,</span></span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="at">    </span><span class="fu">"upper_div"</span><span class="kw">:</span><span class="at"> </span><span class="st">"yes"</span><span class="kw">,</span></span>
-<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="at">    </span><span class="fu">"year"</span><span class="kw">:</span><span class="at"> </span><span class="dv">2020</span><span class="kw">,</span></span>
-<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="at">    </span><span class="fu">"semester"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fall"</span><span class="kw">,</span></span>
-<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="at">    </span><span class="fu">"assignment_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Midterm Exam"</span><span class="kw">,</span></span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="at">    </span><span class="fu">"question_number"</span><span class="kw">:</span><span class="at"> </span><span class="st">"12a"</span><span class="kw">,</span></span>
-<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="at">    </span><span class="fu">"question_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Calculate Expected Value"</span><span class="kw">,</span></span>
-<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="at">    </span><span class="fu">"mode_of_question"</span><span class="kw">:</span><span class="at"> </span><span class="st">"open-ended"</span><span class="kw">,</span></span>
-<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="at">    </span><span class="fu">"medium_of_answer"</span><span class="kw">:</span><span class="at"> </span><span class="st">"handwritten"</span><span class="kw">,</span></span>
-<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="at">    </span><span class="fu">"content_of_answer"</span><span class="kw">:</span><span class="at"> </span><span class="st">"math"</span><span class="kw">,</span></span>
-<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="at">    </span><span class="fu">"scoring_type"</span><span class="kw">:</span><span class="at"> </span><span class="st">"positive"</span><span class="kw">,</span></span>
-<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="at">    </span><span class="fu">"is_proctored"</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span><span class="kw">,</span></span>
-<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="at">    </span><span class="fu">"n_submissions"</span><span class="kw">:</span><span class="at"> </span><span class="dv">0</span><span class="kw">,</span></span>
-<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a><span class="at">    </span><span class="fu">"mean_score"</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.0</span></span>
-<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
-<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="at">  </span><span class="fu">"course_info"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="at">    </span><span class="fu">"department"</span><span class="kw">:</span><span class="at"> </span><span class="st">"STAT"</span><span class="kw">,</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_number"</span><span class="kw">:</span><span class="at"> </span><span class="st">"001"</span><span class="kw">,</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Introduction to Statistics"</span><span class="kw">,</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="at">    </span><span class="fu">"upper_div"</span><span class="kw">:</span><span class="at"> </span><span class="st">"yes"</span><span class="kw">,</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="at">    </span><span class="fu">"year"</span><span class="kw">:</span><span class="at"> </span><span class="dv">2020</span><span class="kw">,</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="at">    </span><span class="fu">"semester"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fall"</span><span class="kw">,</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="at">    </span><span class="fu">"assignment_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Midterm Exam"</span><span class="kw">,</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="at">    </span><span class="fu">"question_number"</span><span class="kw">:</span><span class="at"> </span><span class="st">"12a"</span><span class="kw">,</span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="at">    </span><span class="fu">"question_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Calculate Expected Value"</span><span class="kw">,</span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="at">    </span><span class="fu">"mode_of_question"</span><span class="kw">:</span><span class="at"> </span><span class="st">"open-ended"</span><span class="kw">,</span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="at">    </span><span class="fu">"medium_of_answer"</span><span class="kw">:</span><span class="at"> </span><span class="st">"handwritten"</span><span class="kw">,</span></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="at">    </span><span class="fu">"content_of_answer"</span><span class="kw">:</span><span class="at"> </span><span class="st">"math"</span><span class="kw">,</span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a><span class="at">    </span><span class="fu">"scoring_type"</span><span class="kw">:</span><span class="at"> </span><span class="st">"positive"</span><span class="kw">,</span></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="at">    </span><span class="fu">"is_proctored"</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span><span class="kw">,</span></span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a><span class="at">    </span><span class="fu">"n_submissions"</span><span class="kw">:</span><span class="at"> </span><span class="dv">0</span><span class="kw">,</span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a><span class="at">    </span><span class="fu">"mean_score"</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.0</span></span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
 <p>you will get the following error:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/validate_metadata_json.html">validate_metadata_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"wrong-boolean.json"</span>, package <span class="op">=</span> <span class="st">"GradingAccuracy"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `validate_metadata_json()`:</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> The rubric argument is missing from the following file:</span></span>
@@ -290,9 +339,144 @@ below:</p>
 </div>
 </div>
 <div class="section level3">
-<h3 id="rubricpotential-errors">
-<code>rubric</code>:Potential Errors<a class="anchor" aria-label="anchor" href="#rubricpotential-errors"></a>
+<h3 id="rubric-potential-errors">
+<code>rubric</code>: Potential Errors<a class="anchor" aria-label="anchor" href="#rubric-potential-errors"></a>
 </h3>
+<p>Note that if the <code>uncalibrated</code> rubric item is not empty,
+these checks are applied to both <code>uncalibrated</code> and
+<code>calibrated</code>, but the checks are only applied to the latter
+if <code>uncalibrated</code> is empty.</p>
+<div class="section level4">
+<h4 id="mismatched-rubric-items-and-scores">Mismatched Rubric Items and Scores<a class="anchor" aria-label="anchor" href="#mismatched-rubric-items-and-scores"></a>
+</h4>
+<p>For example, if the number of <code>rubric_items</code> and the
+number of <code>scores</code> are not equal, like in the JSON file
+below:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="at">  </span><span class="fu">"course_info"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="at">    </span><span class="fu">"department"</span><span class="kw">:</span><span class="at"> </span><span class="st">"STAT"</span><span class="kw">,</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_number"</span><span class="kw">:</span><span class="at"> </span><span class="st">"001"</span><span class="kw">,</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Introduction to Statistics"</span><span class="kw">,</span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="at">    </span><span class="fu">"upper_div"</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span><span class="kw">,</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="at">    </span><span class="fu">"year"</span><span class="kw">:</span><span class="at"> </span><span class="dv">2020</span><span class="kw">,</span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="at">    </span><span class="fu">"semester"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fall"</span><span class="kw">,</span></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="at">    </span><span class="fu">"assignment_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Midterm Exam"</span><span class="kw">,</span></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="at">    </span><span class="fu">"question_number"</span><span class="kw">:</span><span class="at"> </span><span class="st">"12a"</span><span class="kw">,</span></span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a><span class="at">    </span><span class="fu">"question_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Calculate Expected Value"</span><span class="kw">,</span></span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a><span class="at">    </span><span class="fu">"mode_of_question"</span><span class="kw">:</span><span class="at"> </span><span class="st">"open-ended"</span><span class="kw">,</span></span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a><span class="at">    </span><span class="fu">"medium_of_answer"</span><span class="kw">:</span><span class="at"> </span><span class="st">"handwritten"</span><span class="kw">,</span></span>
+<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a><span class="at">    </span><span class="fu">"content_of_answer"</span><span class="kw">:</span><span class="at"> </span><span class="st">"math"</span><span class="kw">,</span></span>
+<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a><span class="at">    </span><span class="fu">"scoring_type"</span><span class="kw">:</span><span class="at"> </span><span class="st">"positive"</span><span class="kw">,</span></span>
+<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a><span class="at">    </span><span class="fu">"is_proctored"</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span><span class="kw">,</span></span>
+<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a><span class="at">    </span><span class="fu">"n_submissions"</span><span class="kw">:</span><span class="at"> </span><span class="dv">0</span><span class="kw">,</span></span>
+<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a><span class="at">    </span><span class="fu">"mean_score"</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.0</span></span>
+<span id="cb12-19"><a href="#cb12-19" tabindex="-1"></a><span class="at">  </span><span class="kw">},</span></span>
+<span id="cb12-20"><a href="#cb12-20" tabindex="-1"></a><span class="at">  </span><span class="fu">"rubric"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb12-21"><a href="#cb12-21" tabindex="-1"></a><span class="at">    </span><span class="fu">"calibrated"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb12-22"><a href="#cb12-22" tabindex="-1"></a><span class="at">      </span><span class="fu">"rubric_items"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb12-23"><a href="#cb12-23" tabindex="-1"></a><span class="at">        </span><span class="fu">"R1"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fully credit."</span><span class="kw">,</span></span>
+<span id="cb12-24"><a href="#cb12-24" tabindex="-1"></a><span class="at">        </span><span class="fu">"R2"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Stated correct equation for expected value."</span><span class="kw">,</span></span>
+<span id="cb12-25"><a href="#cb12-25" tabindex="-1"></a><span class="at">        </span><span class="fu">"R3"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Some work in the right direction"</span></span>
+<span id="cb12-26"><a href="#cb12-26" tabindex="-1"></a><span class="at">      </span><span class="kw">},</span></span>
+<span id="cb12-27"><a href="#cb12-27" tabindex="-1"></a><span class="at">      </span><span class="fu">"scores"</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="fl">1.0</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.75</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.5</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.25</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.0</span><span class="kw">]</span></span>
+<span id="cb12-28"><a href="#cb12-28" tabindex="-1"></a><span class="at">    </span><span class="kw">},</span></span>
+<span id="cb12-29"><a href="#cb12-29" tabindex="-1"></a><span class="at">    </span><span class="fu">"uncalibrated"</span><span class="kw">:</span><span class="at"> </span><span class="ch">null</span></span>
+<span id="cb12-30"><a href="#cb12-30" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
+<span id="cb12-31"><a href="#cb12-31" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
+<p>you will get the following error:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/validate_metadata_json.html">validate_metadata_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mismatched-rubric-scores.json"</span>, package <span class="op">=</span> <span class="st">"GradingAccuracy"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `validate_metadata_json()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> <span style="color: #0000BB;">"calibrated"</span> rubric items is not the same length as <span style="color: #0000BB;">"calibrated"</span></span></span>
+<span><span class="co">#&gt;   scores.</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="scores-are-not-numbers">Scores Are Not Numbers<a class="anchor" aria-label="anchor" href="#scores-are-not-numbers"></a>
+</h4>
+<p>If the <code>scores</code> are not numbers, like in the JSON file
+below:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="at">  </span><span class="fu">"course_info"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="at">    </span><span class="fu">"department"</span><span class="kw">:</span><span class="at"> </span><span class="st">"STAT"</span><span class="kw">,</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_number"</span><span class="kw">:</span><span class="at"> </span><span class="st">"001"</span><span class="kw">,</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Introduction to Statistics"</span><span class="kw">,</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="at">    </span><span class="fu">"upper_div"</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span><span class="kw">,</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="at">    </span><span class="fu">"year"</span><span class="kw">:</span><span class="at"> </span><span class="dv">2020</span><span class="kw">,</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="at">    </span><span class="fu">"semester"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fall"</span><span class="kw">,</span></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="at">    </span><span class="fu">"assignment_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Midterm Exam"</span><span class="kw">,</span></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="at">    </span><span class="fu">"question_number"</span><span class="kw">:</span><span class="at"> </span><span class="st">"12a"</span><span class="kw">,</span></span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="at">    </span><span class="fu">"question_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Calculate Expected Value"</span><span class="kw">,</span></span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a><span class="at">    </span><span class="fu">"mode_of_question"</span><span class="kw">:</span><span class="at"> </span><span class="st">"open-ended"</span><span class="kw">,</span></span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="at">    </span><span class="fu">"medium_of_answer"</span><span class="kw">:</span><span class="at"> </span><span class="st">"handwritten"</span><span class="kw">,</span></span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="at">    </span><span class="fu">"content_of_answer"</span><span class="kw">:</span><span class="at"> </span><span class="st">"math"</span><span class="kw">,</span></span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="at">    </span><span class="fu">"scoring_type"</span><span class="kw">:</span><span class="at"> </span><span class="st">"positive"</span><span class="kw">,</span></span>
+<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a><span class="at">    </span><span class="fu">"is_proctored"</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span><span class="kw">,</span></span>
+<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a><span class="at">    </span><span class="fu">"n_submissions"</span><span class="kw">:</span><span class="at"> </span><span class="dv">0</span><span class="kw">,</span></span>
+<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a><span class="at">    </span><span class="fu">"mean_score"</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.0</span></span>
+<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a><span class="at">  </span><span class="kw">},</span></span>
+<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a><span class="at">  </span><span class="fu">"rubric"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a><span class="at">    </span><span class="fu">"calibrated"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a><span class="at">      </span><span class="fu">"rubric_items"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a><span class="at">        </span><span class="fu">"R1"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fully credit."</span><span class="kw">,</span></span>
+<span id="cb14-24"><a href="#cb14-24" tabindex="-1"></a><span class="at">        </span><span class="fu">"R2"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Stated correct equation for expected value."</span><span class="kw">,</span></span>
+<span id="cb14-25"><a href="#cb14-25" tabindex="-1"></a><span class="at">        </span><span class="fu">"R3"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Some work in the right direction"</span></span>
+<span id="cb14-26"><a href="#cb14-26" tabindex="-1"></a><span class="at">      </span><span class="kw">},</span></span>
+<span id="cb14-27"><a href="#cb14-27" tabindex="-1"></a><span class="at">      </span><span class="fu">"scores"</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"A"</span><span class="kw">,</span><span class="at"> </span><span class="st">"B"</span><span class="kw">,</span><span class="at"> </span><span class="st">"C"</span><span class="kw">]</span></span>
+<span id="cb14-28"><a href="#cb14-28" tabindex="-1"></a><span class="at">    </span><span class="kw">},</span></span>
+<span id="cb14-29"><a href="#cb14-29" tabindex="-1"></a><span class="at">    </span><span class="fu">"uncalibrated"</span><span class="kw">:</span><span class="at"> </span><span class="ch">null</span></span>
+<span id="cb14-30"><a href="#cb14-30" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
+<span id="cb14-31"><a href="#cb14-31" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
+<p>you will get the following error:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/validate_metadata_json.html">validate_metadata_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"incorrect-scores.json"</span>, package <span class="op">=</span> <span class="st">"GradingAccuracy"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `validate_metadata_json()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> <span style="color: #0000BB;">"scores"</span> of <span style="color: #0000BB;">"calibrated"</span> rubric is not numeric values.</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="incorrectly-named-keys">Incorrectly Named Keys<a class="anchor" aria-label="anchor" href="#incorrectly-named-keys"></a>
+</h4>
+<p>If you do not name the keys in <code>rubric items</code> according to
+expected structure (e.g. “R1”, “R2”, …), like in the JSON file
+below:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="at">  </span><span class="fu">"course_info"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="at">    </span><span class="fu">"department"</span><span class="kw">:</span><span class="at"> </span><span class="st">"STAT"</span><span class="kw">,</span></span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_number"</span><span class="kw">:</span><span class="at"> </span><span class="st">"001"</span><span class="kw">,</span></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="at">    </span><span class="fu">"course_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Introduction to Statistics"</span><span class="kw">,</span></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a><span class="at">    </span><span class="fu">"upper_div"</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span><span class="kw">,</span></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a><span class="at">    </span><span class="fu">"year"</span><span class="kw">:</span><span class="at"> </span><span class="dv">2020</span><span class="kw">,</span></span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a><span class="at">    </span><span class="fu">"semester"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fall"</span><span class="kw">,</span></span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a><span class="at">    </span><span class="fu">"assignment_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Midterm Exam"</span><span class="kw">,</span></span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a><span class="at">    </span><span class="fu">"question_number"</span><span class="kw">:</span><span class="at"> </span><span class="st">"12a"</span><span class="kw">,</span></span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a><span class="at">    </span><span class="fu">"question_name"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Calculate Expected Value"</span><span class="kw">,</span></span>
+<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a><span class="at">    </span><span class="fu">"mode_of_question"</span><span class="kw">:</span><span class="at"> </span><span class="st">"open-ended"</span><span class="kw">,</span></span>
+<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a><span class="at">    </span><span class="fu">"medium_of_answer"</span><span class="kw">:</span><span class="at"> </span><span class="st">"handwritten"</span><span class="kw">,</span></span>
+<span id="cb16-14"><a href="#cb16-14" tabindex="-1"></a><span class="at">    </span><span class="fu">"content_of_answer"</span><span class="kw">:</span><span class="at"> </span><span class="st">"math"</span><span class="kw">,</span></span>
+<span id="cb16-15"><a href="#cb16-15" tabindex="-1"></a><span class="at">    </span><span class="fu">"scoring_type"</span><span class="kw">:</span><span class="at"> </span><span class="st">"positive"</span><span class="kw">,</span></span>
+<span id="cb16-16"><a href="#cb16-16" tabindex="-1"></a><span class="at">    </span><span class="fu">"is_proctored"</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span><span class="kw">,</span></span>
+<span id="cb16-17"><a href="#cb16-17" tabindex="-1"></a><span class="at">    </span><span class="fu">"n_submissions"</span><span class="kw">:</span><span class="at"> </span><span class="dv">0</span><span class="kw">,</span></span>
+<span id="cb16-18"><a href="#cb16-18" tabindex="-1"></a><span class="at">    </span><span class="fu">"mean_score"</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.0</span></span>
+<span id="cb16-19"><a href="#cb16-19" tabindex="-1"></a><span class="at">  </span><span class="kw">},</span></span>
+<span id="cb16-20"><a href="#cb16-20" tabindex="-1"></a><span class="at">  </span><span class="fu">"rubric"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb16-21"><a href="#cb16-21" tabindex="-1"></a><span class="at">    </span><span class="fu">"calibrated"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb16-22"><a href="#cb16-22" tabindex="-1"></a><span class="at">      </span><span class="fu">"rubric_items"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb16-23"><a href="#cb16-23" tabindex="-1"></a><span class="at">        </span><span class="fu">"R0"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fully credit."</span><span class="kw">,</span></span>
+<span id="cb16-24"><a href="#cb16-24" tabindex="-1"></a><span class="at">        </span><span class="fu">"R1"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Stated correct equation for expected value."</span><span class="kw">,</span></span>
+<span id="cb16-25"><a href="#cb16-25" tabindex="-1"></a><span class="at">        </span><span class="fu">"R2"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Some work in the right direction"</span><span class="kw">,</span></span>
+<span id="cb16-26"><a href="#cb16-26" tabindex="-1"></a><span class="at">        </span><span class="fu">"R3"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Incorrect."</span></span>
+<span id="cb16-27"><a href="#cb16-27" tabindex="-1"></a><span class="at">      </span><span class="kw">},</span></span>
+<span id="cb16-28"><a href="#cb16-28" tabindex="-1"></a><span class="at">      </span><span class="fu">"scores"</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="fl">1.0</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.5</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.5</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.0</span><span class="kw">]</span></span>
+<span id="cb16-29"><a href="#cb16-29" tabindex="-1"></a><span class="at">    </span><span class="kw">},</span></span>
+<span id="cb16-30"><a href="#cb16-30" tabindex="-1"></a><span class="at">    </span><span class="fu">"uncalibrated"</span><span class="kw">:</span><span class="at"> </span><span class="ch">null</span></span>
+<span id="cb16-31"><a href="#cb16-31" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
+<span id="cb16-32"><a href="#cb16-32" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
+<p>you will get the following error:</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/validate_metadata_json.html">validate_metadata_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"incorrect-rubric-keys.json"</span>, package <span class="op">=</span> <span class="st">"GradingAccuracy"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `validate_metadata_json()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> <span style="color: #0000BB;">"rubric_items"</span> of <span style="color: #0000BB;">"calibrated"</span> rubric are misnamed (i.e. should be R1,</span></span>
+<span><span class="co">#&gt;   R2, etc.).</span></span></code></pre></div>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -53,6 +53,8 @@ following structure:
 - `scores`, which is a numbered vector that has the corresponding point
   value of rubric items “R1”, “R2”,…
 
+### Correct Metadata.json with only a `calibrated` rubric
+
 ``` yaml
 {
   "course_info": {
@@ -84,6 +86,50 @@ following structure:
       "scores": [1.0, 0.5, 0.5, 0.0]
     },
     "uncalibrated": null
+  }
+}
+```
+
+### Correct Metadata.json with a `calibrated` and `uncalibrated`rubric
+
+``` yaml
+{
+  "course_info": {
+    "department": "STAT",
+    "course_number": "001",
+    "course_name": "Introduction to Statistics",
+    "upper_div": false,
+    "year": 2020,
+    "semester": "Fall",
+    "assignment_name": "Midterm Exam",
+    "question_number": "12a",
+    "question_name": "Calculate Expected Value",
+    "mode_of_question": "open-ended",
+    "medium_of_answer": "handwritten",
+    "content_of_answer": "math",
+    "scoring_type": "positive",
+    "is_proctored": true,
+    "n_submissions": 0,
+    "mean_score": 0.0
+  },
+  "rubric": {
+    "calibrated": {
+      "rubric_items": {
+        "R1": "Fully credit.",
+        "R2": "Stated correct equation for expected value.",
+        "R3": "Some work in the right direction",
+        "R4": "Incorrect."
+      },
+      "scores": [1.0, 0.5, 0.5, 0.0]
+    },
+    "uncalibrated": {
+      "rubric_items": {
+        "R1": "Fully credit.",
+        "R2": "Started correct approach, but incorrect solution.",
+        "R3": "Some work in the right direction"
+      },
+      "scores": [1.0, 0.5, 0.25]
+    }
   }
 }
 ```
@@ -125,7 +171,7 @@ validate_metadata_json(system.file("extdata", "metadata-calibrated.json", packag
 #> • Content of Answer: math
 ```
 
-### `course_info`:Potential Errors
+### `course_info`: Potential Errors
 
 #### Missing `course_info`
 
@@ -222,4 +268,154 @@ validate_metadata_json(system.file("extdata", "wrong-boolean.json", package = "G
 #>   /home/runner/work/_temp/Library/GradingAccuracy/extdata/wrong-boolean.json
 ```
 
-### `rubric`:Potential Errors
+### `rubric`: Potential Errors
+
+Note that if the `uncalibrated` rubric item is not empty, these checks
+are applied to both `uncalibrated` and `calibrated`, but the checks are
+only applied to the latter if `uncalibrated` is empty.
+
+#### Mismatched Rubric Items and Scores
+
+For example, if the number of `rubric_items` and the number of `scores`
+are not equal, like in the JSON file below:
+
+``` yaml
+{
+  "course_info": {
+    "department": "STAT",
+    "course_number": "001",
+    "course_name": "Introduction to Statistics",
+    "upper_div": false,
+    "year": 2020,
+    "semester": "Fall",
+    "assignment_name": "Midterm Exam",
+    "question_number": "12a",
+    "question_name": "Calculate Expected Value",
+    "mode_of_question": "open-ended",
+    "medium_of_answer": "handwritten",
+    "content_of_answer": "math",
+    "scoring_type": "positive",
+    "is_proctored": true,
+    "n_submissions": 0,
+    "mean_score": 0.0
+  },
+  "rubric": {
+    "calibrated": {
+      "rubric_items": {
+        "R1": "Fully credit.",
+        "R2": "Stated correct equation for expected value.",
+        "R3": "Some work in the right direction"
+      },
+      "scores": [1.0, 0.75, 0.5, 0.25, 0.0]
+    },
+    "uncalibrated": null
+  }
+}
+```
+
+you will get the following error:
+
+``` r
+
+validate_metadata_json(system.file("extdata", "mismatched-rubric-scores.json", package = "GradingAccuracy"))
+#> Error in `validate_metadata_json()`:
+#> ! "calibrated" rubric items is not the same length as "calibrated"
+#>   scores.
+```
+
+#### Scores Are Not Numbers
+
+If the `scores` are not numbers, like in the JSON file below:
+
+``` yaml
+{
+  "course_info": {
+    "department": "STAT",
+    "course_number": "001",
+    "course_name": "Introduction to Statistics",
+    "upper_div": false,
+    "year": 2020,
+    "semester": "Fall",
+    "assignment_name": "Midterm Exam",
+    "question_number": "12a",
+    "question_name": "Calculate Expected Value",
+    "mode_of_question": "open-ended",
+    "medium_of_answer": "handwritten",
+    "content_of_answer": "math",
+    "scoring_type": "positive",
+    "is_proctored": true,
+    "n_submissions": 0,
+    "mean_score": 0.0
+  },
+  "rubric": {
+    "calibrated": {
+      "rubric_items": {
+        "R1": "Fully credit.",
+        "R2": "Stated correct equation for expected value.",
+        "R3": "Some work in the right direction"
+      },
+      "scores": ["A", "B", "C"]
+    },
+    "uncalibrated": null
+  }
+}
+```
+
+you will get the following error:
+
+``` r
+
+validate_metadata_json(system.file("extdata", "incorrect-scores.json", package = "GradingAccuracy"))
+#> Error in `validate_metadata_json()`:
+#> ! "scores" of "calibrated" rubric is not numeric values.
+```
+
+#### Incorrectly Named Keys
+
+If you do not name the keys in `rubric items` according to expected
+structure (e.g. “R1”, “R2”, …), like in the JSON file below:
+
+``` yaml
+{
+  "course_info": {
+    "department": "STAT",
+    "course_number": "001",
+    "course_name": "Introduction to Statistics",
+    "upper_div": false,
+    "year": 2020,
+    "semester": "Fall",
+    "assignment_name": "Midterm Exam",
+    "question_number": "12a",
+    "question_name": "Calculate Expected Value",
+    "mode_of_question": "open-ended",
+    "medium_of_answer": "handwritten",
+    "content_of_answer": "math",
+    "scoring_type": "positive",
+    "is_proctored": true,
+    "n_submissions": 0,
+    "mean_score": 0.0
+  },
+  "rubric": {
+    "calibrated": {
+      "rubric_items": {
+        "R0": "Fully credit.",
+        "R1": "Stated correct equation for expected value.",
+        "R2": "Some work in the right direction",
+        "R3": "Incorrect."
+      },
+      "scores": [1.0, 0.5, 0.5, 0.0]
+    },
+    "uncalibrated": null
+  }
+}
+```
+
+you will get the following error:
+
+``` r
+
+validate_metadata_json(system.file("extdata", "incorrect-rubric-keys.json", package = "GradingAccuracy"))
+#> Error in `validate_metadata_json()`:
+#> ! "rubric_items" of "calibrated" rubric are misnamed (i.e. should be R1,
+#>   R2, etc.).
+```
