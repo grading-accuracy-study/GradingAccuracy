@@ -1,0 +1,32 @@
+{
+  "course_info": {
+    "department": "STAT",
+    "course_number": "001",
+    "course_name": "Introduction to Statistics",
+    "upper_div": false,
+    "year": 2020,
+    "semester": "Fall",
+    "assignment_name": "Midterm Exam",
+    "question_number": "12a",
+    "question_name": "Calculate Expected Value",
+    "mode_of_question": "open-ended",
+    "medium_of_answer": "handwritten",
+    "content_of_answer": "math",
+    "scoring_type": "positive",
+    "is_proctored": true,
+    "n_submissions": 0,
+    "mean_score": 0.0
+  },
+  "rubric": {
+    "calibrated": {
+      "rubric_items": {
+        "R0": "Fully credit.",
+        "R1": "Stated correct equation for expected value.",
+        "R2": "Some work in the right direction",
+        "R3": "Incorrect."
+      },
+      "scores": [1.0, 0.5, 0.5, 0.0]
+    },
+    "uncalibrated": null
+  }
+}

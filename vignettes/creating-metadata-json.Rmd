@@ -48,8 +48,16 @@ The `rubric` object must have a `calibrated` rubric object and optionally an `un
   - `rubric_items` which is a nested list that has keys named as "R1", "R2", etc. with values as strings of the rubric description
   - `scores`, which is a numbered vector that has the corresponding point value of rubric items "R1", "R2",...
 
+## Correct Metadata.json with only a `calibrated` rubric
+
 ``` yaml
 `r xfun::file_string(system.file("extdata", "metadata-calibrated.json", package = "GradingAccuracy"))`
+```
+
+## Correct Metadata.json with a `calibrated` and `uncalibrated `rubric
+
+``` yaml
+`r xfun::file_string(system.file("extdata", "metadata-uncalibrated.json", package = "GradingAccuracy"))`
 ```
 
 # Validating a metadata.json
@@ -70,7 +78,7 @@ Optionally, you can also use the `verbose` argument in order to print out the li
 validate_metadata_json(system.file("extdata", "metadata-calibrated.json", package = "GradingAccuracy"), verbose = T)
 ```
 
-## `course_info`:Potential Errors
+## `course_info`: Potential Errors
 
 ### Missing `course_info`
 
@@ -132,4 +140,66 @@ testthat::expect_error(validate_metadata_json(system.file("extdata", "wrong-bool
 validate_metadata_json(system.file("extdata", "wrong-boolean.json", package = "GradingAccuracy"))
 ```
 
-## `rubric`:Potential Errors
+## `rubric`: Potential Errors
+
+Note that if the `uncalibrated` rubric item is not empty, these checks are applied to both `uncalibrated` and `calibrated`, but the checks are only applied to the latter if `uncalibrated` is empty.
+
+### Mismatched Rubric Items and Scores
+
+For example, if the number of `rubric_items` and the number of `scores` are not equal, like in the JSON file below:
+
+``` yaml
+`r xfun::file_string(system.file("extdata", "mismatched-rubric-scores.json", package = "GradingAccuracy"))`
+```
+
+you will get the following error:
+
+```{r, echo = F}
+# this should give an error
+testthat::expect_error(validate_metadata_json(system.file("extdata", "mismatched-rubric-scores.json", package = "GradingAccuracy")))
+```
+
+
+```{r, error = T}
+validate_metadata_json(system.file("extdata", "mismatched-rubric-scores.json", package = "GradingAccuracy"))
+```
+
+### Scores Are Not Numbers
+
+If the `scores` are not numbers, like in the JSON file below:
+
+``` yaml
+`r xfun::file_string(system.file("extdata", "incorrect-scores.json", package = "GradingAccuracy"))`
+```
+
+you will get the following error:
+
+```{r, echo = F}
+# this should give an error
+testthat::expect_error(validate_metadata_json(system.file("extdata", "incorrect-scores.json", package = "GradingAccuracy")))
+```
+
+
+```{r, error = T}
+validate_metadata_json(system.file("extdata", "incorrect-scores.json", package = "GradingAccuracy"))
+```
+
+### Incorrectly Named Keys
+
+If you do not name the keys in `rubric items` according to expected structure (e.g. "R1", "R2", ...), like in the JSON file below:
+
+``` yaml
+`r xfun::file_string(system.file("extdata", "incorrect-rubric-keys.json", package = "GradingAccuracy"))`
+```
+
+you will get the following error:
+
+```{r, echo = F}
+# this should give an error
+testthat::expect_error(validate_metadata_json(system.file("extdata", "incorrect-rubric-keys.json", package = "GradingAccuracy")))
+```
+
+
+```{r, error = T}
+validate_metadata_json(system.file("extdata", "incorrect-rubric-keys.json", package = "GradingAccuracy"))
+```
