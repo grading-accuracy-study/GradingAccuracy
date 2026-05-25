@@ -164,6 +164,8 @@ generate_metadata_row <- function(dir){
     `Question Number` = paste(course_info$assignment_name, course_info$question_number),
     `Mode of Question` = course_info$mode_of_question,
     `Medium of Answer` = course_info$medium_of_answer,
-    `Content of Answer` = course_info$content_of_answer
+    `Content of Answer` = course_info$content_of_answer,
+    `Total Points` = course_info$total_points,
+    `Rubric Type` = course_info$rubric_type
   )
 }
