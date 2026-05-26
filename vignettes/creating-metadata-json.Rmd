@@ -41,6 +41,8 @@ The `course_info` object must have the following keys (and their corresponding v
 - `is_proctored` : whether the assignment was taken in a proctored environment or if it was take-home
 - `n_submissions`: the number of student submissions, which can be programmatically updated with `update_scores_in_metadata()`
 - `mean_score`: the mean score of experts using, which can be programmatically updated with `update_scores_in_metadata()` (which uses `mean(experts$Score/max(experts$Score))`)
+- `total_points`: the total number of points the question is worth
+- `rubric_type`: the type of rubric (e.g. `"positive disjoint"`)
 
 
 The `rubric` object must have a `calibrated` rubric object and optionally an `uncalibrated` object that follows the same structure. A rubric object (either `calibrated` or `uncalibrated`) must have the following structure:
