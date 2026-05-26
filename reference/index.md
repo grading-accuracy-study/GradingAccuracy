@@ -50,3 +50,5 @@ graders.
   : Calculate Proportion of Identical Scores
 - [`rubric_mae()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/rubric_mae.md)
   : Mean Absolute Error of Rubric Items
+- [`scores_from_metadata()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/scores_from_metadata.md)
+  : Extract Rubric Item Scores from a Metadata JSON File

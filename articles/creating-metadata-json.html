@@ -127,6 +127,12 @@ can be programmatically updated with
 be programmatically updated with
 <code><a href="../reference/update_scores_in_metadata.html">update_scores_in_metadata()</a></code> (which uses
 <code>mean(experts$Score/max(experts$Score))</code>)</li>
+<li>
+<code>total_points</code>: the total number of points the question
+is worth</li>
+<li>
+<code>rubric_type</code>: the type of rubric
+(e.g. <code>"positive disjoint"</code>)</li>
 </ul>
 <p>The <code>rubric</code> object must have a <code>calibrated</code>
 rubric object and optionally an <code>uncalibrated</code> object that
@@ -163,21 +169,23 @@ rubric<a class="anchor" aria-label="anchor" href="#correct-metadata-json-with-on
 <span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="at">    </span><span class="fu">"scoring_type"</span><span class="kw">:</span><span class="at"> </span><span class="st">"positive"</span><span class="kw">,</span></span>
 <span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="at">    </span><span class="fu">"is_proctored"</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span><span class="kw">,</span></span>
 <span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="at">    </span><span class="fu">"n_submissions"</span><span class="kw">:</span><span class="at"> </span><span class="dv">0</span><span class="kw">,</span></span>
-<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="at">    </span><span class="fu">"mean_score"</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.0</span></span>
-<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="at">  </span><span class="kw">},</span></span>
-<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="at">  </span><span class="fu">"rubric"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
-<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a><span class="at">    </span><span class="fu">"calibrated"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
-<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a><span class="at">      </span><span class="fu">"rubric_items"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
-<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a><span class="at">        </span><span class="fu">"R1"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fully credit."</span><span class="kw">,</span></span>
-<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a><span class="at">        </span><span class="fu">"R2"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Stated correct equation for expected value."</span><span class="kw">,</span></span>
-<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a><span class="at">        </span><span class="fu">"R3"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Some work in the right direction"</span><span class="kw">,</span></span>
-<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a><span class="at">        </span><span class="fu">"R4"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Incorrect."</span></span>
-<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a><span class="at">      </span><span class="kw">},</span></span>
-<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a><span class="at">      </span><span class="fu">"scores"</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="fl">1.0</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.5</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.5</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.0</span><span class="kw">]</span></span>
-<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a><span class="at">    </span><span class="kw">},</span></span>
-<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a><span class="at">    </span><span class="fu">"uncalibrated"</span><span class="kw">:</span><span class="at"> </span><span class="ch">null</span></span>
-<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
-<span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="at">    </span><span class="fu">"mean_score"</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.0</span><span class="kw">,</span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="at">    </span><span class="fu">"total_points"</span><span class="kw">:</span><span class="at"> </span><span class="dv">2</span><span class="kw">,</span></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="at">    </span><span class="fu">"rubric_type"</span><span class="kw">:</span><span class="at"> </span><span class="st">"positive disjoint"</span></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a><span class="at">  </span><span class="kw">},</span></span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a><span class="at">  </span><span class="fu">"rubric"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a><span class="at">    </span><span class="fu">"calibrated"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a><span class="at">      </span><span class="fu">"rubric_items"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a><span class="at">        </span><span class="fu">"R1"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fully credit."</span><span class="kw">,</span></span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a><span class="at">        </span><span class="fu">"R2"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Stated correct equation for expected value."</span><span class="kw">,</span></span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a><span class="at">        </span><span class="fu">"R3"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Some work in the right direction"</span><span class="kw">,</span></span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a><span class="at">        </span><span class="fu">"R4"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Incorrect."</span></span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a><span class="at">      </span><span class="kw">},</span></span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a><span class="at">      </span><span class="fu">"scores"</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="fl">1.0</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.5</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.5</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.0</span><span class="kw">]</span></span>
+<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a><span class="at">    </span><span class="kw">},</span></span>
+<span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a><span class="at">    </span><span class="fu">"uncalibrated"</span><span class="kw">:</span><span class="at"> </span><span class="ch">null</span></span>
+<span id="cb2-33"><a href="#cb2-33" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
+<span id="cb2-34"><a href="#cb2-34" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="correct-metadata-json-with-a-calibrated-and-uncalibratedrubric">Correct Metadata.json with a <code>calibrated</code> and
@@ -200,28 +208,30 @@ rubric<a class="anchor" aria-label="anchor" href="#correct-metadata-json-with-on
 <span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="at">    </span><span class="fu">"scoring_type"</span><span class="kw">:</span><span class="at"> </span><span class="st">"positive"</span><span class="kw">,</span></span>
 <span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="at">    </span><span class="fu">"is_proctored"</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span><span class="kw">,</span></span>
 <span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="at">    </span><span class="fu">"n_submissions"</span><span class="kw">:</span><span class="at"> </span><span class="dv">0</span><span class="kw">,</span></span>
-<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="at">    </span><span class="fu">"mean_score"</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.0</span></span>
-<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="at">  </span><span class="kw">},</span></span>
-<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="at">  </span><span class="fu">"rubric"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
-<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="at">    </span><span class="fu">"calibrated"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
-<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="at">      </span><span class="fu">"rubric_items"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
-<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="at">        </span><span class="fu">"R1"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fully credit."</span><span class="kw">,</span></span>
-<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="at">        </span><span class="fu">"R2"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Stated correct equation for expected value."</span><span class="kw">,</span></span>
-<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a><span class="at">        </span><span class="fu">"R3"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Some work in the right direction"</span><span class="kw">,</span></span>
-<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a><span class="at">        </span><span class="fu">"R4"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Incorrect."</span></span>
-<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a><span class="at">      </span><span class="kw">},</span></span>
-<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a><span class="at">      </span><span class="fu">"scores"</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="fl">1.0</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.5</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.5</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.0</span><span class="kw">]</span></span>
-<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a><span class="at">    </span><span class="kw">},</span></span>
-<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a><span class="at">    </span><span class="fu">"uncalibrated"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
-<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a><span class="at">      </span><span class="fu">"rubric_items"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
-<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a><span class="at">        </span><span class="fu">"R1"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fully credit."</span><span class="kw">,</span></span>
-<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a><span class="at">        </span><span class="fu">"R2"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Started correct approach, but incorrect solution."</span><span class="kw">,</span></span>
-<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a><span class="at">        </span><span class="fu">"R3"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Some work in the right direction"</span></span>
-<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a><span class="at">      </span><span class="kw">},</span></span>
-<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a><span class="at">      </span><span class="fu">"scores"</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="fl">1.0</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.5</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.25</span><span class="kw">]</span></span>
-<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a><span class="at">    </span><span class="kw">}</span></span>
-<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
-<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="at">    </span><span class="fu">"mean_score"</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.0</span><span class="kw">,</span></span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="at">    </span><span class="fu">"total_points"</span><span class="kw">:</span><span class="at"> </span><span class="dv">2</span><span class="kw">,</span></span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="at">    </span><span class="fu">"rubric_type"</span><span class="kw">:</span><span class="at"> </span><span class="st">"positive disjoint"</span></span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="at">  </span><span class="kw">},</span></span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="at">  </span><span class="fu">"rubric"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="at">    </span><span class="fu">"calibrated"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="at">      </span><span class="fu">"rubric_items"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a><span class="at">        </span><span class="fu">"R1"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fully credit."</span><span class="kw">,</span></span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a><span class="at">        </span><span class="fu">"R2"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Stated correct equation for expected value."</span><span class="kw">,</span></span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a><span class="at">        </span><span class="fu">"R3"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Some work in the right direction"</span><span class="kw">,</span></span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a><span class="at">        </span><span class="fu">"R4"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Incorrect."</span></span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a><span class="at">      </span><span class="kw">},</span></span>
+<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a><span class="at">      </span><span class="fu">"scores"</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="fl">1.0</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.5</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.5</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.0</span><span class="kw">]</span></span>
+<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a><span class="at">    </span><span class="kw">},</span></span>
+<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a><span class="at">    </span><span class="fu">"uncalibrated"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a><span class="at">      </span><span class="fu">"rubric_items"</span><span class="kw">:</span><span class="at"> </span><span class="kw">{</span></span>
+<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a><span class="at">        </span><span class="fu">"R1"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Fully credit."</span><span class="kw">,</span></span>
+<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a><span class="at">        </span><span class="fu">"R2"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Started correct approach, but incorrect solution."</span><span class="kw">,</span></span>
+<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a><span class="at">        </span><span class="fu">"R3"</span><span class="kw">:</span><span class="at"> </span><span class="st">"Some work in the right direction"</span></span>
+<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a><span class="at">      </span><span class="kw">},</span></span>
+<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a><span class="at">      </span><span class="fu">"scores"</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="fl">1.0</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.5</span><span class="kw">,</span><span class="at"> </span><span class="fl">0.25</span><span class="kw">]</span></span>
+<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a><span class="at">    </span><span class="kw">}</span></span>
+<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a><span class="at">  </span><span class="kw">}</span></span>
+<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -387,8 +397,8 @@ below:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/validate_metadata_json.html">validate_metadata_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mismatched-rubric-scores.json"</span>, package <span class="op">=</span> <span class="st">"GradingAccuracy"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `validate_metadata_json()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> <span style="color: #0000BB;">"calibrated"</span> rubric items is not the same length as <span style="color: #0000BB;">"calibrated"</span></span></span>
-<span><span class="co">#&gt;   scores.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> The following arguments are missing from course_info: <span style="color: #0000BB;">"total_points"</span></span></span>
+<span><span class="co">#&gt;   and <span style="color: #0000BB;">"rubric_type"</span></span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="scores-are-not-numbers">Scores Are Not Numbers<a class="anchor" aria-label="anchor" href="#scores-are-not-numbers"></a>
@@ -430,7 +440,8 @@ below:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/validate_metadata_json.html">validate_metadata_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"incorrect-scores.json"</span>, package <span class="op">=</span> <span class="st">"GradingAccuracy"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `validate_metadata_json()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> <span style="color: #0000BB;">"scores"</span> of <span style="color: #0000BB;">"calibrated"</span> rubric is not numeric values.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> The following arguments are missing from course_info: <span style="color: #0000BB;">"total_points"</span></span></span>
+<span><span class="co">#&gt;   and <span style="color: #0000BB;">"rubric_type"</span></span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="incorrectly-named-keys">Incorrectly Named Keys<a class="anchor" aria-label="anchor" href="#incorrectly-named-keys"></a>
@@ -474,8 +485,8 @@ below:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/validate_metadata_json.html">validate_metadata_json</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"incorrect-rubric-keys.json"</span>, package <span class="op">=</span> <span class="st">"GradingAccuracy"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `validate_metadata_json()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> <span style="color: #0000BB;">"rubric_items"</span> of <span style="color: #0000BB;">"calibrated"</span> rubric are misnamed (i.e. should be R1,</span></span>
-<span><span class="co">#&gt;   R2, etc.).</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> The following arguments are missing from course_info: <span style="color: #0000BB;">"total_points"</span></span></span>
+<span><span class="co">#&gt;   and <span style="color: #0000BB;">"rubric_type"</span></span></span></code></pre></div>
 </div>
 </div>
 </div>

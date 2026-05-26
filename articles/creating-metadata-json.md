@@ -42,6 +42,8 @@ corresponding values):
   programmatically updated with
   [`update_scores_in_metadata()`](https://grading-accuracy-study.github.io/GradingAccuracy/reference/update_scores_in_metadata.md)
   (which uses `mean(experts$Score/max(experts$Score))`)
+- `total_points`: the total number of points the question is worth
+- `rubric_type`: the type of rubric (e.g. `"positive disjoint"`)
 
 The `rubric` object must have a `calibrated` rubric object and
 optionally an `uncalibrated` object that follows the same structure. A
@@ -73,7 +75,9 @@ following structure:
     "scoring_type": "positive",
     "is_proctored": true,
     "n_submissions": 0,
-    "mean_score": 0.0
+    "mean_score": 0.0,
+    "total_points": 2,
+    "rubric_type": "positive disjoint"
   },
   "rubric": {
     "calibrated": {
@@ -110,7 +114,9 @@ following structure:
     "scoring_type": "positive",
     "is_proctored": true,
     "n_submissions": 0,
-    "mean_score": 0.0
+    "mean_score": 0.0,
+    "total_points": 2,
+    "rubric_type": "positive disjoint"
   },
   "rubric": {
     "calibrated": {
@@ -319,8 +325,8 @@ you will get the following error:
 
 validate_metadata_json(system.file("extdata", "mismatched-rubric-scores.json", package = "GradingAccuracy"))
 #> Error in `validate_metadata_json()`:
-#> ! "calibrated" rubric items is not the same length as "calibrated"
-#>   scores.
+#> ! The following arguments are missing from course_info: "total_points"
+#>   and "rubric_type"
 ```
 
 #### Scores Are Not Numbers
@@ -367,7 +373,8 @@ you will get the following error:
 
 validate_metadata_json(system.file("extdata", "incorrect-scores.json", package = "GradingAccuracy"))
 #> Error in `validate_metadata_json()`:
-#> ! "scores" of "calibrated" rubric is not numeric values.
+#> ! The following arguments are missing from course_info: "total_points"
+#>   and "rubric_type"
 ```
 
 #### Incorrectly Named Keys
@@ -416,6 +423,6 @@ you will get the following error:
 
 validate_metadata_json(system.file("extdata", "incorrect-rubric-keys.json", package = "GradingAccuracy"))
 #> Error in `validate_metadata_json()`:
-#> ! "rubric_items" of "calibrated" rubric are misnamed (i.e. should be R1,
-#>   R2, etc.).
+#> ! The following arguments are missing from course_info: "total_points"
+#>   and "rubric_type"
 ```

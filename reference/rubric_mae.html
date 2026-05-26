@@ -59,7 +59,7 @@ to using this function.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rubric_mae</span><span class="op">(</span><span class="va">eval1</span>, <span class="va">eval2</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rubric_mae</span><span class="op">(</span><span class="va">eval1</span>, <span class="va">eval2</span>, weights <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -73,10 +73,23 @@ to using this function.</p>
 <dt id="arg-eval-">eval2<a class="anchor" aria-label="anchor" href="#arg-eval-"></a></dt>
 <dd><p>second dataframe of Gradescope evaluations</p></dd>
 
+
+<dt id="arg-weights">weights<a class="anchor" aria-label="anchor" href="#arg-weights"></a></dt>
+<dd><p>optional numeric vector of point values, one per rubric item
+(in the same order as the R1, R2, ... columns). When <code>NULL</code> (default),
+all items are treated as equally weighted.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>double for mean absolute error</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>When <code>weights</code> is supplied, each rubric item's disagreement is scaled by its
+point value before summing, so a mismatch on a 1-point item contributes more
+than a mismatch on a 0.5-point item. Use <code><a href="scores_from_metadata.html">scores_from_metadata()</a></code> to extract
+the weights vector from a metadata JSON file.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
