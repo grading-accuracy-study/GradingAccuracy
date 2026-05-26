@@ -261,17 +261,46 @@ find_differences_wrt_students <- function(experts_file, student_file,
 #'
 #' @param file1 file path for first grades csv
 #' @param file2 file path for second grades csv
+#' @param metadata_file optional path to a metadata JSON file. When supplied,
+#'   rubric item point values are extracted and passed as weights to
+#'   `rubric_mae()`, producing a point-weighted MAE.
 #'
 #' @return a list
 #'
 #' @importFrom readr read_csv
 #'
 #' @export
-compute_mae_and_isp <- function(file1, file2){
+compute_mae_and_isp <- function(file1, file2, metadata_file = NULL){
   eval1 <- readr::read_csv(file1, show_col_types = FALSE)
   eval2 <- readr::read_csv(file2, show_col_types = FALSE)
-  list(MAE = rubric_mae(eval1, eval2),
+  weights <- if (!is.null(metadata_file)) scores_from_metadata(metadata_file) else NULL
+  list(MAE = rubric_mae(eval1, eval2, weights = weights),
        ISP = isp(eval1, eval2))
+}
+
+
+#' Extract Rubric Item Scores from a Metadata JSON File
+#'
+#' Reads a metadata JSON file and returns the ordered numeric vector of rubric
+#' item point values. This vector can be passed as the `weights` argument to
+#' `rubric_mae()` to compute a point-weighted MAE.
+#'
+#' @param metadata_file path to a metadata JSON file
+#' @param calibrated logical; if `TRUE` (default) extract scores from
+#'   `rubric$calibrated$scores`, otherwise from `rubric$uncalibrated$scores`
+#'
+#' @return a numeric vector of point values, one per rubric item
+#'
+#' @importFrom jsonlite read_json
+#' @export
+scores_from_metadata <- function(metadata_file, calibrated = TRUE) {
+  meta <- jsonlite::read_json(metadata_file)
+  rubric_type <- if (calibrated) "calibrated" else "uncalibrated"
+  scores <- meta$rubric[[rubric_type]]$scores
+  if (is.null(scores)) {
+    stop(paste0("No scores found in metadata for rubric type '", rubric_type, "'"))
+  }
+  as.numeric(unlist(scores))
 }
 
 
@@ -324,21 +353,36 @@ isp <- function(eval1, eval2){
 #' It's recommended to `normalize_full_credit()` for `eval1` and `eval2` prior
 #' to using this function.
 #'
+#' When `weights` is supplied, each rubric item's disagreement is scaled by its
+#' point value before summing, so a mismatch on a 1-point item contributes more
+#' than a mismatch on a 0.5-point item. Use `scores_from_metadata()` to extract
+#' the weights vector from a metadata JSON file.
+#'
 #' @param eval1 first dataframe of Gradescope evaluations
 #' @param eval2 second dataframe of Gradescope evaluations
+#' @param weights optional numeric vector of point values, one per rubric item
+#'   (in the same order as the R1, R2, ... columns). When `NULL` (default),
+#'   all items are treated as equally weighted.
 #'
 #' @return double for mean absolute error
 #'
 #' @export
-rubric_mae <- function(eval1, eval2){
+rubric_mae <- function(eval1, eval2, weights = NULL){
+  if (!is.null(weights)) {
+    rubric_cols <- grep("^R[0-9]+$", names(eval1), value = TRUE)
+    if (length(weights) != length(rubric_cols)) {
+      stop(paste0("Length of weights (", length(weights), ") must match ",
+                  "number of rubric columns (", length(rubric_cols), ")"))
+    }
+  }
   # find differences in rubric toggles
-  error_per_student <- find_differences(eval1, eval2)$error_per_student
+  error_per_student <- find_differences(eval1, eval2, weights = weights)$error_per_student
   # mean absolute error calculation
   mean(error_per_student)
 }
 
 
-find_differences <- function(eval1, eval2){
+find_differences <- function(eval1, eval2, weights = NULL){
   if (!("SID" %in% colnames(eval1)) || !("SID" %in% colnames(eval2))){
     stop("Missing SID")
   }
@@ -369,7 +413,12 @@ find_differences <- function(eval1, eval2){
   # elementwise matrix comparison
   check_equal <- rubric1 != rubric2
 
-  error_per_student <- rowSums(check_equal)
+  if (!is.null(weights)) {
+    error_per_student <- as.vector(check_equal %*% weights)
+    names(error_per_student) <- students
+  } else {
+    error_per_student <- rowSums(check_equal)
+  }
 
   return (list(error_per_student = error_per_student,
               rubric1 = rubric1,

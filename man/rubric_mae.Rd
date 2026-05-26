@@ -4,12 +4,16 @@
 \alias{rubric_mae}
 \title{Mean Absolute Error of Rubric Items}
 \usage{
-rubric_mae(eval1, eval2)
+rubric_mae(eval1, eval2, weights = NULL)
 }
 \arguments{
 \item{eval1}{first dataframe of Gradescope evaluations}
 
 \item{eval2}{second dataframe of Gradescope evaluations}
+
+\item{weights}{optional numeric vector of point values, one per rubric item
+(in the same order as the R1, R2, ... columns). When \code{NULL} (default),
+all items are treated as equally weighted.}
 }
 \value{
 double for mean absolute error
@@ -22,4 +26,10 @@ For expert answer \{1, 0\}, \cr
 2 if grader is \{0, 1\} \cr
 It's recommended to \code{normalize_full_credit()} for \code{eval1} and \code{eval2} prior
 to using this function.
+}
+\details{
+When \code{weights} is supplied, each rubric item's disagreement is scaled by its
+point value before summing, so a mismatch on a 1-point item contributes more
+than a mismatch on a 0.5-point item. Use \code{scores_from_metadata()} to extract
+the weights vector from a metadata JSON file.
 }
