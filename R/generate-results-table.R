@@ -43,12 +43,20 @@ generate_gt_results_table <- function(results_table){
       columns = starts_with("MAE_")
     ) |>
     gt::tab_spanner(
+      label = "wMAE",
+      columns = starts_with("wMAE_")
+    ) |>
+    gt::tab_spanner(
       label = "ISP",
       columns = starts_with("ISP_")
     ) |>
     gt::cols_label_with(
       tidyr::starts_with("MAE_"),
       ~ sub("^MAE_", "", .x)
+    ) |>
+    gt::cols_label_with(
+      tidyr::starts_with("wMAE_"),
+      ~ sub("^wMAE_", "", .x)
     ) |>
     gt::cols_label_with(
       tidyr::starts_with("ISP_"),
@@ -75,8 +83,11 @@ generate_results_row <- function(dir) {
     name = sub("-.*$", "", files)
   )
 
-  mae_vals <- list()
-  isp_vals <- list()
+  metadata_file <- paste0(dir, "/metadata.json")
+
+  mae_vals  <- list()
+  wmae_vals <- list()
+  isp_vals  <- list()
 
   for (status in unique(df$status)) {
     group <- df[df$status == status, ]
@@ -94,10 +105,12 @@ generate_results_row <- function(dir) {
 
       pair_name <- paste0(n1, ".v.", n2)
 
-      metrics <- compute_mae_and_isp(paste0(dir, f1), paste0(dir, f2))
+      metrics <- compute_mae_and_isp(paste0(dir, f1), paste0(dir, f2),
+                                     metadata_file = metadata_file)
 
-      mae_vals[[pair_name]] <- metrics$MAE
-      isp_vals[[pair_name]] <- metrics$ISP
+      mae_vals[[pair_name]]  <- metrics$MAE
+      wmae_vals[[pair_name]] <- metrics$wMAE
+      isp_vals[[pair_name]]  <- metrics$ISP
     }
   }
 
@@ -116,7 +129,8 @@ generate_results_row <- function(dir) {
   )
 
   for (nm in names(mae_vals)) {
-    results_row[[paste0("MAE_", nm)]] <- mae_vals[[nm]]
+    results_row[[paste0("MAE_", nm)]]  <- mae_vals[[nm]]
+    results_row[[paste0("wMAE_", nm)]] <- wmae_vals[[nm]]
   }
 
   for (nm in names(isp_vals)) {

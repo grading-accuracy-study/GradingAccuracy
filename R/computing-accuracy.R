@@ -274,8 +274,9 @@ compute_mae_and_isp <- function(file1, file2, metadata_file = NULL){
   eval1 <- readr::read_csv(file1, show_col_types = FALSE)
   eval2 <- readr::read_csv(file2, show_col_types = FALSE)
   weights <- if (!is.null(metadata_file)) scores_from_metadata(metadata_file) else NULL
-  list(MAE = rubric_mae(eval1, eval2, weights = weights),
-       ISP = isp(eval1, eval2))
+  list(MAE  = rubric_mae(eval1, eval2),
+       wMAE = if (!is.null(weights)) rubric_mae(eval1, eval2, weights = weights) else NA_real_,
+       ISP  = isp(eval1, eval2))
 }
 
 
