@@ -4,12 +4,16 @@
 \alias{compute_mae_and_isp}
 \title{Calculate MAE and ISP}
 \usage{
-compute_mae_and_isp(file1, file2)
+compute_mae_and_isp(file1, file2, metadata_file = NULL)
 }
 \arguments{
 \item{file1}{file path for first grades csv}
 
 \item{file2}{file path for second grades csv}
+
+\item{metadata_file}{optional path to a metadata JSON file. When supplied,
+rubric item point values are extracted and passed as weights to
+\code{rubric_mae()}, producing a point-weighted MAE.}
 }
 \value{
 a list

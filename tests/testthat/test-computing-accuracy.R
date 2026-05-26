@@ -271,6 +271,55 @@ test_that("normalize_full_credit - missing rubric items, row names", {
                                         rubric_items = c("R2", "R4")))
 })
 
+test_that("rubric_mae - weighted, basic", {
+  eval1 <- data.frame(
+    SID = c(1111, 2222, 3333),
+    R1 = c(T, T, F),
+    R2 = c(T, F, T)
+  )
+  eval2 <- data.frame(
+    SID = c(1111, 2222, 3333),
+    R1 = c(T, F, F),  # 2222 differs on R1 (weight 1.0)
+    R2 = c(T, F, F)   # 3333 differs on R2 (weight 0.5)
+  )
+  # 1111: no diff -> 0; 2222: R1 diff -> 1.0; 3333: R2 diff -> 0.5
+  # MAE = (0 + 1.0 + 0.5) / 3
+  actual_mae <- rubric_mae(eval1, eval2, weights = c(1.0, 0.5))
+  expect_equal(actual_mae, (0 + 1.0 + 0.5) / 3)
+})
+
+test_that("rubric_mae - weighted equals unweighted when all weights are 1", {
+  eval1 <- data.frame(
+    SID = c(1111, 2222, 3333, 4444, 5555),
+    R1 = c(T, T, T, F, F),
+    R2 = c(T, F, T, F, T)
+  )
+  eval2 <- data.frame(
+    SID = c(1111, 2222, 3333, 4444, 5555),
+    R1 = c(T, T, F, F, F),
+    R2 = c(T, T, T, T, T)
+  )
+  expect_equal(rubric_mae(eval1, eval2, weights = c(1, 1)),
+               rubric_mae(eval1, eval2))
+})
+
+test_that("rubric_mae - wrong weights length errors", {
+  eval1 <- data.frame(SID = 1111, R1 = TRUE, R2 = FALSE)
+  eval2 <- data.frame(SID = 1111, R1 = TRUE, R2 = TRUE)
+  expect_error(rubric_mae(eval1, eval2, weights = c(1.0, 0.5, 0.5)))
+})
+
+test_that("scores_from_metadata - calibrated", {
+  path <- system.file("extdata", "metadata-calibrated.json", package = "GradingAccuracy")
+  scores <- scores_from_metadata(path)
+  expect_equal(scores, c(1.0, 0.5, 0.5, 0.0))
+})
+
+test_that("scores_from_metadata - uncalibrated returns error for null", {
+  path <- system.file("extdata", "metadata-calibrated.json", package = "GradingAccuracy")
+  expect_error(scores_from_metadata(path, calibrated = FALSE))
+})
+
 test_that("normalize_full_credit - missing rubric items, indices", {
   eval_before <- data.frame(
     SID = c(1111, 3333, 2222, 4444, 5555),

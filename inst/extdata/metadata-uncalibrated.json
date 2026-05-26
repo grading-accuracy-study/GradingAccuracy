@@ -15,7 +15,9 @@
     "scoring_type": "positive",
     "is_proctored": true,
     "n_submissions": 0,
-    "mean_score": 0.0
+    "mean_score": 0.0,
+    "total_points": 2,
+    "rubric_type": "positive disjoint"
   },
   "rubric": {
     "calibrated": {

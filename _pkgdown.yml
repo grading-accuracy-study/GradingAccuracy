@@ -31,3 +31,4 @@ reference:
   - compute_mae_and_isp
   - isp
   - rubric_mae
+  - scores_from_metadata
