@@ -300,7 +300,28 @@ scores_from_metadata <- function(metadata_file, calibrated = TRUE) {
   if (is.null(scores)) {
     stop(paste0("No scores found in metadata for rubric type '", rubric_type, "'"))
   }
-  as.numeric(unlist(scores))
+  scores_unlisted <- unlist(scores, use.names = FALSE)
+  numeric_scores <- suppressWarnings(as.numeric(scores_unlisted))
+
+  if (any(is.na(numeric_scores) & !is.na(scores_unlisted))) {
+    stop(
+      paste0(
+        "Scores in metadata for rubric type '", rubric_type,
+        "' must be numeric and contain no non-numeric values"
+      )
+    )
+  }
+
+  if (any(is.na(numeric_scores))) {
+    stop(
+      paste0(
+        "Scores in metadata for rubric type '", rubric_type,
+        "' must not contain NA values"
+      )
+    )
+  }
+
+  numeric_scores
 }
 
 
